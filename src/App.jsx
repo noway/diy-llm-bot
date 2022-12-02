@@ -4,18 +4,38 @@ import logo from "./logo.svg";
 function App() {
   return (
     <div className="App" role="main">
-      <article className="App-article">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h3>Welcome to React!</h3>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </article>
+      {/* chat history layout bellow */}
+      <div className="chat-history">
+        <div className="chat-message">
+          <div className="chat-message__avatar">
+            <img src={logo} alt="avatar" />
+          </div>
+          <div className="chat-message__content">
+            <div className="chat-message__content__name">John Doe</div>
+            <div className="chat-message__content__text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+              condimentum, nisl ut ultricies tincidunt, nunc elit lacinia nunc, et
+              ultricies nisl lorem eget nunc. Sed euismod, nisl sit amet
+              consectetur lacinia, nunc elit lacinia nunc, et ultricies nisl lorem
+              eget nunc.
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* chat input layout bellow */}
+      <div className="chat-input">
+        <div className="chat-input__avatar">
+          <img src={logo} alt="avatar" />
+        </div>
+        <div className="chat-input__content">
+          <div className="chat-input__content__input">
+            <input type="text" placeholder="Type your message" />
+          </div>
+          <div className="chat-input__content__button">
+            <button>Send</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
