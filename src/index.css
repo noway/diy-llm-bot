@@ -76,3 +76,13 @@ body {
 .chat-input__avatar img {
   margin: 1em 0;
 }
+
+.lead-copy-container {
+  display: flex;
+  justify-content: center;
+}
+
+.lead-copy {
+  max-width: 600px;
+  flex-grow: 1;
+}

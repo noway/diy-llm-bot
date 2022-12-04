@@ -138,62 +138,99 @@ function App() {
 
   return (
     <div className="App" role="main">
-      <div className="chat-history">
-        {state.messages.map((message) => {
-          // TODO: implement fancy writing animation
-          return (
-            <div
-              className={`chat-message-wrapper ${
-                "chat-message-wrapper--" + message.party
-              }`}
-              key={message.timestamp}
-            >
-              <div className="chat-message">
-                <div className="chat-message__avatar">
-                  <img
-                    src={`/${message.party}.png`}
-                    alt="avatar"
-                    width={30}
-                    height={30}
-                  />
-                </div>
-                <div className="chat-message__content">
-                  {/* TODO: add "Copy code" button */}
-                  <ReactMarkdown
-                    children={message.text}
-                    components={{
-                      code({ node, inline, className, children, ...props }) {
-                        // const match = /language-(\w+)/.exec(className || "");
-                        // TODO: dynamically determine the language of the code block
-                        const match = true;
-                        return !inline && match ? (
-                          <SyntaxHighlighter
-                            children={String(children).trim()}
-                            style={{
-                              ...dark,
-                            }}
-                            customStyle={{
-                              maxWidth: "calc(600px - 30px - 1em)",
-                              boxSizing: "border-box",
-                            }}
-                            language={"csharp"}
-                            PreTag="div"
-                            {...props}
-                          />
-                        ) : (
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        );
-                      },
-                    }}
-                  />
+      {state.messages.length > 0 ? (
+        <div className="chat-history">
+          {state.messages.map((message) => {
+            // TODO: implement fancy writing animation
+            return (
+              <div
+                className={`chat-message-wrapper ${
+                  "chat-message-wrapper--" + message.party
+                }`}
+                key={message.timestamp}
+              >
+                <div className="chat-message">
+                  <div className="chat-message__avatar">
+                    <img
+                      src={`/${message.party}.png`}
+                      alt="avatar"
+                      width={30}
+                      height={30}
+                    />
+                  </div>
+                  <div className="chat-message__content">
+                    {/* TODO: add "Copy code" button */}
+                    <ReactMarkdown
+                      children={message.text}
+                      components={{
+                        code({ node, inline, className, children, ...props }) {
+                          // const match = /language-(\w+)/.exec(className || "");
+                          // TODO: dynamically determine the language of the code block
+                          const match = true;
+                          return !inline && match ? (
+                            <SyntaxHighlighter
+                              children={String(children).trim()}
+                              style={{
+                                ...dark,
+                              }}
+                              customStyle={{
+                                maxWidth: "calc(600px - 30px - 1em)",
+                                boxSizing: "border-box",
+                              }}
+                              language={"csharp"}
+                              PreTag="div"
+                              {...props}
+                            />
+                          ) : (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          );
+                        },
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      ) : null}
+      {/* lead copy */}
+      {state.messages.length === 0 ? (
+        <div className="lead-copy-container">
+          <div className="lead-copy">
+            <h1>Compare GPT-3 and ChatGPT</h1>
+            <p>
+              Step 1: Open <a href="https://chat.openai.com">ChatGPT</a> and DIY
+              LLM Bot side-by-side
+            </p>
+            <p>Step 2: Ask questions!</p>
+            <h1>FAQ</h1>
+            <p>
+              <b>What's the model?</b>
+            </p>
+            <p>text-davinci-002</p>
+            <p>
+              <b>What's the prompt?</b>
+            </p>
+            <p>
+              You can see the prompt{" "}
+              <a href="https://github.com/noway/diy-llm-bot/blob/main/src/App.jsx">
+                here
+              </a>
+              .
+            </p>
+            <p>
+              <b>Is there source code?</b>
+            </p>
+            <p>
+              You can find the source code here{" "}
+              <a href="https://github.com/noway/diy-llm-bot">here</a>.
+            </p>
+          </div>
+        </div>
+      ) : null}
       <div className="chat-input-container">
         <form className="chat-input" onSubmit={submit}>
           <div className="chat-input__avatar">

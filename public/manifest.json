@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "DIY LLM Bot",
+  "name": "DIY LLM Bot - compare a generic GPT-3 based chatbot with ChatGPT",
   "icons": [
     {
       "src": "favicon.ico",
