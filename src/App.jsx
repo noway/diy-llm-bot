@@ -125,9 +125,9 @@ function App() {
 
   return (
     <div className="App" role="main">
-      {/* chat history layout bellow */}
       <div className="chat-history">
         {state.messages.map((message) => {
+          // TODO: implement fancy writing animation
           return (
             <div
               className={`chat-message-wrapper ${
@@ -145,6 +145,7 @@ function App() {
                   />
                 </div>
                 <div className="chat-message__content">
+                  {/* TODO: add "Copy code" button */}
                   <ReactMarkdown
                     children={message.text}
                     components={{
@@ -180,7 +181,6 @@ function App() {
           );
         })}
       </div>
-      {/* chat input layout bellow */}
       <div className="chat-input-container">
         <form className="chat-input" onSubmit={submit}>
           <div className="chat-input__avatar">
