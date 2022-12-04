@@ -1,6 +1,6 @@
 import "./App.css";
 import logo from "./logo.svg";
-import { useState } from "react";
+import { useState, useReducer } from "react";
 
 async function getCompletion(prompt) {
   const BEARER_TOKEN = process.env.REACT_APP_BEARER_TOKEN;
@@ -26,27 +26,44 @@ async function getCompletion(prompt) {
   return body["choices"][0]["text"];
 }
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "add_message":
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      };
+    default:
+      throw new Error();
+  }
+}
+const initialState = { messages: [] };
+
 function App() {
   const [prompt, setPrompt] = useState("");
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <div className="App" role="main">
       {/* chat history layout bellow */}
       <div className="chat-history">
-        <div className="chat-message">
-          <div className="chat-message__avatar">
-            <img src={logo} alt="avatar" />
-          </div>
-          <div className="chat-message__content">
-            <div className="chat-message__content__name">John Doe</div>
-            <div className="chat-message__content__text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              condimentum, nisl ut ultricies tincidunt, nunc elit lacinia nunc,
-              et ultricies nisl lorem eget nunc. Sed euismod, nisl sit amet
-              consectetur lacinia, nunc elit lacinia nunc, et ultricies nisl
-              lorem eget nunc.
+        {state.messages.map((message) => {
+          return (
+            <div className="chat-message">
+              <div className="chat-message__avatar">
+                <img src={logo} alt="avatar" />
+              </div>
+              <div className="chat-message__content">
+                <div className="chat-message__content__name">
+                  {message.name}
+                </div>
+                <div className="chat-message__content__text">
+                  {message.text}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
       {/* chat input layout bellow */}
       <div className="chat-input">
@@ -65,8 +82,10 @@ function App() {
           <div className="chat-input__content__button">
             <button
               onClick={async () => {
+                dispatch({type: 'add_message', payload: {text: prompt, name: 'You'}});
                 const completion = await getCompletion(prompt);
-                alert(completion);
+                setPrompt("");
+                dispatch({type: 'add_message', payload: {text: completion, name: 'Bot'}});
               }}
             >
               Send
