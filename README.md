@@ -1,8 +1,6 @@
 # DIY LLM Bot
 
-This project allows you to quickly plug in a Large Language Model API into a standardized chatbot experience.
-
-With the rapid advancement of Machine Learning, we see more and more LLMs coming out. This project tries to make a frontend that can be used across different models and make it easy for users to "test drive" different AIs.
+This project allows you to compare a generic GPT-3 based chatbot with ChatGPT.
 
 ## Project goals
 
@@ -14,3 +12,7 @@ With the rapid advancement of Machine Learning, we see more and more LLMs coming
 
 - Quantitative evaluation of the model
 - Training models
+
+## Future project goals
+
+Once we see more Machine Learning advancements, this project can be used to compare different LLMs and "test drive" different AIs through the same user interface.
