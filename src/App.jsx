@@ -136,6 +136,7 @@ function App() {
                   components={{
                     code({ node, inline, className, children, ...props }) {
                       // const match = /language-(\w+)/.exec(className || "");
+                      // TODO: dynamically determine the language of the code block
                       const match = true
                       return !inline && match ? (
                         <SyntaxHighlighter
