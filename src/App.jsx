@@ -66,7 +66,22 @@ function App() {
         })}
       </div>
       {/* chat input layout bellow */}
-      <div className="chat-input">
+      <form
+        className="chat-input"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          dispatch({
+            type: "add_message",
+            payload: { text: prompt, name: "You" },
+          });
+          const completion = await getCompletion(prompt);
+          setPrompt("");
+          dispatch({
+            type: "add_message",
+            payload: { text: completion, name: "Bot" },
+          });
+        }}
+      >
         <div className="chat-input__avatar">
           <img src={logo} alt="avatar" width={50} height={50} />
         </div>
@@ -80,19 +95,10 @@ function App() {
             />
           </div>
           <div className="chat-input__content__button">
-            <button
-              onClick={async () => {
-                dispatch({type: 'add_message', payload: {text: prompt, name: 'You'}});
-                const completion = await getCompletion(prompt);
-                setPrompt("");
-                dispatch({type: 'add_message', payload: {text: completion, name: 'Bot'}});
-              }}
-            >
-              Send
-            </button>
+            <button>Send</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
