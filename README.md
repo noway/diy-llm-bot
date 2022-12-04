@@ -15,4 +15,4 @@ This project allows you to compare a generic GPT-3 based chatbot with ChatGPT.
 
 ## Future project goals
 
-Once we see more Machine Learning advancements, this project can be used to compare different LLMs and "test drive" different AIs through the same user interface.
+Once there are more Machine Learning advancements, this project can be used to compare different LLMs and "test drive" different AIs through the same user interface.
