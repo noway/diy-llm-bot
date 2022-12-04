@@ -78,7 +78,7 @@ function App() {
   async function submit(e) {
     e.preventDefault();
     try {
-      const humanMessage = { text: prompt, name: "You", party: "human" };
+      const humanMessage = { text: prompt, name: "You", party: "human", timestamp: Date.now() };
       dispatch({
         type: "add_message",
         payload: humanMessage,
@@ -92,6 +92,7 @@ function App() {
         text: parseCompletionIntoMessageText(completion),
         name: "Bot",
         party: "bot",
+        timestamp: Date.now(),
       };
       setLoading(false);
       dispatch({
@@ -109,14 +110,14 @@ function App() {
       <div className="chat-history">
         {state.messages.map((message) => {
           return (
-            <div className="chat-message">
+            <div className="chat-message" key={message.timestamp}>
               <div className="chat-message__avatar">
-                <img src={logo} alt="avatar" width={30} height={30} />
+                <img src={`/public/${message.party}.png`} alt="avatar" width={30} height={30} />
               </div>
               <div className="chat-message__content">
-                <div className="chat-message__content__name">
+                {/* <div className="chat-message__content__name">
                   {message.name}
-                </div>
+                </div> */}
                 <pre className="chat-message__content__text">
                   {message.text}
                 </pre>
@@ -128,7 +129,7 @@ function App() {
       {/* chat input layout bellow */}
       <form className="chat-input" onSubmit={submit}>
         <div className="chat-input__avatar">
-          <img src={logo} alt="avatar" width={30} height={30} />
+          <img src={`/public/human.png`} alt="avatar" width={30} height={30} />
         </div>
         <div className="chat-input__content">
           <div className="chat-input__content__input">
