@@ -3,9 +3,10 @@ import logo from "./logo.svg";
 import { useState, useReducer } from "react";
 import ReactMarkdown from "react-markdown";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 async function getCompletion(prompt) {
-  const BEARER_TOKEN = process.env.REACT_APP_BEARER_TOKEN;
+  const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
   const model = "text-davinci-002";
   const temperature = 0.5;
   const options = {
@@ -120,7 +121,7 @@ function App() {
             <div className="chat-message" key={message.timestamp}>
               <div className="chat-message__avatar">
                 <img
-                  src={`/public/${message.party}.png`}
+                  src={`/${message.party}.png`}
                   alt="avatar"
                   width={30}
                   height={30}
@@ -163,7 +164,7 @@ function App() {
       {/* chat input layout bellow */}
       <form className="chat-input" onSubmit={submit}>
         <div className="chat-input__avatar">
-          <img src={`/public/human.png`} alt="avatar" width={30} height={30} />
+          <img src={`/human.png`} alt="avatar" width={30} height={30} />
         </div>
         <div className="chat-input__content">
           <div className="chat-input__content__input">
