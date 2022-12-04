@@ -41,7 +41,7 @@ function reducer(state, action) {
 const initialState = { messages: [] };
 
 function generatePrompt(messages) {
-  let prompt = `This is a conversation between between a human and a bot. The bot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text.\n\n`
+  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text.\n\n`
 
   for (let i = 0; i < messages.length; i++) {
     const message = messages[i];
