@@ -12,8 +12,30 @@ code {
     monospace;
 }
 
+body {
+  display: flex;
+}
+
+#root {
+  display: flex;
+  flex-grow: 1;
+}
+
 .chat-input {
   display: flex;
+  flex-grow: 1;
+}
+
+.chat-input__content {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.chat-input__content__input {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-message {
@@ -22,5 +44,5 @@ code {
 
 .chat-message__content__text {
   white-space: pre-wrap;
-  text-align: left;
+  margin: 0;
 }

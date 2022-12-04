@@ -111,7 +111,7 @@ function App() {
           return (
             <div className="chat-message">
               <div className="chat-message__avatar">
-                <img src={logo} alt="avatar" width={50} height={50} />
+                <img src={logo} alt="avatar" width={30} height={30} />
               </div>
               <div className="chat-message__content">
                 <div className="chat-message__content__name">
@@ -128,7 +128,7 @@ function App() {
       {/* chat input layout bellow */}
       <form className="chat-input" onSubmit={submit}>
         <div className="chat-input__avatar">
-          <img src={logo} alt="avatar" width={50} height={50} />
+          <img src={logo} alt="avatar" width={30} height={30} />
         </div>
         <div className="chat-input__content">
           <div className="chat-input__content__input">
@@ -137,6 +137,7 @@ function App() {
               placeholder="Type your message"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
+              autoFocus
             />
           </div>
           <div className="chat-input__content__button">
