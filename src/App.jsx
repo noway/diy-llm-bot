@@ -16,6 +16,7 @@ async function getCompletion(prompt) {
       model,
       prompt,
       temperature,
+      max_tokens: 1024,
     }),
   };
   const response = await fetch(
@@ -39,9 +40,55 @@ function reducer(state, action) {
 }
 const initialState = { messages: [] };
 
+function generatePrompt(messages) {
+  let prompt = `This is a conversation between between a human and a bot. The bot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text.\n\n`
+
+  for (let i = 0; i < messages.length; i++) {
+    const message = messages[i];
+    const {party, text} = message;
+    if (party == "human") {
+      prompt += `Human: ${text.trim()}\n\n`;
+    } else if (party == "bot") {
+      prompt += `Bot: ${text.trim()}\n\n`;
+    }
+  }
+  // prompt for the bot
+  prompt += "Bot: ";
+  console.log('prompt',prompt);
+  return prompt;
+}
+
+function parseCompletionIntoMessageText(completion) {
+  return completion;
+}
+
 function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = useState(false);
+
+  async function submit(e) {
+    e.preventDefault();
+    try {
+      const newMessage = { text: prompt, name: "You", party: "human" };
+      dispatch({
+        type: "add_message",
+        payload: newMessage,
+      });
+      setPrompt("");
+      setLoading(true);
+      const completion = await getCompletion(
+        generatePrompt([...state.messages, newMessage])
+      );
+      setLoading(false);
+      dispatch({
+        type: "add_message",
+        payload: { text: parseCompletionIntoMessageText(completion), name: "Bot", party: "bot" },
+      });
+    } catch (e) {
+      alert(e.message);
+    }
+  }
 
   return (
     <div className="App" role="main">
@@ -66,22 +113,7 @@ function App() {
         })}
       </div>
       {/* chat input layout bellow */}
-      <form
-        className="chat-input"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          dispatch({
-            type: "add_message",
-            payload: { text: prompt, name: "You" },
-          });
-          const completion = await getCompletion(prompt);
-          setPrompt("");
-          dispatch({
-            type: "add_message",
-            payload: { text: completion, name: "Bot" },
-          });
-        }}
-      >
+      <form className="chat-input" onSubmit={submit}>
         <div className="chat-input__avatar">
           <img src={logo} alt="avatar" width={50} height={50} />
         </div>
@@ -95,7 +127,7 @@ function App() {
             />
           </div>
           <div className="chat-input__content__button">
-            <button>Send</button>
+            <button disabled={loading}>Send</button>
           </div>
         </div>
       </form>
