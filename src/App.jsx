@@ -1,5 +1,4 @@
 import "./App.css";
-import logo from "./logo.svg";
 import { useState, useReducer, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
