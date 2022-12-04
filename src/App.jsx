@@ -1,6 +1,8 @@
 import "./App.css";
 import logo from "./logo.svg";
 import { useState, useReducer } from "react";
+import ReactMarkdown from "react-markdown";
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 
 async function getCompletion(prompt) {
   const BEARER_TOKEN = process.env.REACT_APP_BEARER_TOKEN;
@@ -78,7 +80,12 @@ function App() {
   async function submit(e) {
     e.preventDefault();
     try {
-      const humanMessage = { text: prompt, name: "You", party: "human", timestamp: Date.now() };
+      const humanMessage = {
+        text: prompt,
+        name: "You",
+        party: "human",
+        timestamp: Date.now(),
+      };
       dispatch({
         type: "add_message",
         payload: humanMessage,
@@ -112,15 +119,41 @@ function App() {
           return (
             <div className="chat-message" key={message.timestamp}>
               <div className="chat-message__avatar">
-                <img src={`/public/${message.party}.png`} alt="avatar" width={30} height={30} />
+                <img
+                  src={`/public/${message.party}.png`}
+                  alt="avatar"
+                  width={30}
+                  height={30}
+                />
               </div>
               <div className="chat-message__content">
                 {/* <div className="chat-message__content__name">
                   {message.name}
                 </div> */}
-                <pre className="chat-message__content__text">
-                  {message.text}
-                </pre>
+                {/* <pre className="chat-message__content__text"> */}
+                <ReactMarkdown
+                  children={message.text}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      // const match = /language-(\w+)/.exec(className || "");
+                      const match = true
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          children={String(children).replace(/\n$/, "")}
+                          style={dark}
+                          language={"csharp"}
+                          PreTag="div"
+                          {...props}
+                        />
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                />
+                {/* </pre> */}
               </div>
             </div>
           );
