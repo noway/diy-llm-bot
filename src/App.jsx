@@ -1,9 +1,9 @@
 import "./App.css";
 import logo from "./logo.svg";
-import { useState, useReducer } from "react";
+import { useState, useReducer, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 async function getCompletion(prompt) {
   const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
@@ -77,6 +77,7 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
+  const inputElement = useRef(null);
 
   async function submit(e) {
     e.preventDefault();
@@ -93,6 +94,10 @@ function App() {
       });
       setPrompt("");
       setLoading(true);
+      // scroll to the very bottom of the page
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+      }, 0);
       const completion = await getCompletion(
         generatePrompt([...state.messages, humanMessage])
       );
@@ -107,6 +112,12 @@ function App() {
         type: "add_message",
         payload: botMessage,
       });
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+        if (inputElement.current) {
+          inputElement.current.focus();
+        }
+      }, 0);
     } catch (e) {
       alert(e.message);
     }
@@ -118,69 +129,81 @@ function App() {
       <div className="chat-history">
         {state.messages.map((message) => {
           return (
-            <div className="chat-message" key={message.timestamp}>
-              <div className="chat-message__avatar">
-                <img
-                  src={`/${message.party}.png`}
-                  alt="avatar"
-                  width={30}
-                  height={30}
-                />
-              </div>
-              <div className="chat-message__content">
-                {/* <div className="chat-message__content__name">
-                  {message.name}
-                </div> */}
-                {/* <pre className="chat-message__content__text"> */}
-                <ReactMarkdown
-                  children={message.text}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      // const match = /language-(\w+)/.exec(className || "");
-                      // TODO: dynamically determine the language of the code block
-                      const match = true
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          children={String(children).replace(/\n$/, "")}
-                          style={dark}
-                          language={"csharp"}
-                          PreTag="div"
-                          {...props}
-                        />
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                />
-                {/* </pre> */}
+            <div
+              className={`chat-message-wrapper ${
+                "chat-message-wrapper--" + message.party
+              }`}
+              key={message.timestamp}
+            >
+              <div className="chat-message">
+                <div className="chat-message__avatar">
+                  <img
+                    src={`/${message.party}.png`}
+                    alt="avatar"
+                    width={30}
+                    height={30}
+                  />
+                </div>
+                <div className="chat-message__content">
+                  <ReactMarkdown
+                    children={message.text}
+                    components={{
+                      code({ node, inline, className, children, ...props }) {
+                        // const match = /language-(\w+)/.exec(className || "");
+                        // TODO: dynamically determine the language of the code block
+                        const match = true;
+                        return !inline && match ? (
+                          <SyntaxHighlighter
+                            children={String(children).trim()}
+                            style={{
+                              ...dark,
+                            }}
+                            customStyle={{
+                              maxWidth: "calc(600px - 30px - 1em)",
+                              boxSizing: "border-box",
+                            }}
+                            language={"csharp"}
+                            PreTag="div"
+                            {...props}
+                          />
+                        ) : (
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        );
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
           );
         })}
       </div>
       {/* chat input layout bellow */}
-      <form className="chat-input" onSubmit={submit}>
-        <div className="chat-input__avatar">
-          <img src={`/human.png`} alt="avatar" width={30} height={30} />
-        </div>
-        <div className="chat-input__content">
-          <div className="chat-input__content__input">
-            <input
-              type="text"
-              placeholder="Type your message"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              autoFocus
-            />
+      <div className="chat-input-container">
+        <form className="chat-input" onSubmit={submit}>
+          <div className="chat-input__avatar">
+            <img src={`/human.png`} alt="avatar" width={30} height={30} />
           </div>
-          <div className="chat-input__content__button">
-            <button disabled={loading}>Send</button>
+          <div className="chat-input__content">
+            <div className="chat-input__content__input">
+              <input
+                type="text"
+                placeholder={loading ? "Loading..." : "Type your message"}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                autoFocus={true}
+                disabled={loading}
+                ref={inputElement}
+              />
+            </div>
+            <div className="chat-input__content__button">
+              <button disabled={loading}>Send</button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
