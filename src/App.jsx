@@ -43,7 +43,7 @@ function reducer(state, action) {
 }
 
 function generatePrompt(messages) {
-  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text. All code blocks are put into 3 backticks. All inline code is put into 1 backtick. \n\n`;
+  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text. Everything is formatted using Markdown.\n\n`;
 
   // TODO: implement sliding window of 25 messages
   for (let i = 0; i < messages.length; i++) {
