@@ -51,7 +51,7 @@ function App() {
           return (
             <div className="chat-message">
               <div className="chat-message__avatar">
-                <img src={logo} alt="avatar" />
+                <img src={logo} alt="avatar" width={50} height={50} />
               </div>
               <div className="chat-message__content">
                 <div className="chat-message__content__name">
@@ -68,7 +68,7 @@ function App() {
       {/* chat input layout bellow */}
       <div className="chat-input">
         <div className="chat-input__avatar">
-          <img src={logo} alt="avatar" />
+          <img src={logo} alt="avatar" width={50} height={50} />
         </div>
         <div className="chat-input__content">
           <div className="chat-input__content__input">
