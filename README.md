@@ -2,6 +2,9 @@
 
 This project allows you to compare a generic GPT-3 based chatbot with ChatGPT.
 
+## Try it out
+You can try it out on [diy-llm-bot.netlify.app](https://diy-llm-bot.netlify.app/).
+
 ## Screenshot
 <img width="1512" alt="image" src="https://user-images.githubusercontent.com/2031472/205493461-0fa628c8-8877-4a09-a269-8f08f9bf91b5.png">
 
