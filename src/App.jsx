@@ -42,7 +42,21 @@ function reducer(state, action) {
 }
 
 function generatePrompt(messages) {
-  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text. Everything is formatted using Markdown.\n\n`;
+  let prompt = `Hello, I am a chatbot powered by GPT-3. You can ask me anything and I will try my best to answer your questions.
+
+To format my responses with code blocks, you can use the following markdown syntax:
+
+\`\`\`
+Your code goes here
+\`\`\`
+
+To format my responses with inline code, you can use the following markdown syntax:
+
+\`Your code goes here\`
+
+Feel free to ask me anything and I will do my best to help.
+
+`;
 
   // TODO: implement sliding window of 25 messages
   for (let i = 0; i < messages.length; i++) {
