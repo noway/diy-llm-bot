@@ -19,3 +19,8 @@ code {
 .chat-message {
   display: flex;
 }
+
+.chat-message__content__text {
+  white-space: pre-wrap;
+  text-align: left;
+}

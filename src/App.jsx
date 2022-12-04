@@ -59,7 +59,7 @@ function generatePrompt(messages) {
 }
 
 function parseCompletionIntoMessageText(completion) {
-  return completion;
+  return completion.trim();
 }
 
 function App() {
@@ -104,9 +104,9 @@ function App() {
                 <div className="chat-message__content__name">
                   {message.name}
                 </div>
-                <div className="chat-message__content__text">
+                <pre className="chat-message__content__text">
                   {message.text}
-                </div>
+                </pre>
               </div>
             </div>
           );
