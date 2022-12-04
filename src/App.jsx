@@ -59,7 +59,13 @@ function generatePrompt(messages) {
 }
 
 function parseCompletionIntoMessageText(completion) {
-  return completion.trim();
+  const trimmedCompletion = completion.trim();
+  // make sure we stop parsing when we encounter "Human: " on a new line:
+  const indexOfHuman = trimmedCompletion.indexOf("\nHuman: ");
+  if (indexOfHuman > -1) {
+    return trimmedCompletion.substring(0, indexOfHuman);
+  }
+  return trimmedCompletion;
 }
 
 function App() {
