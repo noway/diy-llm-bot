@@ -38,14 +38,13 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-const initialState = { messages: [] };
 
 function generatePrompt(messages) {
-  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text.\n\n`
+  let prompt = `This is a conversation between between a human and a AI chatbot. The AI chatbot is designed to assist with a wide range of tasks, including answering questions, providing explanations, and generating text.\n\n`;
 
   for (let i = 0; i < messages.length; i++) {
     const message = messages[i];
-    const {party, text} = message;
+    const { party, text } = message;
     if (party == "human") {
       prompt += `Human: ${text.trim()}\n\n`;
     } else if (party == "bot") {
@@ -54,7 +53,7 @@ function generatePrompt(messages) {
   }
   // prompt for the bot
   prompt += "Bot: ";
-  console.log('prompt',prompt);
+  console.log(prompt);
   return prompt;
 }
 
@@ -68,6 +67,8 @@ function parseCompletionIntoMessageText(completion) {
   return trimmedCompletion;
 }
 
+const initialState = { messages: [] };
+
 function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -76,20 +77,25 @@ function App() {
   async function submit(e) {
     e.preventDefault();
     try {
-      const newMessage = { text: prompt, name: "You", party: "human" };
+      const humanMessage = { text: prompt, name: "You", party: "human" };
       dispatch({
         type: "add_message",
-        payload: newMessage,
+        payload: humanMessage,
       });
       setPrompt("");
       setLoading(true);
       const completion = await getCompletion(
-        generatePrompt([...state.messages, newMessage])
+        generatePrompt([...state.messages, humanMessage])
       );
+      const botMessage = {
+        text: parseCompletionIntoMessageText(completion),
+        name: "Bot",
+        party: "bot",
+      };
       setLoading(false);
       dispatch({
         type: "add_message",
-        payload: { text: parseCompletionIntoMessageText(completion), name: "Bot", party: "bot" },
+        payload: botMessage,
       });
     } catch (e) {
       alert(e.message);
