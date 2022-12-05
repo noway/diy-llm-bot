@@ -35,7 +35,7 @@ interface Message {
   timestamp: number;
 }
 interface State {
-  messages: Message[]
+  messages: Message[];
 }
 interface Action {
   type: "add_message";
