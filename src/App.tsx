@@ -1,10 +1,11 @@
 import "./App.css";
-import { useState, useReducer, useRef } from "react";
+import { useState, useReducer, useRef, FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import React from "react";
 
-async function getCompletion(prompt) {
+async function getCompletion(prompt: string) {
   const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
   const model = "text-davinci-002";
   const temperature = 0.5;
@@ -28,8 +29,20 @@ async function getCompletion(prompt) {
   const body = await response.json();
   return body["choices"][0]["text"];
 }
+interface Message {
+  text: string;
+  party: "bot" | "human";
+  timestamp: number;
+}
+interface State {
+  messages: Message[]
+}
+interface Action {
+  type: "add_message";
+  payload: Message;
+}
 
-function reducer(state, action) {
+function reducer(state: State, action: Action) {
   switch (action.type) {
     case "add_message":
       return {
@@ -41,7 +54,7 @@ function reducer(state, action) {
   }
 }
 
-function generatePrompt(messages) {
+function generatePrompt(messages: Message[]) {
   let prompt = `Hello, I am a chatbot powered by GPT-3. You can ask me anything and I will try my best to answer your questions.
 
 To format my responses with code blocks, you can use the following markdown syntax:
@@ -74,7 +87,7 @@ Feel free to ask me anything and I will do my best to help.
   return prompt;
 }
 
-function parseCompletionIntoMessageText(completion) {
+function parseCompletionIntoMessageText(completion: string) {
   const trimmedCompletion = completion.trim();
   // make sure we stop parsing when we encounter "Human: " on a new line:
   const indexOfHuman = trimmedCompletion.indexOf("\nHuman: ");
@@ -90,15 +103,15 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
-  const inputElement = useRef(null);
+  const inputElement = useRef<HTMLInputElement | null>(null);
 
-  async function submit(e) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const humanMessage = {
         text: prompt,
         name: "You",
-        party: "human",
+        party: "human" as const,
         timestamp: Date.now(),
       };
       dispatch({
@@ -117,7 +130,7 @@ function App() {
       const botMessage = {
         text: parseCompletionIntoMessageText(completion),
         name: "Bot",
-        party: "bot",
+        party: "bot" as const,
         timestamp: Date.now(),
       };
       setLoading(false);
@@ -132,7 +145,7 @@ function App() {
         }
       }, 0);
     } catch (e) {
-      alert(e.message);
+      alert((e as Error).message);
     }
   }
 
@@ -140,7 +153,7 @@ function App() {
     <div className="App" role="main">
       {state.messages.length > 0 ? (
         <div className="chat-history">
-          {state.messages.map((message) => {
+          {state.messages.map((message: Message) => {
             // TODO: implement fancy writing animation
             return (
               <div
@@ -170,16 +183,13 @@ function App() {
                           return !inline && match ? (
                             <SyntaxHighlighter
                               children={String(children).trim()}
-                              style={{
-                                ...dark,
-                              }}
+                              style={dark}
                               customStyle={{
                                 maxWidth: "calc(600px - 30px - 1em)",
                                 boxSizing: "border-box",
                               }}
                               language={"csharp"}
                               PreTag="div"
-                              {...props}
                             />
                           ) : (
                             <code className={className} {...props}>
