@@ -3,7 +3,6 @@ import { useState, useReducer, useRef, FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import React from "react";
 
 async function getCompletion(prompt: string) {
   const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
