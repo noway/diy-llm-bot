@@ -42,12 +42,16 @@ interface Action {
 }
 
 function joinRepeatingTokens(str: string[]) {
-  return str.reduce((acc, curr) => {
-    if (acc[acc.length - 1] && acc[acc.length - 1].endsWith(curr)) {
-      return [...acc.slice(0, -1), acc[acc.length - 1] + curr];
+  const result: string[] = [];
+  for (let i = 0; i < str.length; i++) {
+    const curr = str[i];
+    if (result.length > 0 && result[result.length - 1].endsWith(curr)) {
+      result[result.length - 1] += curr;
+    } else {
+      result.push(curr);
     }
-    return [...acc, curr];
-  }, [] as string[]);
+  }
+  return result;
 }
 
 function addCharAllButLast(char: string, strs: string[]) {
