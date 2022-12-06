@@ -103,7 +103,7 @@ function ChatMessage({
   useEffect(() => {
     if (isAnimated) {
       const timer = setTimeout(() => {
-        const tokensRead = splitSpaceMerge(messageText).length
+        const tokensRead = splitSpaceMerge(messageText).length;
         if (tokensRead < allTokens.length) {
           setMessageText(allTokens.slice(0, tokensRead + 1).join(""));
         } else {
@@ -279,7 +279,9 @@ function App() {
               <ChatMessage
                 key={message.timestamp}
                 message={message}
-                isAnimated={i === state.messages.length - 1 && message.party === "bot"}
+                isAnimated={
+                  i === state.messages.length - 1 && message.party === "bot"
+                }
               />
             );
           })}
