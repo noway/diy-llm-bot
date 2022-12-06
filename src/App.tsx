@@ -41,6 +41,25 @@ interface Action {
   payload: Message;
 }
 
+function trimSpace(str: string | undefined) {
+  if (str === undefined) {
+    return
+  }
+  return str.replace(/^\s+|\s+$/g, "");
+}
+
+function joinRepeatingEmptyStrings(str: string[]) {
+  return str.reduce((acc, curr) => {
+    if (trimSpace(acc[acc.length - 1]) === "" && curr === "") {
+      return [...acc.slice(0, -1), acc[acc.length - 1] + " "];
+    }
+    return [...acc, curr];
+  }, [] as string[]);
+}
+
+function splitSpaceMerge(str: string) {
+  return joinRepeatingEmptyStrings(str.split(" "));
+}
 
 function ChatMessage({
   message,
@@ -52,19 +71,21 @@ function ChatMessage({
   const [messageText, setMessageText] = useState(
     isAnimated ? "" : message.text
   );
+  const allTokens = splitSpaceMerge(message.text);
   useEffect(() => {
     if (isAnimated) {
       const timer = setTimeout(() => {
-        if (messageText.length < message.text.length) {
-          setMessageText(message.text.slice(0, messageText.length + 10));
+        const tokensRead = splitSpaceMerge(messageText).length
+        if (tokensRead < allTokens.length) {
+          setMessageText(allTokens.slice(0, tokensRead + 1).join(" "));
         } else {
-          setMessageText(message.text);
+          setMessageText(allTokens.join(" "));
           clearTimeout(timer);
         }
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [messageText, message.text, isAnimated]);
+  }, [messageText, isAnimated, allTokens]);
   return (
     <div
       className={`chat-message-wrapper ${
