@@ -110,7 +110,7 @@ function ChatMessage({
           setMessageText(allTokens.join(""));
           clearTimeout(timer);
         }
-      }, 100);
+      }, 50);
       return () => clearTimeout(timer);
     }
   }, [messageText, isAnimated, allTokens]);
