@@ -41,21 +41,12 @@ interface Action {
   payload: Message;
 }
 
-function trimSpace(str: string | undefined) {
-  if (str === undefined) {
-    return
-  }
-  return str.replace(/^\s+|\s+$/g, "");
-}
-
-function joinRepeatingEmptyStrings(str: string[]) {
-  return str.reduce((acc, curr, i) => {
-    const isLast = i === str.length - 1;
-    const addWhitespace = isLast ? "" : " ";
-    if (trimSpace(acc[acc.length - 1]) === "" && curr === "") {
-      return [...acc.slice(0, -1), acc[acc.length - 1] + " " + addWhitespace];
+function joinRepeatingTokens(str: string[]) {
+  return str.reduce((acc, curr) => {
+    if (acc[acc.length - 1] && acc[acc.length - 1].endsWith(curr)) {
+      return [...acc.slice(0, -1), acc[acc.length - 1] + curr];
     }
-    return [...acc, curr + addWhitespace];
+    return [...acc, curr];
   }, [] as string[]);
 }
 
@@ -70,13 +61,15 @@ function addCharAllButLast(char: string, strs: string[]) {
 }
 
 function tokenizeArrayByCharacter(tokens: string[], char: string) {
-  return tokens.flatMap((token) => {
-    return addCharAllButLast(char, token.split(char))
-  })
+  return joinRepeatingTokens(
+    tokens.flatMap((token) => {
+      return addCharAllButLast(char, token.split(char));
+    })
+  );
 }
 
 function splitSpaceMerge(str: string) {
-  let tokens = joinRepeatingEmptyStrings(str.split(" "));
+  let tokens = tokenizeArrayByCharacter([str], " ");
   tokens = tokenizeArrayByCharacter(tokens, ",");
   tokens = tokenizeArrayByCharacter(tokens, "(");
   tokens = tokenizeArrayByCharacter(tokens, ")");
@@ -87,13 +80,13 @@ function splitSpaceMerge(str: string) {
   tokens = tokenizeArrayByCharacter(tokens, ";");
   tokens = tokenizeArrayByCharacter(tokens, "'");
   tokens = tokenizeArrayByCharacter(tokens, '"');
-  tokens = tokenizeArrayByCharacter(tokens, '-');
-  tokens = tokenizeArrayByCharacter(tokens, '.');
-  tokens = tokenizeArrayByCharacter(tokens, '!');
-  tokens = tokenizeArrayByCharacter(tokens, '`');
-  tokens = tokenizeArrayByCharacter(tokens, '/');
-  tokens = tokenizeArrayByCharacter(tokens, '\\');
-  return tokens
+  tokens = tokenizeArrayByCharacter(tokens, "-");
+  tokens = tokenizeArrayByCharacter(tokens, ".");
+  tokens = tokenizeArrayByCharacter(tokens, "!");
+  tokens = tokenizeArrayByCharacter(tokens, "`");
+  tokens = tokenizeArrayByCharacter(tokens, "/");
+  tokens = tokenizeArrayByCharacter(tokens, "\\");
+  return tokens;
 }
 
 function ChatMessage({
