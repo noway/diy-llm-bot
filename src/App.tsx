@@ -53,21 +53,16 @@ function joinRepeatingTokens(str: string[]) {
   }
   return result;
 }
-
-function addCharAllButLast(char: string, strs: string[]) {
-  return strs.map((str, i) => {
-    const isLast = i === strs.length - 1;
-    if (isLast) {
-      return str;
-    }
-    return str + char;
-  });
-}
-
 function tokenizeArrayByCharacter(tokens: string[], char: string) {
   return joinRepeatingTokens(
     tokens.flatMap((token) => {
-      return addCharAllButLast(char, token.split(char));
+      const result = [];
+      const tokenized = token.split(char);
+      for (let i = 0; i < tokenized.length - 1; i++) {
+        result.push(tokenized[i] + char);
+      }
+      result.push(tokenized[tokenized.length - 1]);
+      return result;
     })
   );
 }
