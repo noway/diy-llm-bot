@@ -113,6 +113,7 @@ function ChatMessage({
       return () => clearTimeout(timer);
     }
   }, [messageText, isAnimated, allTokens]);
+  // TODO: add blinking cursor
   return (
     <div
       className={`chat-message-wrapper ${
