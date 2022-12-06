@@ -67,7 +67,7 @@ function tokenizeArrayByCharacter(tokens: string[], char: string) {
   );
 }
 
-function splitSpaceMerge(str: string) {
+function tokenize(str: string) {
   let tokens = tokenizeArrayByCharacter([str], " ");
   tokens = tokenizeArrayByCharacter(tokens, ",");
   tokens = tokenizeArrayByCharacter(tokens, "(");
@@ -98,11 +98,11 @@ function ChatMessage({
   const [messageText, setMessageText] = useState(
     isAnimated ? "" : message.text
   );
-  const allTokens = splitSpaceMerge(message.text);
+  const allTokens = tokenize(message.text);
   useEffect(() => {
     if (isAnimated) {
       const timer = setTimeout(() => {
-        const tokensRead = splitSpaceMerge(messageText).length;
+        const tokensRead = tokenize(messageText).length;
         if (tokensRead < allTokens.length) {
           setMessageText(allTokens.slice(0, tokensRead + 1).join(""));
         } else {
