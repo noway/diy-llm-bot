@@ -49,11 +49,13 @@ function trimSpace(str: string | undefined) {
 }
 
 function joinRepeatingEmptyStrings(str: string[]) {
-  return str.reduce((acc, curr) => {
+  return str.reduce((acc, curr, i) => {
+    const isLast = i === str.length - 1;
+    const addWhitespace = isLast ? "" : " ";
     if (trimSpace(acc[acc.length - 1]) === "" && curr === "") {
-      return [...acc.slice(0, -1), acc[acc.length - 1] + " "];
+      return [...acc.slice(0, -1), acc[acc.length - 1] + " " + addWhitespace];
     }
-    return [...acc, curr];
+    return [...acc, curr + addWhitespace];
   }, [] as string[]);
 }
 
@@ -77,9 +79,9 @@ function ChatMessage({
       const timer = setTimeout(() => {
         const tokensRead = splitSpaceMerge(messageText).length
         if (tokensRead < allTokens.length) {
-          setMessageText(allTokens.slice(0, tokensRead + 1).join(" "));
+          setMessageText(allTokens.slice(0, tokensRead + 1).join(""));
         } else {
-          setMessageText(allTokens.join(" "));
+          setMessageText(allTokens.join(""));
           clearTimeout(timer);
         }
       }, 100);
