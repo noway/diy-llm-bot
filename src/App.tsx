@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useReducer, useRef, FormEvent } from "react";
+import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -39,6 +39,79 @@ interface State {
 interface Action {
   type: "add_message";
   payload: Message;
+}
+
+
+function ChatMessage({
+  message,
+  isAnimated,
+}: {
+  message: Message;
+  isAnimated: boolean;
+}): JSX.Element {
+  const [messageText, setMessageText] = useState(
+    isAnimated ? "" : message.text
+  );
+  useEffect(() => {
+    if (isAnimated) {
+      const timer = setTimeout(() => {
+        if (messageText.length < message.text.length) {
+          setMessageText(message.text.slice(0, messageText.length + 10));
+        } else {
+          setMessageText(message.text);
+          clearTimeout(timer);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [messageText, message.text, isAnimated]);
+  return (
+    <div
+      className={`chat-message-wrapper ${
+        "chat-message-wrapper--" + message.party
+      }`}
+    >
+      <div className="chat-message">
+        <div className="chat-message__avatar">
+          <img
+            src={`/${message.party}.png`}
+            alt="avatar"
+            width={30}
+            height={30}
+          />
+        </div>
+        <div className="chat-message__content">
+          {/* TODO: add "Copy code" button */}
+          <ReactMarkdown
+            children={messageText}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                // const match = /language-(\w+)/.exec(className || "");
+                // TODO: dynamically determine the language of the code block
+                const match = true;
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).trim()}
+                    style={dark}
+                    customStyle={{
+                      maxWidth: "calc(600px - 30px - 1em)",
+                      boxSizing: "border-box",
+                    }}
+                    language={"csharp"}
+                    PreTag="div"
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function reducer(state: State, action: Action) {
@@ -152,55 +225,13 @@ function App() {
     <div className="App" role="main">
       {state.messages.length > 0 ? (
         <div className="chat-history">
-          {state.messages.map((message: Message) => {
-            // TODO: implement fancy writing animation
+          {state.messages.map((message: Message, i) => {
             return (
-              <div
-                className={`chat-message-wrapper ${
-                  "chat-message-wrapper--" + message.party
-                }`}
+              <ChatMessage
                 key={message.timestamp}
-              >
-                <div className="chat-message">
-                  <div className="chat-message__avatar">
-                    <img
-                      src={`/${message.party}.png`}
-                      alt="avatar"
-                      width={30}
-                      height={30}
-                    />
-                  </div>
-                  <div className="chat-message__content">
-                    {/* TODO: add "Copy code" button */}
-                    <ReactMarkdown
-                      children={message.text}
-                      components={{
-                        code({ node, inline, className, children, ...props }) {
-                          // const match = /language-(\w+)/.exec(className || "");
-                          // TODO: dynamically determine the language of the code block
-                          const match = true;
-                          return !inline && match ? (
-                            <SyntaxHighlighter
-                              children={String(children).trim()}
-                              style={dark}
-                              customStyle={{
-                                maxWidth: "calc(600px - 30px - 1em)",
-                                boxSizing: "border-box",
-                              }}
-                              language={"csharp"}
-                              PreTag="div"
-                            />
-                          ) : (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
+                message={message}
+                isAnimated={i === state.messages.length - 1 && message.party === "bot"}
+              />
             );
           })}
         </div>
