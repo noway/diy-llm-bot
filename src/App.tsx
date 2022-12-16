@@ -246,7 +246,7 @@ function App() {
         window.scrollTo(0, document.body.scrollHeight);
       }, 0);
       const res = await fetch(
-        "http://localhost:3000/generate-chat-completion",
+        `${import.meta.env.VITE_API_URL}/generate-chat-completion`,
         {
           method: "POST",
           headers: {
