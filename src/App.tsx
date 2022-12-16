@@ -245,9 +245,23 @@ function App() {
       setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight);
       }, 0);
-      const completion = await getCompletion(
-        generatePrompt([...state.messages, humanMessage])
+      const res = await fetch(
+        "http://localhost:3000/generate-chat-completion",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [...state.messages, humanMessage],
+          }),
+        }
       );
+      const data = await res.json();
+      if (!data.success) {
+        throw new Error(data.error.message);
+      }
+      const completion = data.completion;
       const botMessage = {
         text: parseCompletionIntoMessageText(completion),
         name: "Bot",
