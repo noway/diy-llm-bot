@@ -163,6 +163,10 @@ function parseCompletionIntoMessageText(completion: string) {
 
 const initialState = { messages: [] };
 
+declare global {
+  function gtag(...args: any[]): void;
+}
+
 function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -172,6 +176,11 @@ function App() {
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      gtag("event", "send_message", {
+        event_category: "messages",
+        event_label: "Send human message",
+        value: prompt.length,
+      });
       const humanMessage = {
         text: prompt,
         name: "You",
@@ -215,6 +224,11 @@ function App() {
       dispatch({
         type: "add_message",
         payload: botMessage,
+      });
+      gtag("event", "receive_message", {
+        event_category: "messages",
+        event_label: "Receive bot message",
+        value: botMessage.text.length,
       });
       setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight);
