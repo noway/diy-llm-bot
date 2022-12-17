@@ -4,30 +4,6 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-async function getCompletion(prompt: string) {
-  const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
-  const model = "text-davinci-002";
-  const temperature = 0.5;
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${BEARER_TOKEN}`,
-    },
-    body: JSON.stringify({
-      model,
-      prompt,
-      temperature,
-      max_tokens: 1024,
-    }),
-  };
-  const response = await fetch(
-    "https://api.openai.com/v1/completions",
-    options
-  );
-  const body = await response.json();
-  return body["choices"][0]["text"];
-}
 interface Message {
   text: string;
   party: "bot" | "human";
@@ -173,39 +149,6 @@ function reducer(state: State, action: Action) {
     default:
       throw new Error();
   }
-}
-
-function generatePrompt(messages: Message[]) {
-  let prompt = `Hello, I am a chatbot powered by GPT-3. You can ask me anything and I will try my best to answer your questions.
-
-To format my responses with code blocks, you can use the following markdown syntax:
-
-\`\`\`
-Your code goes here
-\`\`\`
-
-To format my responses with inline code, you can use the following markdown syntax:
-
-\`Your code goes here\`
-
-Feel free to ask me anything and I will do my best to help.
-
-`;
-
-  // TODO: implement sliding window of 25 messages
-  for (let i = 0; i < messages.length; i++) {
-    const message = messages[i];
-    const { party, text } = message;
-    if (party == "human") {
-      prompt += `Human: ${text.trim()}\n\n`;
-    } else if (party == "bot") {
-      prompt += `Bot: ${text.trim()}\n\n`;
-    }
-  }
-  // prompt for the bot
-  prompt += "Bot: ";
-  console.log(prompt);
-  return prompt;
 }
 
 function parseCompletionIntoMessageText(completion: string) {
