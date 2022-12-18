@@ -249,6 +249,15 @@ function App() {
 
   return (
     <div className="App" role="main">
+      <div className="header-container">
+        <div className="header">
+          <div className="header-item">Chat</div>
+          <div className="header-separator">|</div>
+          <div className="header-item">
+            <a href="https://stats.uptimerobot.com/1PXv3h60ZG">Status</a>
+          </div>
+        </div>
+      </div>
       {state.messages.length > 0 ? (
         <div className="chat-history">
           {state.messages.map((message: Message, i) => {
@@ -268,7 +277,7 @@ function App() {
       {state.messages.length === 0 ? (
         <div className="lead-copy-container">
           <div className="lead-copy">
-            <h1>Compare GPT-3 and ChatGPT</h1>
+            <h1 style={{ marginBlockStart: 0 }}>Compare GPT-3 and ChatGPT</h1>
             <p>
               Step 1: Open <a href="https://chat.openai.com">ChatGPT</a> and DIY
               LLM Bot side-by-side

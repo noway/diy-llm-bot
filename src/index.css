@@ -86,3 +86,32 @@ body {
   max-width: 600px;
   flex-grow: 1;
 }
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 1.5em;
+  margin-block-end: 1.5em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.header {
+  max-width: 600px;
+  flex-grow: 1;
+  display: flex;
+  color: grey;
+  gap: 1em;
+}
+
+.header-separator {
+  color: lightgray;
+}
+
+.header-item {
+}
+
+.header a {
+  color: black;
+  text-decoration: none;
+}
