@@ -237,7 +237,13 @@ function App() {
         }
       }, 0);
     } catch (e) {
-      alert((e as Error).message);
+      if ((e as Error).message === "Failed to fetch") {
+        alert(
+          "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later."
+        );
+      } else {
+        alert((e as Error).message);
+      }
     }
   }
 
