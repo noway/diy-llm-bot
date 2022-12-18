@@ -278,7 +278,7 @@ function App() {
             </p>
             <p>
               You can see the prompt{" "}
-              <a href="https://github.com/noway/diy-llm-bot/blob/main/src/App.tsx#L58">
+              <a href="https://github.com/noway/diy-llm-bot-api/blob/main/index.ts#L50">
                 here
               </a>
               .
