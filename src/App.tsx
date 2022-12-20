@@ -11,10 +11,14 @@ interface Message {
 interface State {
   messages: Message[];
 }
-interface Action {
-  type: "add_message";
-  payload: Message;
-}
+type Action =
+  | {
+      type: "add_message";
+      payload: Message;
+    }
+  | {
+      type: "reset_messages";
+    };
 
 function joinRepeatingTokens(str: string[]) {
   const result: string[] = [];
@@ -145,6 +149,11 @@ function reducer(state: State, action: Action) {
         ...state,
         messages: [...state.messages, action.payload],
       };
+    case "reset_messages":
+      return {
+        ...state,
+        messages: [],
+      };
     default:
       throw new Error();
   }
@@ -246,6 +255,19 @@ function App() {
         alert((e as Error).message);
       }
     }
+  }
+
+  function resetChat() {
+    dispatch({
+      type: "reset_messages",
+    });
+    setPrompt("");
+    setLoading(false);
+    setModel("text-davinci-003");
+    gtag("event", "reset_chat", {
+      event_category: "messages",
+      event_label: "Reset chat",
+    });
   }
 
   return (
