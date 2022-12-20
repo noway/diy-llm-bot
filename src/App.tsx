@@ -207,11 +207,11 @@ function App() {
         window.scrollTo(0, document.body.scrollHeight);
       }, 0);
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/generate-chat-completion`,
+        `${import.meta.env.VITE_API_URL}/generate-chat-completion?force-json=true`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "text/plain",
           },
           body: JSON.stringify({
             messages: [...state.messages, humanMessage],
