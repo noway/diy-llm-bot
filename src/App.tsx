@@ -284,11 +284,7 @@ function App() {
               LLM Bot side-by-side
             </p>
             <p>Step 2: Ask questions!</p>
-            <h1>FAQ</h1>
-            {/* <p>
-              <b>What's the model?</b>
-            </p>
-            <p>text-davinci-002</p> */}
+            <h2>FAQ</h2>
             <p>
               <b>What's the prompt?</b>
             </p>
@@ -306,11 +302,11 @@ function App() {
               You can find the source code here{" "}
               <a href="https://github.com/noway/diy-llm-bot">here</a>.
             </p>
-            <h1>Model</h1>
             <p>
-              <b>What model to use?</b>
+              <b>What model is used?</b>
             </p>
             <p>
+              You can select your model:{" "}
               <select name="model" id="model" onChange={e => setModel(e.target.value)} value={model}>
                 <option value="text-davinci-002">text-davinci-002</option>
                 <option value="text-davinci-003">text-davinci-003</option>
