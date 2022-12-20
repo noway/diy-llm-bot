@@ -253,7 +253,7 @@ function App() {
           <div className="header-item">Chat</div>
           <div className="header-separator">|</div>
           <div className="header-item">
-            <a href="https://stats.uptimerobot.com/1PXv3h60ZG">Status</a>
+            <a href={import.meta.env.VITE_UPTIME_URL}>Status</a>
           </div>
         </div>
       </div>
