@@ -118,7 +118,8 @@ body {
 .header-item {
 }
 
-.header a {
+.header-item a, .header-item .header-item-link {
   color: black;
   text-decoration: none;
+  cursor: pointer;
 }

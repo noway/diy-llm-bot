@@ -274,7 +274,14 @@ function App() {
     <div className="App" role="main">
       <div className="header-container">
         <div className="header">
-          <div className="header-item">Chat</div>
+          <div className="header-item">
+            {state.messages.length > 0 ? (
+              <span className="header-item-link" onClick={resetChat}>
+                Chat
+              </span>
+            ) : null}
+            {state.messages.length === 0 ? "Chat" : null}
+          </div>
           <div className="header-separator">|</div>
           <div className="header-item">
             <a href={import.meta.env.VITE_UPTIME_URL}>Status</a>
