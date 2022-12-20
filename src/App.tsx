@@ -167,6 +167,7 @@ declare global {
 }
 
 function App() {
+  const [model, setModel] = useState("text-davinci-003");
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
@@ -205,6 +206,7 @@ function App() {
           },
           body: JSON.stringify({
             messages: [...state.messages, humanMessage],
+            model,
           }),
         }
       );
@@ -283,10 +285,10 @@ function App() {
             </p>
             <p>Step 2: Ask questions!</p>
             <h1>FAQ</h1>
-            <p>
+            {/* <p>
               <b>What's the model?</b>
             </p>
-            <p>text-davinci-002</p>
+            <p>text-davinci-002</p> */}
             <p>
               <b>What's the prompt?</b>
             </p>
@@ -303,6 +305,18 @@ function App() {
             <p>
               You can find the source code here{" "}
               <a href="https://github.com/noway/diy-llm-bot">here</a>.
+            </p>
+            <h1>Model</h1>
+            <p>
+              <b>What model to use?</b>
+            </p>
+            <p>
+              <select name="model" id="model" onChange={e => setModel(e.target.value)} value={model}>
+                <option value="text-davinci-002">text-davinci-002</option>
+                <option value="text-davinci-003">text-davinci-003</option>
+                <option value="davinci-instruct-beta">davinci-instruct-beta</option>
+                <option value="davinci-instruct-beta:2.0.0">davinci-instruct-beta:2.0.0</option>
+              </select>
             </p>
           </div>
         </div>
