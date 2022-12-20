@@ -315,12 +315,12 @@ function App() {
               >
                 <option value="text-davinci-002">text-davinci-002</option>
                 <option value="text-davinci-003">text-davinci-003</option>
-                <option value="davinci-instruct-beta">
+                {/* <option value="davinci-instruct-beta">
                   davinci-instruct-beta
                 </option>
                 <option value="davinci-instruct-beta:2.0.0">
                   davinci-instruct-beta:2.0.0
-                </option>
+                </option> */}
               </select>
             </p>
           </div>
