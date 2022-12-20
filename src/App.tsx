@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";

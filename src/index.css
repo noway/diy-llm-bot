@@ -21,6 +21,13 @@ body {
   flex-grow: 1;
 }
 
+.App {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
 .chat-message__avatar img {
   padding: 1em 0;
 }
