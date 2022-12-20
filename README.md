@@ -22,3 +22,7 @@ You can try it out on [diy-llm-bot.netlify.app](https://diy-llm-bot.netlify.app/
 ## Future project goals
 
 Once there are more Machine Learning advancements, this project can be used to compare different LLMs and "test drive" different AIs through the same user interface.
+
+## Links
+
+- API repo: [noway/diy-llm-bot-api](https://github.com/noway/diy-llm-bot-api)
