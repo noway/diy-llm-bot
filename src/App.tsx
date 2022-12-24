@@ -5,6 +5,7 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface Message {
   text: string;
+  name: "You" | "Bot";
   party: "bot" | "human";
   timestamp: number;
 }
@@ -17,81 +18,15 @@ type Action =
       payload: Message;
     }
   | {
+      type: "set_message";
+      payload: Message;
+    }
+  | {
       type: "reset_messages";
     };
 
-function joinRepeatingTokens(str: string[]) {
-  const result: string[] = [];
-  for (let i = 0; i < str.length; i++) {
-    const curr = str[i];
-    if (result.length > 0 && result[result.length - 1].endsWith(curr)) {
-      result[result.length - 1] += curr;
-    } else {
-      result.push(curr);
-    }
-  }
-  return result;
-}
-function tokenizeArrayByCharacter(tokens: string[], char: string) {
-  return joinRepeatingTokens(
-    tokens.flatMap((token) => {
-      const result = [];
-      const tokenized = token.split(char);
-      for (let i = 0; i < tokenized.length - 1; i++) {
-        result.push(tokenized[i] + char);
-      }
-      result.push(tokenized[tokenized.length - 1]);
-      return result;
-    })
-  );
-}
-
-function tokenize(str: string) {
-  let tokens = tokenizeArrayByCharacter([str], " ");
-  tokens = tokenizeArrayByCharacter(tokens, ",");
-  tokens = tokenizeArrayByCharacter(tokens, "(");
-  tokens = tokenizeArrayByCharacter(tokens, ")");
-  tokens = tokenizeArrayByCharacter(tokens, "{");
-  tokens = tokenizeArrayByCharacter(tokens, "}");
-  tokens = tokenizeArrayByCharacter(tokens, "<");
-  tokens = tokenizeArrayByCharacter(tokens, ">");
-  tokens = tokenizeArrayByCharacter(tokens, ";");
-  tokens = tokenizeArrayByCharacter(tokens, "'");
-  tokens = tokenizeArrayByCharacter(tokens, '"');
-  tokens = tokenizeArrayByCharacter(tokens, "-");
-  tokens = tokenizeArrayByCharacter(tokens, ".");
-  tokens = tokenizeArrayByCharacter(tokens, "!");
-  tokens = tokenizeArrayByCharacter(tokens, "`");
-  tokens = tokenizeArrayByCharacter(tokens, "/");
-  tokens = tokenizeArrayByCharacter(tokens, "\\");
-  return tokens;
-}
-
-function ChatMessage({
-  message,
-  isAnimated,
-}: {
-  message: Message;
-  isAnimated: boolean;
-}): JSX.Element {
-  const [messageText, setMessageText] = useState(
-    isAnimated ? "" : message.text
-  );
-  const allTokens = tokenize(message.text);
-  useEffect(() => {
-    if (isAnimated) {
-      const timer = setTimeout(() => {
-        const tokensRead = tokenize(messageText).length;
-        if (tokensRead < allTokens.length) {
-          setMessageText(allTokens.slice(0, tokensRead + 1).join(""));
-        } else {
-          setMessageText(allTokens.join(""));
-          clearTimeout(timer);
-        }
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [messageText, isAnimated, allTokens]);
+function ChatMessage({ message }: { message: Message }): JSX.Element {
+  const messageText = message.text;
   // TODO: add blinking cursor
   return (
     <div
@@ -149,6 +84,21 @@ function reducer(state: State, action: Action) {
         ...state,
         messages: [...state.messages, action.payload],
       };
+    case "set_message":
+      const replacedMessages = state.messages.map((message) =>
+        message.timestamp === action.payload.timestamp
+          ? action.payload
+          : message
+      );
+      const messages = state.messages.find(
+        (message) => message.timestamp === action.payload.timestamp
+      )
+        ? replacedMessages
+        : [...state.messages, action.payload];
+      return {
+        ...state,
+        messages,
+      };
     case "reset_messages":
       return {
         ...state,
@@ -192,7 +142,7 @@ function App() {
       });
       const humanMessage = {
         text: prompt,
-        name: "You",
+        name: "You" as const,
         party: "human" as const,
         timestamp: Date.now(),
       };
@@ -207,7 +157,9 @@ function App() {
         window.scrollTo(0, document.body.scrollHeight);
       }, 0);
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/generate-chat-completion?force-json=true`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/generate-chat-completion-streaming?force-json=true`,
         {
           method: "POST",
           headers: {
@@ -219,27 +171,49 @@ function App() {
           }),
         }
       );
-      const data = await res.json();
-      if (!data.success) {
-        throw new Error(data.error.message);
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
       }
-      const completion = data.completion;
-      const botMessage = {
-        text: parseCompletionIntoMessageText(completion),
-        name: "Bot",
-        party: "bot" as const,
-        timestamp: Date.now(),
-      };
+      if (!res.body) {
+        throw new Error("No response body");
+      }
+
+      const reader = res.body.getReader();
+      let completion = "";
+      let botMessage: Message | null = null;
+      const timestamp = Date.now();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+
+        // Convert the binary data to a string
+        const dataString = new TextDecoder().decode(value);
+        completion += dataString;
+
+        botMessage = {
+          text: parseCompletionIntoMessageText(completion),
+          name: "Bot" as const,
+          party: "bot" as const,
+          timestamp,
+        };
+
+        dispatch({
+          type: "set_message",
+          payload: botMessage,
+        });
+      }
+
       setLoading(false);
-      dispatch({
-        type: "add_message",
-        payload: botMessage,
-      });
-      gtag("event", "receive_message", {
-        event_category: "messages",
-        event_label: "Receive bot message",
-        value: botMessage.text.length,
-      });
+      if (botMessage) {
+        gtag("event", "receive_message", {
+          event_category: "messages",
+          event_label: "Receive bot message",
+          value: botMessage.text.length,
+        });
+      }
       setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight);
         if (inputElement.current) {
@@ -291,15 +265,7 @@ function App() {
       {state.messages.length > 0 ? (
         <div className="chat-history">
           {state.messages.map((message: Message, i) => {
-            return (
-              <ChatMessage
-                key={message.timestamp}
-                message={message}
-                isAnimated={
-                  i === state.messages.length - 1 && message.party === "bot"
-                }
-              />
-            );
+            return <ChatMessage key={message.timestamp} message={message} />;
           })}
         </div>
       ) : null}
