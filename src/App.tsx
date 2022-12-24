@@ -258,14 +258,14 @@ function App() {
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
-            <a href={import.meta.env.VITE_UPTIME_URL} rel="noopener">
-              Status
+            <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
+              GitHub
             </a>
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
-            <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
-              GitHub
+            <a href={import.meta.env.VITE_UPTIME_URL} rel="noopener">
+              Status
             </a>
           </div>
         </div>
