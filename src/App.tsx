@@ -260,6 +260,12 @@ function App() {
           <div className="header-item">
             <a href={import.meta.env.VITE_UPTIME_URL}>Status</a>
           </div>
+          <div className="header-separator">|</div>
+          <div className="header-item">
+            <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
+              GitHub
+            </a>
+          </div>
         </div>
       </div>
       {state.messages.length > 0 ? (
