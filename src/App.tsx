@@ -1,4 +1,4 @@
-import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
+import { useState, useReducer, useRef, FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -7,7 +7,7 @@ interface Message {
   text: string;
   name: "You" | "Bot";
   party: "bot" | "human";
-  timestamp: number;
+  id: number;
 }
 interface State {
   messages: Message[];
@@ -86,12 +86,10 @@ function reducer(state: State, action: Action) {
       };
     case "set_message":
       const replacedMessages = state.messages.map((message) =>
-        message.timestamp === action.payload.timestamp
-          ? action.payload
-          : message
+        message.id === action.payload.id ? action.payload : message
       );
       const messages = state.messages.find(
-        (message) => message.timestamp === action.payload.timestamp
+        (message) => message.id === action.payload.id
       )
         ? replacedMessages
         : [...state.messages, action.payload];
@@ -144,7 +142,7 @@ function App() {
         text: prompt,
         name: "You" as const,
         party: "human" as const,
-        timestamp: Date.now(),
+        id: Date.now(),
       };
       dispatch({
         type: "add_message",
@@ -182,7 +180,7 @@ function App() {
       const reader = res.body.getReader();
       let completion = "";
       let botMessage: Message | null = null;
-      const timestamp = Date.now();
+      const id = Date.now();
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
@@ -197,7 +195,7 @@ function App() {
           text: parseCompletionIntoMessageText(completion),
           name: "Bot" as const,
           party: "bot" as const,
-          timestamp,
+          id,
         };
 
         dispatch({
@@ -266,8 +264,8 @@ function App() {
       </div>
       {state.messages.length > 0 ? (
         <div className="chat-history">
-          {state.messages.map((message: Message, i) => {
-            return <ChatMessage key={message.timestamp} message={message} />;
+          {state.messages.map((message: Message) => {
+            return <ChatMessage key={message.id} message={message} />;
           })}
         </div>
       ) : null}
