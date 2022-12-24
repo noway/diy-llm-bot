@@ -258,7 +258,9 @@ function App() {
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
-            <a href={import.meta.env.VITE_UPTIME_URL}>Status</a>
+            <a href={import.meta.env.VITE_UPTIME_URL} rel="noopener">
+              Status
+            </a>
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
@@ -281,8 +283,11 @@ function App() {
           <div className="lead-copy">
             <h1 style={{ marginBlockStart: 0 }}>Compare GPT-3 and ChatGPT</h1>
             <p>
-              Step 1: Open <a href="https://chat.openai.com">ChatGPT</a> and DIY
-              LLM Bot side-by-side
+              Step 1: Open{" "}
+              <a href="https://chat.openai.com" rel="noopener">
+                ChatGPT
+              </a>{" "}
+              and DIY LLM Bot side-by-side
             </p>
             <p>Step 2: Ask questions!</p>
             <h2>FAQ</h2>
@@ -291,7 +296,10 @@ function App() {
             </p>
             <p>
               You can see the prompt{" "}
-              <a href="https://github.com/noway/diy-llm-bot-api/blob/main/index.ts#L50">
+              <a
+                href="https://github.com/noway/diy-llm-bot-api/blob/main/index.ts#L50"
+                rel="noopener"
+              >
                 here
               </a>
               .
@@ -301,7 +309,10 @@ function App() {
             </p>
             <p>
               You can find the source code here{" "}
-              <a href="https://github.com/noway/diy-llm-bot">here</a>.
+              <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
+                here
+              </a>
+              .
             </p>
             <p>
               <b>What model is used?</b>
