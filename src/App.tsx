@@ -204,6 +204,9 @@ function App() {
           type: "set_message",
           payload: botMessage,
         });
+        setTimeout(() => {
+          window.scrollTo(0, document.body.scrollHeight);
+        }, 0);
       }
 
       setLoading(false);
@@ -215,7 +218,6 @@ function App() {
         });
       }
       setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
         if (inputElement.current) {
           inputElement.current.focus();
         }
