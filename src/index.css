@@ -89,6 +89,7 @@ body {
 .lead-copy-container {
   display: flex;
   justify-content: center;
+  padding: 0 1em;
 }
 
 .lead-copy {
