@@ -55,6 +55,7 @@ body {
 .chat-message-wrapper {
   display: flex;
   justify-content: center;
+  padding: 0 1em;
 }
 .chat-message-wrapper--bot {
   border-bottom: 1px solid;
@@ -71,6 +72,7 @@ body {
 .chat-input-container {
   display: flex;
   justify-content: center;
+  padding: 0 1em;
 }
 
 .chat-input {
@@ -101,6 +103,7 @@ body {
   margin-block-end: 1.5em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+  margin-inline: 1em;
 }
 
 .header {

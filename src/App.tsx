@@ -1,4 +1,4 @@
-import { useState, useReducer, useRef, FormEvent } from "react";
+import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -28,6 +28,15 @@ type Action =
 function ChatMessage({ message }: { message: Message }): JSX.Element {
   const messageText = message.text;
   // TODO: add blinking cursor
+  const EM_IN_PX = 16;
+  const [viewportWidth, setViewportWidth] = useState(window.screen.width);
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.screen.width);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div
       className={`chat-message-wrapper ${
@@ -57,7 +66,10 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
                     children={String(children).trim()}
                     style={dark}
                     customStyle={{
-                      maxWidth: "calc(600px - 30px - 1em)",
+                      maxWidth: `calc(${Math.min(
+                        viewportWidth,
+                        600 + 2 * EM_IN_PX
+                      )}px - 30px - 1em - 2em)`,
                       boxSizing: "border-box",
                     }}
                     language={"csharp"}
