@@ -318,9 +318,9 @@ function App() {
               <b>Found it useful?</b>
             </p>
             <p>
-              Leave a ⭐️  on{" "}
+              Leave a ⭐️ on{" "}
               <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
-              GitHub
+                GitHub
               </a>
               .
             </p>
