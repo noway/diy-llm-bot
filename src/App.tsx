@@ -315,6 +315,16 @@ function App() {
               .
             </p>
             <p>
+              <b>Found it useful?</b>
+            </p>
+            <p>
+              Leave a ⭐️  on{" "}
+              <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
+              GitHub
+              </a>
+              .
+            </p>
+            <p>
               <b>What model is used?</b>
             </p>
             <p>
