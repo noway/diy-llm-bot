@@ -312,7 +312,7 @@ function App() {
             <p>
               You can see the prompt{" "}
               <a
-                href="https://github.com/noway/diy-llm-bot-api/blob/main/index.ts#L76"
+                href="https://github.com/noway/diy-llm-bot-api/blob/main/index.ts#L73"
                 rel="noopener"
               >
                 here
