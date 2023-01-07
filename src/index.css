@@ -52,6 +52,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+.chat-input__content__input input {
+  width: 100%;
+}
 
 .chat-message {
   display: flex;
