@@ -107,6 +107,16 @@ body {
   flex-grow: 1;
 }
 
+.notice-container {
+  display: flex;
+  justify-content: center;
+  background-color: #efefef;
+}
+.notice {
+  max-width: 600px;
+  padding: 0.5em 1em;
+  text-align: center;
+}
 .header-container {
   display: flex;
   justify-content: center;

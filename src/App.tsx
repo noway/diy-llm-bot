@@ -261,6 +261,17 @@ function App() {
 
   return (
     <div className="App" role="main">
+      {location.hostname === "diy-llm-bot.netlify.app" ? (
+        <div className="notice-container">
+          <div className="notice">
+            DIY LLM Bot has moved to{" "}
+            <a href="https://diy-llm-bot.com" rel="noopener">
+              diy-llm-bot.com
+            </a>
+            . Please update your bookmarks.
+          </div>
+        </div>
+      ) : null}
       <div className="header-container">
         <div className="header">
           <div className="header-item">
