@@ -25,6 +25,11 @@ type Action =
       type: "reset_messages";
     };
 
+const bot_url =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAC80lEQVRIS7WVWUhUYRTHf9832RgWEmqltoxtFIGBU0IraVYW7ZE1LUYLBj0U0UOUpVGa9VDRSwRtD0VakNiGpI5R2kuZUCSIzkxoy4O2g5bOcuK2QDB3bGy5L/fhnvM75/uf8/2v4j8+qjfs1Va3lHSNCjsn7ECjCUeEW4q9/wmeZXXJ1a7RYTcUdmDf+Vfkp4Td5avCyvtt0EaLR6Kt3TQFNAZdUGgFg72aC76eJeoRvlF7xMA1x3wm6pP1W+MKBVqI79Jo4FwgdIEe4SsiXfIsv4HFBRNYWvWWnGxwXOjiY+YQruc2MvzoWKo+jAvJCPkhr79LnviE2jIX7xtOUDu9gCNpMdy7+JSOxtPE24uYuDyKSUpzoGOMKSckvEi7xdDYpYTBUwcwoLaDqKE+Hr224NUW4q1e4josxgTYK7bewQ19C5VHavt1U/GgGkv0SMrOp1GtKji+7DmHJi36Nt7cwMjey2LAL89slsoHFspLHtNua0NEgwqQ0JjAtuyJJGX4cFSO/TO4UWCDxS0xkUJcp6JPosL/CoZNE2NtWFvzF6v4q+/800uU069FZqX6KJ1tw36gBb8EUAqUMWWtqTs4gsn7W9FKs9s/IvyBHlYeEWXcRSNH0CicZxNJ39xK9bkk0re0YpviJzLWz5nMMczY1soeSQoqYFrRgD/JSyD54CsuFjbQNPtlkDMPej6c7Y7x1DtspBS/MF1HU/ieqW1yLPouWyrt3L7kpv3pySB4bPIOtq4ZTWniO3baBrKuJtgtTeEb+jRL8Zx6cpypnKopJ/L6rSB4QsxW1h9OpjD1IfvqJpPXHrzvpvCsiGYpy6hnQbWdG/crTOFflixkV/o8Ts6sI/dOCvmBYAswhW+yuOXS3DqWOFO4VlMZEr57RxbHBjpZUZVCsTdMeJHySH7mI+bftXPzXoXpbzaiM4KVGWlcnfuY5U47Jd1hal6gPFKS1Mbqlji0GOZk2Pr3QxovRYDAj0UtHfKGzA+xFHQGr+JXPcUQJyprHcEAAAAASUVORK5CYII=";
+const human_url =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACb0lEQVRIS92UX0hTURzHv2dWSx/KJojZS4GxhB5iQlQvPkQhlQg12ENlsWhMpOaW0sOcMF1ZJK6JYW70R6Fy5ei/EBFoRUoghtBCEnqqjIhWlLjpvb84Z7YGu3dsoi8dLhzu+d37+X1/3/M7h2EJB1tCNv5XOGPEbRsoBQyFqQYWDVLaytWDjNHuDQxEwNOdhIFXqQkuScvQ8mJWlaEcYIx2rWfQzEcJTGzOkw+ykJ9cSae8HJ7nMUWOKjyTLpoqj3+lZk9aWyJBC3LLNivm+T0yCt2hHlHFnrCy92nh0ckOWKrqhCnd972oNTYgFptD4IFXJDxSWYe+dzJAWcBnQlaytPgRCPmgLTkJnuTvSH6vMdrR1e8FxsahNQZShCoqn75lpkbfNbTe6BDwcxWrYO/0CH4y3G0+BbftGKTZKFaarmYGj961Uv3ZbrT1/VOstsFsPAySJGiN/szgHGQ1MPLdiSuPvr8IMA0YEVZstCVskoZHud/IO9yTRSsCaCrXkvOMA1hbLDaO9zqIofdRO/BlCowYzjvb4BqcyfIQzXvg2M6o9YITmhwt5ML8hDM5X7+hod4N78uFHn8Av+6ZqffmY8zFJID4w8CETsLx6irk7r+ywLsFgH5bo7i4RqonhGrRzjKgi9yOV+FKf2WrZubgYNcBhMNvUXsigO/2IUyXmJA3GcSbfWOCvcVgUD1APK4I31p5lBwHK7BJrxcQU01IzBN7PQiVhpC/ZjUKdAVizdLkw+uH1zPvFg73N9vEj3z+8TMCy+lnaHftAEFG8+V+sb4ocA75+PmTqHNdUXEi6aLBeRUBjw0kx63IRPkfkSH+GJhPFeIAAAAASUVORK5CYII=";
+
 function ChatMessage({ message }: { message: Message }): JSX.Element {
   const messageText = message.text;
   // TODO: add blinking cursor
@@ -46,10 +51,8 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
       <div className="chat-message">
         <div className="chat-message__avatar">
           <img
-            src={`/${message.party}.png`}
+            src={message.party === "bot" ? bot_url : human_url}
             alt="avatar"
-            width={30}
-            height={30}
           />
         </div>
         <div className="chat-message__content">
@@ -69,7 +72,7 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
                       maxWidth: `calc(${Math.min(
                         viewportWidth,
                         600 + 2 * EM_IN_PX
-                      )}px - 30px - 1em - 2em)`,
+                      )}px - 34.5px - 1em - 2em)`,
                       boxSizing: "border-box",
                     }}
                     language={"csharp"}
@@ -357,7 +360,7 @@ function App() {
       <div className="chat-input-container">
         <form className="chat-input" onSubmit={submit}>
           <div className="chat-input__avatar">
-            <img src={`/human.png`} alt="avatar" width={30} height={30} />
+            <img src={human_url} alt="avatar" />
           </div>
           <div className="chat-input__content">
             <div className="chat-input__content__input">
