@@ -34,7 +34,7 @@ body {
 }
 
 .chat-message__avatar img {
-  padding: 1em 0;
+  padding: calc(1em - (4.5px / 2)) 0;
   width: 34.5px;
   height: 34.5px;
   image-rendering: pixelated;
@@ -91,7 +91,7 @@ body {
 }
 
 .chat-input__avatar img {
-  margin: 1em 0;
+  margin: calc(1em - (4.5px / 2)) 0;
   width: 34.5px;
   height: 34.5px;
   image-rendering: pixelated;
