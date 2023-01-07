@@ -75,11 +75,6 @@ body {
   border-color: rgba(0,0,0,0.1);
 }
 
-.chat-message__content__text {
-  white-space: pre-wrap;
-  margin: 0;
-}
-
 .chat-input-container {
   display: flex;
   justify-content: center;
