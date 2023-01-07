@@ -125,9 +125,6 @@ body {
   color: lightgray;
 }
 
-.header-item {
-}
-
 .header-item a, .header-item .header-item-link {
   color: black;
   text-decoration: none;
