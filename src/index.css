@@ -54,6 +54,7 @@ body {
 }
 .chat-input__content__input input {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .chat-message {
