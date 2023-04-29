@@ -147,6 +147,8 @@ function App() {
 
   async function submit(e: FormEvent<HTMLFormElement>) {
 
+    e.preventDefault();
+
     const currentDatePT = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
     const targetDatePT = new Date("2023-05-01T00:00:00-07:00");
     if (currentDatePT < targetDatePT) {
@@ -154,7 +156,6 @@ function App() {
       return
     }
 
-    e.preventDefault();
     try {
       gtag("event", "send_message", {
         event_category: "messages",
