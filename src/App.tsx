@@ -146,6 +146,14 @@ function App() {
   const inputElement = useRef<HTMLInputElement | null>(null);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
+
+    const currentDatePT = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    const targetDatePT = new Date("2023-05-01T00:00:00-07:00");
+    if (currentDatePT < targetDatePT) {
+      alert("DIY LLM Bot is on a short break until May 1, 2023. Please check back then.");
+      return
+    }
+
     e.preventDefault();
     try {
       gtag("event", "send_message", {
