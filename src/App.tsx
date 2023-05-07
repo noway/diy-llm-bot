@@ -139,7 +139,7 @@ declare global {
 }
 
 function App() {
-  const [model, setModel] = useState("text-davinci-003");
+  const [model, setModel] = useState("gpt-3.5-turbo");
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
@@ -261,7 +261,7 @@ function App() {
     });
     setPrompt("");
     setLoading(false);
-    setModel("text-davinci-003");
+    setModel("gpt-3.5-turbo");
     gtag("event", "reset_chat", {
       event_category: "messages",
       event_label: "Reset chat",
@@ -372,6 +372,7 @@ function App() {
               >
                 <option value="text-davinci-002">text-davinci-002</option>
                 <option value="text-davinci-003">text-davinci-003</option>
+                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
               </select>
             </p>
           </div>
