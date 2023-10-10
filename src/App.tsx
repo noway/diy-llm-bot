@@ -65,7 +65,6 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
           />
         </div>
         <div className="chat-message__content">
-          {/* TODO: add "Copy code" button */}
           <ReactMarkdown
             children={messageText}
             components={{
