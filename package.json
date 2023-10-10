@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.5",
     "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.4",
     "react-syntax-highlighter": "^15.5.0"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^18.11.10",
     "@types/react": "^18.0.24",
+    "@types/react-copy-to-clipboard": "^5.0.5",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
     "typescript": "^4.6.4",
