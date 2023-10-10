@@ -183,3 +183,18 @@ body {
   outline: none;
   box-shadow: 0 0 3px rgba(255,255,255,0.3);
 }
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  background-color: black;
+  animation: blink 1s step-end infinite;
+  margin-left: 0.25em;
+}

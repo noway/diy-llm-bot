@@ -32,7 +32,7 @@ const bot_url =
 const human_url =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACb0lEQVRIS92UX0hTURzHv2dWSx/KJojZS4GxhB5iQlQvPkQhlQg12ENlsWhMpOaW0sOcMF1ZJK6JYW70R6Fy5ei/EBFoRUoghtBCEnqqjIhWlLjpvb84Z7YGu3dsoi8dLhzu+d37+X1/3/M7h2EJB1tCNv5XOGPEbRsoBQyFqQYWDVLaytWDjNHuDQxEwNOdhIFXqQkuScvQ8mJWlaEcYIx2rWfQzEcJTGzOkw+ykJ9cSae8HJ7nMUWOKjyTLpoqj3+lZk9aWyJBC3LLNivm+T0yCt2hHlHFnrCy92nh0ckOWKrqhCnd972oNTYgFptD4IFXJDxSWYe+dzJAWcBnQlaytPgRCPmgLTkJnuTvSH6vMdrR1e8FxsahNQZShCoqn75lpkbfNbTe6BDwcxWrYO/0CH4y3G0+BbftGKTZKFaarmYGj961Uv3ZbrT1/VOstsFsPAySJGiN/szgHGQ1MPLdiSuPvr8IMA0YEVZstCVskoZHud/IO9yTRSsCaCrXkvOMA1hbLDaO9zqIofdRO/BlCowYzjvb4BqcyfIQzXvg2M6o9YITmhwt5ML8hDM5X7+hod4N78uFHn8Av+6ZqffmY8zFJID4w8CETsLx6irk7r+ywLsFgH5bo7i4RqonhGrRzjKgi9yOV+FKf2WrZubgYNcBhMNvUXsigO/2IUyXmJA3GcSbfWOCvcVgUD1APK4I31p5lBwHK7BJrxcQU01IzBN7PQiVhpC/ZjUKdAVizdLkw+uH1zPvFg73N9vEj3z+8TMCy+lnaHftAEFG8+V+sb4ocA75+PmTqHNdUXEi6aLBeRUBjw0kx63IRPkfkSH+GJhPFeIAAAAASUVORK5CYII=";
 
-function ChatMessage({ message }: { message: Message }): JSX.Element {
+function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
   const messageText = message.text;
   // TODO: add blinking cursor
   const EM_IN_PX = 16;
@@ -51,6 +51,9 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const paragraphCount = (messageText.match(/\n/g) || []).length + 1;
+
   return (
     <div
       className={`chat-message-wrapper ${
@@ -102,6 +105,15 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
                   <code className={className} {...props}>
                     {children}
                   </code>
+                );
+              },
+              p({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <p {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </p>
                 );
               },
             }}
@@ -318,8 +330,10 @@ function App() {
       </div>
       {state.messages.length > 0 ? (
         <div className="chat-history">
-          {state.messages.map((message: Message) => {
-            return <ChatMessage key={message.id} message={message} />;
+          {state.messages.map((message: Message, index: number) => {
+            const { party } = message;
+            const blink = party === "bot" && index === state.messages.length - 1 && loading
+            return <ChatMessage key={message.id} message={message} blink={blink} />;
           })}
         </div>
       ) : null}
