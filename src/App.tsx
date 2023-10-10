@@ -1,7 +1,9 @@
 import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+const styleToUse = coldarkDark
 
 interface Message {
   text: string;
@@ -35,6 +37,13 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
   // TODO: add blinking cursor
   const EM_IN_PX = 16;
   const [viewportWidth, setViewportWidth] = useState(window.screen.width);
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
   useEffect(() => {
     const handleResize = () => {
       setViewportWidth(window.screen.width);
@@ -65,19 +74,30 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
                 // TODO: dynamically determine the language of the code block
                 const match = true;
                 return !inline && match ? (
-                  <SyntaxHighlighter
-                    children={String(children).trim()}
-                    style={dark}
-                    customStyle={{
-                      maxWidth: `calc(${Math.min(
-                        viewportWidth,
-                        600 + 2 * EM_IN_PX
-                      )}px - 34.5px - 1em - 2em)`,
-                      boxSizing: "border-box",
-                    }}
-                    language={"csharp"}
-                    PreTag="div"
-                  />
+                  <div className="chat-message__code-block">
+                    <div className="code-block__header">
+                      <span className="code-block__language">csharp</span>
+                      <CopyToClipboard text={String(children).trim()} onCopy={handleCopy}>
+                        <button className="code-block__copy-button">
+                          {copied ? "Copied!" : "Copy code"}
+                        </button>
+                      </CopyToClipboard>
+                    </div>
+                    <SyntaxHighlighter
+                      children={String(children).trim()}
+                      style={styleToUse}
+                      customStyle={{
+                        maxWidth: `calc(${Math.min(
+                          viewportWidth,
+                          600 + 2 * EM_IN_PX
+                        )}px - 34.5px - 1em - 2em)`,
+                        boxSizing: "border-box",
+                      }}
+                      language={"csharp"}
+                      PreTag="div"
+                      className={"code-block__code"}
+                    />
+                  </div>
                 ) : (
                   <code className={className} {...props}>
                     {children}

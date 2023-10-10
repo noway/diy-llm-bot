@@ -140,3 +140,46 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+.code-block__code {
+  margin-top: 0 !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.code-block__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2d2d2d;
+  background-color: hsl(213 39% 18% / 1);
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.code-block__language {
+  color: #a5a5a5;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: smaller;
+  visibility: hidden;
+}
+
+.code-block__copy-button {
+  background-color: hsl(213 39% 11% / 1);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.code-block__copy-button:hover {
+  background-color: hsl(213 39% 28% / 1);
+}
+
+.code-block__copy-button:focus, .code-block__copy-button:active {
+  outline: none;
+  box-shadow: 0 0 3px rgba(255,255,255,0.3);
+}
