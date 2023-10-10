@@ -71,11 +71,12 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
               code({ node, inline, className, children, ...props }) {
                 // const match = /language-(\w+)/.exec(className || "");
                 // TODO: dynamically determine the language of the code block
+                const language = "csharp";
                 const match = true;
                 return !inline && match ? (
                   <div className="chat-message__code-block">
                     <div className="code-block__header">
-                      <span className="code-block__language">csharp</span>
+                      <span className="code-block__language">{language}</span>
                       <CopyToClipboard text={String(children).trim()} onCopy={handleCopy}>
                         <button className="code-block__copy-button">
                           {copied ? "Copied!" : "Copy code"}
@@ -92,7 +93,7 @@ function ChatMessage({ message }: { message: Message }): JSX.Element {
                         )}px - 34.5px - 1em - 2em)`,
                         boxSizing: "border-box",
                       }}
-                      language={"csharp"}
+                      language={language}
                       PreTag="div"
                       className={"code-block__code"}
                     />
