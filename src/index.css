@@ -184,7 +184,6 @@ body {
 
 .code-block__copy-button:focus, .code-block__copy-button:active {
   outline: none;
-  box-shadow: 0 0 3px rgba(255,255,255,0.3);
 }
 
 @keyframes blink {
