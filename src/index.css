@@ -75,6 +75,9 @@ body {
   background-color: rgba(247,247,247);
   border-color: rgba(0,0,0,0.1);
 }
+.chat-message__content {
+  flex-grow: 1;
+}
 
 .chat-input-container {
   display: flex;
