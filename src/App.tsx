@@ -1,4 +1,4 @@
-import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
+import { useState, useReducer, useRef, FormEvent, useEffect, memo } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -199,6 +199,8 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     </div>
   );
 }
+
+const ChatMessageMemo = memo(ChatMessage);
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
@@ -409,7 +411,7 @@ function App() {
           {state.messages.map((message: Message, index: number) => {
             const { party } = message;
             const blink = party === "bot" && index === state.messages.length - 1 && loading
-            return <ChatMessage key={message.id} message={message} blink={blink} />;
+            return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
           })}
         </div>
       ) : null}
