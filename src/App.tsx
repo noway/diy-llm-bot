@@ -33,7 +33,8 @@ const human_url =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACb0lEQVRIS92UX0hTURzHv2dWSx/KJojZS4GxhB5iQlQvPkQhlQg12ENlsWhMpOaW0sOcMF1ZJK6JYW70R6Fy5ei/EBFoRUoghtBCEnqqjIhWlLjpvb84Z7YGu3dsoi8dLhzu+d37+X1/3/M7h2EJB1tCNv5XOGPEbRsoBQyFqQYWDVLaytWDjNHuDQxEwNOdhIFXqQkuScvQ8mJWlaEcYIx2rWfQzEcJTGzOkw+ykJ9cSae8HJ7nMUWOKjyTLpoqj3+lZk9aWyJBC3LLNivm+T0yCt2hHlHFnrCy92nh0ckOWKrqhCnd972oNTYgFptD4IFXJDxSWYe+dzJAWcBnQlaytPgRCPmgLTkJnuTvSH6vMdrR1e8FxsahNQZShCoqn75lpkbfNbTe6BDwcxWrYO/0CH4y3G0+BbftGKTZKFaarmYGj961Uv3ZbrT1/VOstsFsPAySJGiN/szgHGQ1MPLdiSuPvr8IMA0YEVZstCVskoZHud/IO9yTRSsCaCrXkvOMA1hbLDaO9zqIofdRO/BlCowYzjvb4BqcyfIQzXvg2M6o9YITmhwt5ML8hDM5X7+hod4N78uFHn8Av+6ZqffmY8zFJID4w8CETsLx6irk7r+ywLsFgH5bo7i4RqonhGrRzjKgi9yOV+FKf2WrZubgYNcBhMNvUXsigO/2IUyXmJA3GcSbfWOCvcVgUD1APK4I31p5lBwHK7BJrxcQU01IzBN7PQiVhpC/ZjUKdAVizdLkw+uH1zPvFg73N9vEj3z+8TMCy+lnaHftAEFG8+V+sb4ocA75+PmTqHNdUXEi6aLBeRUBjw0kx63IRPkfkSH+GJhPFeIAAAAASUVORK5CYII=";
 
 function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
-  const messageText = message.text;
+  const { text, party } = message;
+  const lineCount = (text.match(/\n/g) || []).length + 1;
   const EM_IN_PX = 16;
   const [viewportWidth, setViewportWidth] = useState(window.screen.width);
   const [copied, setCopied] = useState(false);
@@ -50,25 +51,22 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const lineCount = (messageText.match(/\n/g) || []).length + 1;
-
   return (
     <div
       className={`chat-message-wrapper ${
-        "chat-message-wrapper--" + message.party
+        "chat-message-wrapper--" + party
       }`}
     >
       <div className="chat-message">
         <div className="chat-message__avatar">
           <img
-            src={message.party === "bot" ? bot_url : human_url}
+            src={party === "bot" ? bot_url : human_url}
             alt="avatar"
           />
         </div>
         <div className="chat-message__content">
           <ReactMarkdown
-            children={messageText}
+            children={text}
             components={{
               code({ node, inline, className, children, ...props }) {
                 // const match = /language-(\w+)/.exec(className || "");
