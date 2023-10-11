@@ -18,12 +18,17 @@
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.10",
-    "@types/react": "^18.0.24",
+    "@types/node": "^20.8.4",
+    "@types/react": "^18.2.15",
     "@types/react-copy-to-clipboard": "^5.0.5",
-    "@types/react-dom": "^18.0.8",
-    "@vitejs/plugin-react": "^2.2.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.3"
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
   }
 }
