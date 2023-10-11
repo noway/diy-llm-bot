@@ -252,6 +252,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const inputElement = useRef<HTMLInputElement | null>(null);
+  const { messages } = state;
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -286,7 +287,7 @@ function App() {
             "Content-Type": "text/plain",
           },
           body: JSON.stringify({
-            messages: [...state.messages, humanMessage],
+            messages: [...messages, humanMessage],
             model,
           }),
         }
@@ -382,12 +383,12 @@ function App() {
       <div className="header-container">
         <div className="header">
           <div className="header-item">
-            {state.messages.length > 0 ? (
+            {messages.length > 0 ? (
               <span className="header-item-link" onClick={resetChat}>
                 Chat
               </span>
             ) : null}
-            {state.messages.length === 0 ? "Chat" : null}
+            {messages.length === 0 ? "Chat" : null}
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
@@ -403,17 +404,17 @@ function App() {
           </div>
         </div>
       </div>
-      {state.messages.length > 0 ? (
+      {messages.length > 0 ? (
         <div className="chat-history">
-          {state.messages.map((message: Message, index: number) => {
+          {messages.map((message, index) => {
             const { party } = message;
-            const blink = party === "bot" && index === state.messages.length - 1 && loading
+            const blink = party === "bot" && index === messages.length - 1 && loading
             return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
           })}
         </div>
       ) : null}
       {/* lead copy */}
-      {state.messages.length === 0 ? (
+      {messages.length === 0 ? (
         <div className="lead-copy-container">
           <div className="lead-copy">
             <h1 style={{ marginBlockStart: 0 }}>Compare GPT-3 and ChatGPT</h1>
