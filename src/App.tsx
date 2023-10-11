@@ -101,7 +101,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                       className={"code-block__code"}
                       renderer={(props) => {
                         const { rows, stylesheet, useInlineStyles } = props
-                        const codeLineCount = node.position!.start.line + rows.length
+                        const codeLineCount = (node.position?.start.line ?? 0) + rows.length
                         const isLastParagraph = codeLineCount === lineCount;
                         const elements = rows.map((row, index) => createElement({
                           node: row,
@@ -124,7 +124,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               p({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <p {...props}>
                     {children}
@@ -133,7 +133,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h1({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h1 {...props}>
                     {children}
@@ -142,7 +142,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h2({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h2 {...props}>
                     {children}
@@ -151,7 +151,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h3({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h3 {...props}>
                     {children}
@@ -160,7 +160,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h4({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h4 {...props}>
                     {children}
@@ -169,7 +169,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h5({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h5 {...props}>
                     {children}
@@ -178,7 +178,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h6({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <h6 {...props}>
                     {children}
@@ -187,7 +187,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               li({ node, children, ...props }) {
-                const isLastLine = node.position!.start.line === lineCount;
+                const isLastLine = node.position?.start.line === lineCount;
                 return (
                   <li {...props}>
                     {children}
