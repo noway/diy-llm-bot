@@ -116,6 +116,69 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                   </p>
                 );
               },
+              h1({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h1 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h1>
+                );
+              },
+              h2({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h2 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h2>
+                );
+              },
+              h3({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h3 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h3>
+                );
+              },
+              h4({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h4 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h4>
+                );
+              },
+              h5({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h5 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h5>
+                );
+              },
+              h6({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <h6 {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </h6>
+                );
+              },
+              li({ node, children, ...props }) {
+                const isLastParagraph = node.position!.start.line === paragraphCount;
+                return (
+                  <li {...props}>
+                    {children}
+                    {isLastParagraph && blink ? <span className="blinking-cursor" /> : null}
+                  </li>
+                );
+              },
             }}
           />
         </div>
