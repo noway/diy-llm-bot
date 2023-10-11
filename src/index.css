@@ -194,13 +194,15 @@ body {
 
 .blinking-cursor {
   display: inline-block;
-  width: 0.5em;
-  height: 1em;
+  width: 0.6em;
+  height: 1.2em;
   background-color: black;
   animation: blink 1s step-end infinite;
-  margin-left: 0.25em;
+  position: absolute;
 }
 
-.blinking-cursor--light {
+.blinking-cursor--code {
   background-color: white;
+  width: 0.65em;
+  height: 1.5em;
 }

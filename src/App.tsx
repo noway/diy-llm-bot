@@ -111,7 +111,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                           key: index,
                         }));
                         if (isLastParagraph && blink) {
-                          elements.push(<span className="blinking-cursor blinking-cursor--light" key="blinking-cursor" />)
+                          elements.push(<span className="blinking-cursor blinking-cursor--code" key="blinking-cursor" />)
                         }
                         return elements
                     }}
