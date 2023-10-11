@@ -1,6 +1,6 @@
 import { useState, useReducer, useRef, FormEvent, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 const styleToUse = coldarkDark
@@ -99,6 +99,22 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                       language={language}
                       PreTag="div"
                       className={"code-block__code"}
+                      renderer={(props) => {
+                        const { rows, stylesheet, useInlineStyles } = props
+                        const totalLineCount = node.position!.start.line + rows.length
+                        const isLastParagraph = totalLineCount === paragraphCount;
+                        const elements = rows.map((row, index) => createElement({
+                          node: row,
+                          stylesheet,
+                          style: undefined,
+                          useInlineStyles,
+                          key: index,
+                        }));
+                        if (isLastParagraph && blink) {
+                          elements.push(<span className="blinking-cursor blinking-cursor--light" key="blinking-cursor" />)
+                        }
+                        return elements
+                    }}
                     />
                   </div>
                 ) : (

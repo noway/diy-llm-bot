@@ -201,3 +201,7 @@ body {
   animation: blink 1s step-end infinite;
   margin-left: 0.25em;
 }
+
+.blinking-cursor--light {
+  background-color: white;
+}
