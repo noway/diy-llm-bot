@@ -34,7 +34,6 @@ const human_url =
 
 function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
   const messageText = message.text;
-  // TODO: add blinking cursor
   const EM_IN_PX = 16;
   const [viewportWidth, setViewportWidth] = useState(window.screen.width);
   const [copied, setCopied] = useState(false);
