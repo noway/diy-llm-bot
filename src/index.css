@@ -165,7 +165,6 @@ body {
   color: #a5a5a5;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   font-size: smaller;
-  visibility: hidden;
 }
 
 .code-block__copy-button {

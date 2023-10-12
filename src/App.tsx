@@ -35,22 +35,6 @@ const human_url =
 function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
   const { text, party } = message;
   const lineCount = (text.match(/\n/g) || []).length + 1;
-  const EM_IN_PX = 16;
-  const [viewportWidth, setViewportWidth] = useState(window.screen.width);
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
-  };
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.screen.width);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   return (
     <div
       className={`chat-message-wrapper chat-message-wrapper--${party}`}
@@ -67,51 +51,12 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
             children={text}
             components={{
               code({ node, inline, className, children, ...props }) {
-                // const match = /language-(\w+)/.exec(className || "");
-                // TODO: dynamically determine the language of the code block
-                const language = "csharp";
-                const match = true;
-                return !inline && match ? (
-                  <div className="chat-message__code-block">
-                    <div className="code-block__header">
-                      <span className="code-block__language">{language}</span>
-                      <CopyToClipboard text={String(children).trim()} onCopy={handleCopy}>
-                        <button className="code-block__copy-button">
-                          {copied ? "Copied!" : "Copy code"}
-                        </button>
-                      </CopyToClipboard>
-                    </div>
-                    <SyntaxHighlighter
-                      children={String(children).trim()}
-                      style={styleToUse}
-                      customStyle={{
-                        maxWidth: `calc(${Math.min(
-                          viewportWidth,
-                          600 + 2 * EM_IN_PX
-                        )}px - 34.5px - 1em - 2em)`,
-                        boxSizing: "border-box",
-                      }}
-                      language={language}
-                      PreTag="div"
-                      className={"code-block__code"}
-                      renderer={(props) => {
-                        const { rows, stylesheet, useInlineStyles } = props
-                        const codeLineCount = (node.position?.start.line ?? 0) + rows.length
-                        const isLastParagraph = codeLineCount === lineCount;
-                        const elements = rows.map((row, index) => createElement({
-                          node: row,
-                          stylesheet,
-                          style: undefined,
-                          useInlineStyles,
-                          key: index,
-                        }));
-                        if (isLastParagraph && blink) {
-                          elements.push(<span className="blinking-cursor blinking-cursor--code" key="blinking-cursor" />)
-                        }
-                        return elements
-                      }}
-                    />
-                  </div>
+                const nodeLineCount = node.position?.start.line ?? 0
+                const code = String(children).trim()
+                const match = /language-(\w+)/.exec(className || "");
+                const language = match ? match[1] : undefined
+                return !inline ? (
+                  <CodeBlock nodeLineCount={nodeLineCount} lineCount={lineCount} blink={blink} code={code} language={language} />
                 ) : (
                   <code className={className} {...props}>
                     {children}
@@ -199,6 +144,68 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
 }
 
 const ChatMessageMemo = memo(ChatMessage);
+
+function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boolean, code: string, language?: string }) {
+  const EM_IN_PX = 16;
+  const { nodeLineCount, lineCount, blink, code, language } = props;
+  const [viewportWidth, setViewportWidth] = useState(window.screen.width);
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.screen.width);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  const handleCopy = () => {
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
+  return (
+    <div className="chat-message__code-block">
+      <div className="code-block__header">
+        <span className="code-block__language">{language}</span>
+        <CopyToClipboard text={code} onCopy={handleCopy}>
+          <button className="code-block__copy-button">
+            {copied ? "Copied!" : "Copy code"}
+          </button>
+        </CopyToClipboard>
+      </div>
+      <SyntaxHighlighter
+        children={code}
+        style={styleToUse}
+        customStyle={{
+          maxWidth: `calc(${Math.min(
+            viewportWidth,
+            600 + 2 * EM_IN_PX
+          )}px - 34.5px - 1em - 2em)`,
+          boxSizing: "border-box",
+        }}
+        language={language}
+        PreTag="div"
+        className="code-block__code"
+        renderer={(props) => {
+          const { rows, stylesheet, useInlineStyles } = props;
+          const codeLineCount = nodeLineCount + rows.length;
+          const isLastParagraph = codeLineCount === lineCount;
+          const elements = rows.map((row, index) => createElement({
+            node: row,
+            stylesheet,
+            style: undefined,
+            useInlineStyles,
+            key: index,
+          }));
+          if (isLastParagraph && blink) {
+            elements.push(<span className="blinking-cursor blinking-cursor--code" key="blinking-cursor" />);
+          }
+          return elements;
+        }}
+      />
+    </div>
+  );
+}
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
