@@ -47,13 +47,13 @@ body {
   gap: 1em;
 }
 
-.chat-input__content__input {
+.chat-input__content__textarea {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   padding: 22px 0;
 }
-.chat-input__content__input textarea {
+.chat-input__content__textarea textarea {
   width: 100%;
   box-sizing: border-box;
   border-radius: 2px; 
@@ -65,10 +65,10 @@ body {
 }
 
 @media (max-width: 767px) {
-  .chat-input__content__input textarea {
+  .chat-input__content__textarea textarea {
     font-size: 16px;
   }
-  .chat-input__content__input {
+  .chat-input__content__textarea {
     padding: 20.5px 0;
   }
 }

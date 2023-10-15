@@ -271,17 +271,17 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
-  const inputElement = useRef<HTMLTextAreaElement | null>(null);
+  const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useMaxWidth767();
   const { messages } = state;
 
   useEffect(() => {
-    const el = inputElement.current;
+    const el = textareaElement.current;
     if (el) {
       el.style.height = 'auto';
       el.style.height = (el.scrollHeight + 1.5) + 'px';
     }
-  }, [prompt, isMaxWidth767, inputElement.current]);
+  }, [prompt, isMaxWidth767, textareaElement.current]);
 
   async function submit(e?: FormEvent<HTMLFormElement>) {
     e && e.preventDefault();
@@ -368,8 +368,8 @@ function App() {
         });
       }
       setTimeout(() => {
-        if (inputElement.current) {
-          inputElement.current.focus();
+        if (textareaElement.current) {
+          textareaElement.current.focus();
         }
       }, 0);
     } catch (e) {
@@ -521,7 +521,7 @@ function App() {
             <img src={human_url} alt="avatar" />
           </div>
           <div className="chat-input__content">
-            <div className="chat-input__content__input">
+            <div className="chat-input__content__textarea">
               <textarea
                 placeholder={loading ? "Loading..." : "Type your message"}
                 value={prompt}
@@ -529,7 +529,7 @@ function App() {
                 onKeyDown={handleKeyDown}
                 autoFocus={true}
                 disabled={loading}
-                ref={inputElement}
+                ref={textareaElement}
                 rows={1}
               ></textarea>
             </div>
