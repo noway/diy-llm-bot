@@ -253,12 +253,26 @@ declare global {
   function gtag(...args: any[]): void;
 }
 
+function useMaxWidth767() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 767);
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return isMobile;
+}
+
 function App() {
   const [model, setModel] = useState("gpt-3.5-turbo");
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const inputElement = useRef<HTMLTextAreaElement | null>(null);
+  const isMaxWidth767 = useMaxWidth767();
   const { messages } = state;
 
   useEffect(() => {
@@ -267,7 +281,7 @@ function App() {
       el.style.height = 'auto';
       el.style.height = (el.scrollHeight + 1.5) + 'px';
     }
-  }, [prompt, inputElement.current]);
+  }, [prompt, isMaxWidth767, inputElement.current]);
 
   async function submit(e?: FormEvent<HTMLFormElement>) {
     e && e.preventDefault();
