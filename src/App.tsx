@@ -258,11 +258,19 @@ function App() {
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
-  const inputElement = useRef<HTMLInputElement | null>(null);
+  const inputElement = useRef<HTMLTextAreaElement | null>(null);
   const { messages } = state;
 
-  async function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  useEffect(() => {
+    const el = inputElement.current;
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = (el.scrollHeight + 1.5) + 'px';
+    }
+  }, [prompt, inputElement.current]);
+
+  async function submit(e?: FormEvent<HTMLFormElement>) {
+    e && e.preventDefault();
     try {
       gtag("event", "send_message", {
         event_category: "messages",
@@ -372,6 +380,13 @@ function App() {
       event_category: "messages",
       event_label: "Reset chat",
     });
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();  
+      submit();
+    }
   }
 
   return (
@@ -493,15 +508,16 @@ function App() {
           </div>
           <div className="chat-input__content">
             <div className="chat-input__content__input">
-              <input
-                type="text"
+              <textarea
                 placeholder={loading ? "Loading..." : "Type your message"}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
                 autoFocus={true}
                 disabled={loading}
                 ref={inputElement}
-              />
+                rows={1}
+              ></textarea>
             </div>
             <div className="chat-input__content__button">
               <button disabled={loading}>Send</button>

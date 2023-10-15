@@ -51,10 +51,17 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 20.5px 0;
 }
-.chat-input__content__input input {
+.chat-input__content__input textarea {
   width: 100%;
   box-sizing: border-box;
+  border-radius: 2px; 
+  overflow-y: hidden;
+  resize: none;
+  font-size: 16px;
+  font-family: Arial;
+  padding-left: 3px;
 }
 
 .chat-message {
@@ -92,8 +99,12 @@ body {
   max-width: 600px;
 }
 
+.chat-input__avatar {
+  display: flex;
+  align-items: center;
+  padding-bottom: 3.5px;
+}
 .chat-input__avatar img {
-  padding: calc(1em - (4.5px / 2)) 0;
   width: 34.5px;
   height: 34.5px;
   image-rendering: pixelated;
