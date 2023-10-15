@@ -287,7 +287,7 @@ function App() {
       }, 0);
       const apiDomain = import.meta.env.VITE_API_URL;
       const res = await fetch(
-        `${apiDomain}/generate-chat-completion-streaming?force-json=true`,
+        `${apiDomain}/generate-chat-completion-streaming`,
         {
           method: "POST",
           headers: {
