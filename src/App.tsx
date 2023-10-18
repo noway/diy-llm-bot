@@ -165,7 +165,7 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
     }, 2000);
   };
   return (
-    <div className="chat-message__code-block">
+    <div className="code-block__container">
       <div className="code-block__header">
         <span className="code-block__language">{language}</span>
         <CopyToClipboard text={code} onCopy={handleCopy}>
