@@ -225,3 +225,27 @@ body {
   width: 0.65em;
   height: 1.5em;
 }
+
+.chat-message__content td, .chat-message__content th {
+  border: 1px solid #767676;
+  padding: 0.25em 0.5em;
+}
+
+.chat-message__content table {
+  border-collapse: collapse;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.chat-message__content blockquote {
+  padding-inline-start: 20px;
+  border-left: 2px solid grey;
+  margin: 0px;
+  display: inline-block;
+}
+
+.chat-message__content ul, .chat-message__content ol {
+  padding-inline-start: 1em;
+}
