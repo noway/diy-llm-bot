@@ -4,6 +4,7 @@ import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highligh
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isMobile } from "react-device-detect";
+import remarkGfm from "remark-gfm";
 const styleToUse = coldarkDark
 
 interface Message {
@@ -49,6 +50,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
         </div>
         <div className="chat-message__content">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
             children={text}
             components={{
               code({ node, inline, className, children, ...props }) {

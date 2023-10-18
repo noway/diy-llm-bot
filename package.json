@@ -16,7 +16,8 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.4",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "3"
   },
   "devDependencies": {
     "@types/node": "^20.8.4",
