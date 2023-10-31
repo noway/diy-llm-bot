@@ -145,7 +145,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 return (
                   <td {...props}>
                     {children}
-                    {isLastLine && isLastColumn ? <span className="blinking-cursor" /> : null}
+                    {isLastLine && isLastColumn && blink ? <span className="blinking-cursor" /> : null}
                   </td>
                 );
               },
