@@ -143,7 +143,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 const isLastLine = node.position?.start.line === lineCount;
                 const isLastColumn = node.position?.end.column === lastLineColumnCount;
                 return (
-                  <td {...props}>
+                  <td>
                     {children}
                     {isLastLine && isLastColumn && blink ? <span className="blinking-cursor" /> : null}
                   </td>
