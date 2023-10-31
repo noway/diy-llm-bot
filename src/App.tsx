@@ -37,8 +37,7 @@ const human_url =
 function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
   const { text, party } = message;
   const lineCount = (text.match(/\n/g) || []).length + 1;
-  const lastLineCharacterCount = text.length - text.lastIndexOf("\n") - 1;
-  const lastLineColumnCount = lastLineCharacterCount + 1;
+  const lastLineColumnCount = text.length - text.lastIndexOf("\n");
   return (
     <div
       className={`chat-message-wrapper chat-message-wrapper--${party}`}
@@ -143,7 +142,6 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
               td({ node, children, ...props }) {
                 const isLastLine = node.position?.start.line === lineCount;
                 const isLastColumn = node.position?.end.column === lastLineColumnCount;
-                isLastLine && console.log('*** node1', node, lastLineColumnCount)
                 return (
                   <td {...props}>
                     {children}
