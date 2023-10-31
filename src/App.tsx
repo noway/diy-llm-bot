@@ -296,7 +296,9 @@ function App() {
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
-    setAuthKey(key);
+    if (key !== null) {
+      setAuthKey(key);
+    }
   }
 
   useEffect(() => {
