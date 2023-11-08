@@ -30,7 +30,7 @@ interface ResetMessagesAction {
 }
 type Action = AddMessageAction | SetMessageAction | ResetMessagesAction;
 
-const DEFAULT_MODEL = "gpt-3.5-turbo";
+const DEFAULT_MODEL = "gpt-4-1106-preview";
 const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
 
 const bot_url =
@@ -537,6 +537,7 @@ function App() {
                 <option value="text-davinci-002">text-davinci-002</option>
                 <option value="text-davinci-003">text-davinci-003</option>
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
                 {authKey ? (
                   <option value="gpt-4">gpt-4</option>
                 ) : null}
