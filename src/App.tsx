@@ -10,8 +10,8 @@ const styleToUse = coldarkDark
 
 interface Message {
   text: string;
-  name: "You" | "Bot";
-  party: "bot" | "human";
+  name: "You" | "Bot" | null;
+  party: "bot" | "human" | "error";
   id: number;
 }
 interface State {
@@ -48,12 +48,12 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     >
       <div className="chat-message">
         <div className="chat-message__avatar">
-          <img
+          {message.party == 'bot' || message.party == 'human' ? <img
             src={party === "bot" ? bot_url : human_url}
             alt="avatar"
-          />
+          /> : null}
         </div>
-        <div className="chat-message__content">
+        {message.party == 'bot' || message.party == 'human' ? <div className="chat-message__content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             children={text}
@@ -155,7 +155,10 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
               },
             }}
           />
-        </div>
+        </div> : null}
+        {message.party == 'error' ? <div className="chat-message__content">
+          <p>{text}</p>
+        </div> : null}
       </div>
     </div>
   );
@@ -401,11 +404,27 @@ function App() {
       }, 0);
     } catch (e) {
       if ((e as Error).message === "Failed to fetch") {
-        alert(
-          "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later."
-        );
+        const message = {
+          text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
+          name: null,
+          party: "error" as const,
+          id: Date.now(),
+        };
+        dispatch({
+          type: "set_message",
+          payload: message,
+        });
       } else {
-        alert(`${(e as Error).message}\n\nPlease try again later.`);
+        const message = {
+          text: `${(e as Error).message}\n\nPlease try again later.`,
+          name: null,
+          party: "error" as const,
+          id: Date.now(),
+        };
+        dispatch({
+          type: "set_message",
+          payload: message,
+        });
       }
     }
   }

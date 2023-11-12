@@ -91,6 +91,12 @@ body {
   background-color: rgba(247,247,247);
   border-color: rgba(0,0,0,0.1);
 }
+.chat-message-wrapper--error {
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  background-color: rgba(247, 28, 28, 0.1);
+  border-color: rgba(247, 28, 28, 0.25);
+}
 .chat-message__content {
   flex-grow: 1;
 }
