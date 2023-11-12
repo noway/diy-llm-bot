@@ -425,7 +425,7 @@ function App() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
-      e.preventDefault();  
+      e.preventDefault();
       submit();
     }
   }
