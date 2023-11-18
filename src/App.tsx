@@ -332,10 +332,7 @@ function App() {
       });
       setPrompt("");
       setLoading(true);
-      // scroll to the very bottom of the page
-      setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-      }, 0);
+      scrollToBottom();
       const apiDomain = import.meta.env.VITE_API_URL;
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
@@ -384,9 +381,7 @@ function App() {
           type: "set_message",
           payload: botMessage,
         });
-        setTimeout(() => {
-          window.scrollTo(0, document.body.scrollHeight);
-        }, 0);
+        scrollToBottom()
       }
 
       setLoading(false);
@@ -427,6 +422,12 @@ function App() {
         });
       }
     }
+  }
+
+  function scrollToBottom() {
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 0);
   }
 
   function resetChat() {
