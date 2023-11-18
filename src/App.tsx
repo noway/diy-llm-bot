@@ -42,6 +42,15 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   const { text, party } = message;
   const lineCount = (text.match(/\n/g) || []).length + 1;
   const lastLineColumnCount = text.length - text.lastIndexOf("\n");
+
+  function scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [text]);
+
   return (
     <div
       className={`chat-message-wrapper chat-message-wrapper--${party}`}
@@ -332,7 +341,6 @@ function App() {
       });
       setPrompt("");
       setLoading(true);
-      scrollToBottom();
       const apiDomain = import.meta.env.VITE_API_URL;
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
@@ -381,7 +389,6 @@ function App() {
           type: "set_message",
           payload: botMessage,
         });
-        scrollToBottom()
       }
 
       setLoading(false);
@@ -422,12 +429,6 @@ function App() {
         });
       }
     }
-  }
-
-  function scrollToBottom() {
-    setTimeout(() => {
-      window.scrollTo(0, document.body.scrollHeight);
-    }, 0);
   }
 
   function resetChat() {
