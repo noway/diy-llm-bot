@@ -1,4 +1,4 @@
-import { useState, useReducer, useRef, FormEvent, useEffect, memo } from "react";
+import { useState, useReducer, useRef, FormEvent, useEffect, memo, useLayoutEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -47,7 +47,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     window.scrollTo(0, document.body.scrollHeight);
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollToBottom();
   }, [text]);
 
