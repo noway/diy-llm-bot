@@ -378,17 +378,35 @@ function App() {
         const dataString = new TextDecoder().decode(value);
         completion += dataString;
 
-        botMessage = {
-          text: parseCompletionIntoMessageText(completion),
-          name: "Bot" as const,
-          party: "bot" as const,
-          id,
-        };
+        try {
+          const msg = JSON.parse(completion);
 
-        dispatch({
-          type: "set_message",
-          payload: botMessage,
-        });
+          botMessage = {
+            text: msg.error,
+            name: null,
+            party: "error" as const,
+            id,
+          };
+          dispatch({
+            type: "set_message",
+            payload: botMessage,
+          });
+
+        }
+        catch (e) {
+          botMessage = {
+            text: parseCompletionIntoMessageText(completion),
+            name: "Bot" as const,
+            party: "bot" as const,
+            id,
+          };
+          dispatch({
+            type: "set_message",
+            payload: botMessage,
+          });
+        }
+
+
       }
 
       setLoading(false);
