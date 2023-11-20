@@ -380,6 +380,7 @@ function App() {
 
         let isError = false;
         try {
+          // TODO: API should properly send 4xx/5xx status codes for this
           const headers: { [key: string]: string } = {};
           res.headers.forEach((value, name) => {
             headers[name] = value;
