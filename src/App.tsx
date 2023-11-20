@@ -393,12 +393,22 @@ function App() {
           isError = false;
         }
 
-        botMessage = {
-          text: parseCompletionIntoMessageText(completion),
-          name: "Bot" as const,
-          party: "bot" as const,
-          id,
-        };
+        if (isError) {
+          botMessage = {
+            text: JSON.parse(completion).error.message,
+            name: null,
+            party: "error",
+            id,
+          };  
+        }
+        else {
+          botMessage = {
+            text: parseCompletionIntoMessageText(completion),
+            name: "Bot" as const,
+            party: "bot" as const,
+            id,
+          };
+        }
 
         dispatch({
           type: "set_message",
