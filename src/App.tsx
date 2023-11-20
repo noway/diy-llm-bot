@@ -378,35 +378,32 @@ function App() {
         const dataString = new TextDecoder().decode(value);
         completion += dataString;
 
+        let isError = false;
         try {
           const msg = JSON.parse(completion);
-
-          botMessage = {
-            text: msg.error,
-            name: null,
-            party: "error" as const,
-            id,
-          };
-          dispatch({
-            type: "set_message",
-            payload: botMessage,
-          });
-
+          const headers: { [key: string]: string } = {};
+          res.headers.forEach((value, name) => {
+            headers[name] = value;
+          })
+          if (headers['transfer-encoding'] === undefined && !msg.success && msg.error && msg.error.message) {
+            isError = true;
+          }
         }
         catch (e) {
-          botMessage = {
-            text: parseCompletionIntoMessageText(completion),
-            name: "Bot" as const,
-            party: "bot" as const,
-            id,
-          };
-          dispatch({
-            type: "set_message",
-            payload: botMessage,
-          });
+          isError = false;
         }
 
+        botMessage = {
+          text: parseCompletionIntoMessageText(completion),
+          name: "Bot" as const,
+          party: "bot" as const,
+          id,
+        };
 
+        dispatch({
+          type: "set_message",
+          payload: botMessage,
+        });
       }
 
       setLoading(false);
