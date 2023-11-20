@@ -100,6 +100,9 @@ body {
 .chat-message__content {
   flex-grow: 1;
 }
+.chat-message__content--error p {
+  white-space: pre-wrap;
+}
 
 .chat-input-container {
   display: flex;

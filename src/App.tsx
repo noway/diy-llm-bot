@@ -165,7 +165,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
             }}
           />
         </div> : null}
-        {message.party == 'error' ? <div className="chat-message__content">
+        {message.party == 'error' ? <div className="chat-message__content chat-message__content--error">
           <p>{text}</p>
         </div> : null}
       </div>
