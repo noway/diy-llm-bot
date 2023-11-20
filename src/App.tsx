@@ -380,12 +380,12 @@ function App() {
 
         let isError = false;
         try {
-          const msg = JSON.parse(completion);
           const headers: { [key: string]: string } = {};
           res.headers.forEach((value, name) => {
             headers[name] = value;
           })
-          if (headers['transfer-encoding'] === undefined && !msg.success && msg.error && msg.error.message) {
+          const msg = JSON.parse(completion);
+          if (headers['content-length'] !== undefined && !msg.success && msg.error && msg.error.message) {
             isError = true;
           }
         }
