@@ -44,7 +44,9 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   const lastLineColumnCount = text.length - text.lastIndexOf("\n");
 
   function scrollToBottom() {
-    window.scrollTo(0, document.body.scrollHeight);
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 200) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   }
 
   useLayoutEffect(() => {
