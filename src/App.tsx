@@ -450,6 +450,8 @@ function App() {
         });
       } else if ((e as Error).message === "BodyStreamBuffer was aborted") {
         // ignore
+      } else if ((e as Error).message === "Fetch is aborted") {
+        // ignore
       } else {
         const message = {
           text: `${(e as Error).message}\n\nPlease try again later.`,
