@@ -307,6 +307,7 @@ function App() {
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useMaxWidth767();
   const { messages } = state;
+  const controller = useRef<AbortController>();
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
@@ -343,6 +344,7 @@ function App() {
       });
       setPrompt("");
       setLoading(true);
+      controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
@@ -356,6 +358,7 @@ function App() {
             model,
             authKey,
           }),
+          signal: controller.current.signal,
         }
       );
 
@@ -373,6 +376,7 @@ function App() {
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
+          controller.current = undefined;
           break;
         }
 
@@ -444,6 +448,8 @@ function App() {
           type: "set_message",
           payload: message,
         });
+      } else if ((e as Error).message === "BodyStreamBuffer was aborted") {
+        // ignore
       } else {
         const message = {
           text: `${(e as Error).message}\n\nPlease try again later.`,
@@ -460,6 +466,9 @@ function App() {
   }
 
   function resetChat() {
+    if (controller.current) {
+      controller.current.abort();
+    }
     dispatch({
       type: "reset_messages",
     });
