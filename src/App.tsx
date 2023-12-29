@@ -306,7 +306,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useMaxWidth767();
-  const { messages } = state;
   const controller = useRef<AbortController>();
 
   function promptAuthKey() {
@@ -354,7 +353,7 @@ function App() {
             "Content-Type": "text/plain",
           },
           body: JSON.stringify({
-            messages: [...messages, humanMessage],
+            messages: [...state.messages, humanMessage],
             model,
             authKey,
           }),
@@ -506,12 +505,12 @@ function App() {
       <div className="header-container">
         <div className="header">
           <div className="header-item">
-            {messages.length > 0 ? (
+            {state.messages.length > 0 ? (
               <span className="header-item-link" onClick={resetChat}>
                 Chat
               </span>
             ) : null}
-            {messages.length === 0 ? "Chat" : null}
+            {state.messages.length === 0 ? "Chat" : null}
           </div>
           <div className="header-separator">|</div>
           <div className="header-item">
@@ -527,17 +526,17 @@ function App() {
           </div>
         </div>
       </div>
-      {messages.length > 0 ? (
+      {state.messages.length > 0 ? (
         <div className="chat-history">
-          {messages.map((message, index) => {
+          {state.messages.map((message, index) => {
             const { party } = message;
-            const blink = party === "bot" && index === messages.length - 1 && loading
+            const blink = party === "bot" && index === state.messages.length - 1 && loading
             return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
           })}
         </div>
       ) : null}
       {/* lead copy */}
-      {messages.length === 0 ? (
+      {state.messages.length === 0 ? (
         <div className="lead-copy-container">
           <div className="lead-copy">
             <h1 style={{ marginBlockStart: 0 }}>Compare GPT-3 and ChatGPT</h1>
