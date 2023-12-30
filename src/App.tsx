@@ -48,7 +48,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   const lastScrollHeight = useRef(document.body.scrollHeight);
 
   function scrollToBottom(stickyThreshold: number) {
-    const currentScrollHeight = window.innerHeight + window.scrollY;
+    const currentScrollHeight = Math.ceil(window.innerHeight + window.scrollY);
     const documentHeight = document.body.scrollHeight;
     if (currentScrollHeight >= documentHeight - stickyThreshold) {
       if (currentScrollHeight < documentHeight) {
