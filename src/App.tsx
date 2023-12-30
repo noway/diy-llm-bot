@@ -45,6 +45,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   const { text, party } = message;
   const lineCount = (text.match(/\n/g) || []).length + 1;
   const lastLineColumnCount = text.length - text.lastIndexOf("\n");
+  const lastScrollHeight = useRef(document.body.scrollHeight);
 
   function scrollToBottom(stickyThreshold: number) {
     const currentScrollHeight = window.innerHeight + window.scrollY;
@@ -57,7 +58,9 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   }
 
   useLayoutEffect(() => {
-    scrollToBottom(200);
+    const newContentHeight = document.body.scrollHeight - lastScrollHeight.current;
+    scrollToBottom(newContentHeight);
+    lastScrollHeight.current = document.body.scrollHeight;
   }, [text]);
 
   return (
