@@ -235,6 +235,9 @@ body {
   width: 0.65em;
   height: 1.5em;
 }
+.blinking-cursor--container {
+  position: relative;
+}
 
 .chat-message__content td, .chat-message__content th {
   border: 1px solid #767676;

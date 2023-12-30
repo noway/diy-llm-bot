@@ -240,7 +240,7 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
             key: index,
           }));
           if (isLastParagraph && blink) {
-            elements.push(<span className="blinking-cursor blinking-cursor--code" key="blinking-cursor" />);
+            elements.push(<span className="blinking-cursor--container"><span className="blinking-cursor blinking-cursor--code" key="blinking-cursor" /></span>);
           }
           return elements;
         }}
