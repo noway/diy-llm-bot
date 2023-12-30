@@ -435,9 +435,7 @@ function App() {
         }
       }, 0);
     } catch (e) {
-      const error = e as Error;
-      // TODO: use error instanceof Error
-      if (error.message === "Failed to fetch") {
+      if (e instanceof Error && e.message === "Failed to fetch") {
         const message = {
           text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
           name: null,
@@ -448,13 +446,14 @@ function App() {
           type: "set_message",
           payload: message,
         });
-      } else if (error.message === "BodyStreamBuffer was aborted") {
+      } else if (e instanceof Error && e.message === "BodyStreamBuffer was aborted") {
         // ignore
-      } else if (error.message === "Fetch is aborted") {
+      } else if (e instanceof Error && e.message === "Fetch is aborted") {
         // ignore
       } else {
+        const errorMessage = e instanceof Error ? e.message : "Unknown error";
         const message = {
-          text: `${error.message}\n\nPlease try again later.`,
+          text: `${errorMessage}\n\nPlease try again later.`,
           name: null,
           party: "error" as const,
           id: Date.now(),
