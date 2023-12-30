@@ -7,6 +7,10 @@ import { isMobile } from "react-device-detect";
 import remarkGfm from "remark-gfm";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
+declare global {
+  function gtag(...args: any[]): void;
+}
+
 interface Message {
   text: string;
   name: "You" | "Bot" | null;
@@ -268,6 +272,8 @@ function reducer(state: State, action: Action) {
   }
 }
 
+const initialState = { messages: [] };
+
 function parseCompletionIntoMessageText(completion: string) {
   const trimmedCompletion = completion.trim();
   // make sure we stop parsing when we encounter "Human: " on a new line:
@@ -278,11 +284,6 @@ function parseCompletionIntoMessageText(completion: string) {
   return trimmedCompletion;
 }
 
-const initialState = { messages: [] };
-
-declare global {
-  function gtag(...args: any[]): void;
-}
 
 function useMaxWidth767() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
