@@ -1,12 +1,11 @@
 import { useState, useReducer, useRef, FormEvent, useEffect, memo, useLayoutEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highlighter";
+import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isMobile } from "react-device-detect";
 import remarkGfm from "remark-gfm";
 import { useLocalStorage } from "@uidotdev/usehooks";
-const styleToUse = coldarkDark
 
 interface Message {
   text: string;
@@ -205,9 +204,9 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
           </button>
         </CopyToClipboard>
       </div>
-      <SyntaxHighlighter
+      <Prism
         children={code}
-        style={styleToUse}
+        style={coldarkDark}
         customStyle={{
           maxWidth: `calc(${Math.min(
             viewportWidth,
