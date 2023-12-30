@@ -58,12 +58,12 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     >
       <div className="chat-message">
         <div className="chat-message__avatar">
-          {message.party == 'bot' || message.party == 'human' ? <img
+          {party == 'bot' || party == 'human' ? <img
             src={party === "bot" ? bot_url : human_url}
             alt="avatar"
           /> : null}
         </div>
-        {message.party == 'bot' || message.party == 'human' ? <div className="chat-message__content">
+        {party == 'bot' || party == 'human' ? <div className="chat-message__content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             children={text}
@@ -166,7 +166,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
             }}
           />
         </div> : null}
-        {message.party == 'error' ? <div className="chat-message__content chat-message__content--error">
+        {party == 'error' ? <div className="chat-message__content chat-message__content--error">
           <p>{text}</p>
         </div> : null}
       </div>
