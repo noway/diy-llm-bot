@@ -310,7 +310,7 @@ function App() {
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
-    if (key !== null) {
+    if (key !== null && key !== undefined && `${key}`.trim() !== "") {
       setAuthKey(key);
     }
   }
