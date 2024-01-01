@@ -332,6 +332,9 @@ function App() {
 
   async function submit(e?: FormEvent<HTMLFormElement>) {
     e && e.preventDefault();
+    if (prompt.trim() === "") {
+      return;
+    }
     try {
       gtag("event", "send_message", {
         event_category: "messages",
