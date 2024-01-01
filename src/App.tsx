@@ -164,7 +164,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                   </li>
                 );
               },
-              td({ node, children, ...props }) {
+              td({ node, children }) {
                 const isLastLine = node.position?.start.line === lineCount;
                 const isLastColumn = node.position?.end.column === lastLineColumnCount;
                 return (
