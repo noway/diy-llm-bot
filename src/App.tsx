@@ -604,7 +604,6 @@ function App() {
                 onChange={(e) => setModel(e.target.value)}
                 value={model}
               >
-                <option value="text-davinci-002">text-davinci-002</option>
                 <option value="text-davinci-003">text-davinci-003</option>
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
                 <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
