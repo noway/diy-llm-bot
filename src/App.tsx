@@ -307,13 +307,14 @@ function useMaxWidth767() {
 
 function App() {
   const [authKey, setAuthKey] = useLocalStorage("");
-  const [model, setModel] = useState(authKey ? DEFAULT_MODEL_AUTH_KEY : DEFAULT_MODEL);
+  const [model, setModel] = useState(DEFAULT_MODEL);
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useMaxWidth767();
   const controller = useRef<AbortController>();
+  const justReceivedAuth = useRef(true);
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
@@ -321,6 +322,15 @@ function App() {
       setAuthKey(key);
     }
   }
+
+  useEffect(() => {
+    if (authKey && model === DEFAULT_MODEL && justReceivedAuth.current) {
+      setModel(DEFAULT_MODEL_AUTH_KEY);
+    }
+    if (authKey) {
+      justReceivedAuth.current = false;
+    }
+  }, [authKey, model]);
 
   useEffect(() => {
     const el = textareaElement.current;
