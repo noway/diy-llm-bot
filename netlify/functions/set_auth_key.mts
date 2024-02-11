@@ -6,7 +6,7 @@ export default async (event: Request) => {
   if (event.method !== 'PUT') {
     return new Response('Method not allowed', { status: 405 });
   }
-  
+
   let params: { authKey: string } | null = null
   try {
     const eventBodyString = await event.text()
@@ -18,7 +18,7 @@ export default async (event: Request) => {
   if (!params || !params.authKey || !isValid(params.authKey)) {
     return new Response('Invalid request body', { status: 400 });
   }
-  
+
   const serializedCookie = serialize('__Host-authKey', params.authKey, {
     secure: true,
     httpOnly: true,
@@ -26,8 +26,8 @@ export default async (event: Request) => {
     path: '/',
     maxAge: 400 * 24 * 60 * 60,
   });
-  
-  return new Response(JSON.stringify({ success: true }) , {
+
+  return new Response(JSON.stringify({ success: true }), {
     status: 200,
     headers: {
       'Set-Cookie': serializedCookie,

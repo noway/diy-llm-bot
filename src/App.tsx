@@ -466,7 +466,7 @@ function App() {
             name: null,
             party: "error",
             id,
-          };  
+          };
         }
         else {
           botMessage = {
