@@ -5,7 +5,6 @@ import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isMobile } from "react-device-detect";
 import remarkGfm from "remark-gfm";
-import { useLocalStorage } from "@uidotdev/usehooks";
 
 declare global {
   function gtag(...args: any[]): void;
@@ -305,8 +304,50 @@ function useMaxWidth767() {
   return isMobile;
 }
 
+async function setAuthKeyCookie(authKey: string) {
+  const res = await fetch('/.netlify/functions/set_auth_key', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ authKey }),
+  })
+  if (!res.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return res.json()
+}
+
+async function getAuthKeyCookie() {
+  const res = await fetch('/.netlify/functions/get_auth_key', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  if (!res.ok) {
+    throw new Error('Network response was not ok')
+  }
+  return res.json()
+}
+
+function useAuthKey() {
+  const [authKey, setAuthKey] = useState<string | null>(null);
+  useEffect(() => {
+    getAuthKeyCookie()
+      .then((data) => {
+        setAuthKey(data.authKey);
+      })
+  }, [setAuthKey]);
+  function setAuthKeyAndPersist(authKey: string) {
+    setAuthKey(authKey);
+    setAuthKeyCookie(authKey);
+  }
+  return [authKey, setAuthKeyAndPersist] as const;
+}
+
 function App() {
-  const [authKey, setAuthKey] = useLocalStorage("");
+  const [authKey, setAuthKey] = useAuthKey();
   const [model, setModel] = useState(DEFAULT_MODEL);
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
