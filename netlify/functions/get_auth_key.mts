@@ -6,11 +6,6 @@ export default async (event: Request, context: Context) => {
   }
 
   const authKey = context.cookies.get('__Host-authKey');
-
-  if (!authKey) {
-    return new Response('No auth key', { status: 404 });
-  }
-
   return new Response(JSON.stringify({ authKey }), {
     status: 200,
     headers: {
