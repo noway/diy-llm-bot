@@ -23,6 +23,7 @@ export default async (event: Request) => {
     secure: true,
     httpOnly: true,
     sameSite: 'strict',
+    domain: '.diy-llm-bot.com',
     path: '/',
     maxAge: 400 * 24 * 60 * 60,
   });
