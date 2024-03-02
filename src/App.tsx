@@ -318,12 +318,14 @@ async function setAuthKeyCookie(authKey: string) {
   return res.json()
 }
 
-async function getAuthKeyCookie() {
-  const res = await fetch('/.netlify/functions/get_auth_key', {
-    method: 'PUT',
+async function getIsAuthed(): Promise<{ success: boolean, isAuthed: boolean }> {
+  const apiDomain = import.meta.env.VITE_API_URL;
+  const res = await fetch(`${apiDomain}/is-authed`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
   if (!res.ok) {
     throw new Error('Network response was not ok')
@@ -331,23 +333,8 @@ async function getAuthKeyCookie() {
   return res.json()
 }
 
-function useAuthKey() {
-  const [authKey, setAuthKey] = useState<string | null>(null);
-  useEffect(() => {
-    getAuthKeyCookie()
-      .then((data) => {
-        setAuthKey(data.authKey);
-      })
-  }, [setAuthKey]);
-  function setAuthKeyAndPersist(authKey: string) {
-    setAuthKey(authKey);
-    setAuthKeyCookie(authKey);
-  }
-  return [authKey, setAuthKeyAndPersist] as const;
-}
-
 function App() {
-  const [authKey, setAuthKey] = useAuthKey();
+  const [isAuthed, setIsAuthed] = useState(false);
   const [model, setModel] = useState(DEFAULT_MODEL);
   const [prompt, setPrompt] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -355,23 +342,23 @@ function App() {
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useMaxWidth767();
   const controller = useRef<AbortController>();
-  const justReceivedAuth = useRef(true);
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
     if (key !== null && key !== undefined && `${key}`.trim() !== "") {
-      setAuthKey(key);
+      setAuthKeyCookie(key);
+      setIsAuthed(true);
     }
   }
 
   useEffect(() => {
-    if (authKey && model === DEFAULT_MODEL && justReceivedAuth.current) {
-      setModel(DEFAULT_MODEL_AUTH_KEY);
-    }
-    if (authKey) {
-      justReceivedAuth.current = false;
-    }
-  }, [authKey, model]);
+    getIsAuthed().then((data) => {
+      setIsAuthed(data.isAuthed);
+      if (data.isAuthed) {
+        setModel(DEFAULT_MODEL_AUTH_KEY);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const el = textareaElement.current;
@@ -537,7 +524,7 @@ function App() {
     });
     setPrompt("");
     setLoading(false);
-    setModel(authKey ? DEFAULT_MODEL_AUTH_KEY : DEFAULT_MODEL);
+    setModel(isAuthed ? DEFAULT_MODEL_AUTH_KEY : DEFAULT_MODEL);
     gtag("event", "reset_chat", {
       event_category: "messages",
       event_label: "Reset chat",
@@ -659,7 +646,7 @@ function App() {
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
                 <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
                 <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">mistralai/Mixtral-8x7B-Instruct-v0.1</option>
-                {authKey ? (
+                {isAuthed ? (
                   <option value="gpt-4">gpt-4</option>
                 ) : null}
               </select>
