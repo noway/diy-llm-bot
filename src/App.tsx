@@ -416,7 +416,6 @@ function App() {
           body: JSON.stringify({
             messages: [...state.messages, humanMessage],
             model,
-            authKey,
           }),
           signal: controller.current.signal,
           credentials: 'include',
