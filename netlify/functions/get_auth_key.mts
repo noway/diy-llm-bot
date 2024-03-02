@@ -5,7 +5,7 @@ export default async (event: Request, context: Context) => {
     return new Response('Method not allowed', { status: 405 });
   }
 
-  const authKey = context.cookies.get('__Host-authKey');
+  const authKey = context.cookies.get('__Secure-authKey');
   return new Response(JSON.stringify({ authKey }), {
     status: 200,
     headers: {

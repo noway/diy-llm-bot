@@ -19,7 +19,7 @@ export default async (event: Request) => {
     return new Response('Invalid request body', { status: 400 });
   }
 
-  const serializedCookie = serialize('__Host-authKey', params.authKey, {
+  const serializedCookie = serialize('__Secure-authKey', params.authKey, {
     secure: true,
     httpOnly: true,
     sameSite: 'strict',
