@@ -419,6 +419,7 @@ function App() {
             authKey,
           }),
           signal: controller.current.signal,
+          credentials: 'include',
         }
       );
 
