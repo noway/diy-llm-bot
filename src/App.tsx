@@ -647,6 +647,7 @@ function App() {
                 <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
                 <option value="anthropic/claude-3-opus:beta">anthropic/claude-3-opus:beta</option>
                 <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">mistralai/Mixtral-8x7B-Instruct-v0.1</option>
+                <option value="mistralai/mistral-large">mistralai/mistral-large</option>
                 {isAuthed ? (
                   <option value="gpt-4">gpt-4</option>
                 ) : null}
