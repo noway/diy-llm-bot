@@ -45,9 +45,6 @@ importers:
       '@types/react-copy-to-clipboard':
         specifier: ^5.0.7
         version: 5.0.7
-      '@types/react-dom':
-        specifier: ^18.2.22
-        version: 18.2.22
       '@types/react-syntax-highlighter':
         specifier: ^15.5.11
         version: 15.5.11
@@ -505,9 +502,6 @@ packages:
 
   '@types/react-copy-to-clipboard@5.0.7':
     resolution: {integrity: sha1-DLck1CKPHC+PVnVnGzlxyIAdX0U=}
-
-  '@types/react-dom@18.2.22':
-    resolution: {integrity: sha512-fHkBXPeNtfvri6gdsMYyW+dW7RXFo6Ad09nLFK0VQWR7yGLai/Cyvyj696gbwYvBnhGtevUG9cET0pmUbMtoPQ==}
 
   '@types/react-syntax-highlighter@15.5.11':
     resolution: {integrity: sha1-4FB0WyLv+B/BPLDHY90NBjQTu/E=}
@@ -1922,10 +1916,6 @@ snapshots:
   '@types/prop-types@15.7.11': {}
 
   '@types/react-copy-to-clipboard@5.0.7':
-    dependencies:
-      '@types/react': 18.3.2
-
-  '@types/react-dom@18.2.22':
     dependencies:
       '@types/react': 18.3.2
 
