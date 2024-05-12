@@ -414,13 +414,8 @@ function App() {
       let completion = "";
       let botMessage: Message | null = null;
       const id = Date.now();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          controller.current = undefined;
-          break;
-        }
-
+      let { done, value } = await reader.read();
+      while (!done) {
         // Convert the binary data to a string
         const dataString = new TextDecoder().decode(value);
         completion += dataString;
@@ -462,7 +457,9 @@ function App() {
           type: "set_message",
           payload: botMessage,
         });
+        ({ done, value } = await reader.read());
       }
+      controller.current = undefined;
 
       setLoading(false);
       if (botMessage) {
