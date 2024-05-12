@@ -360,7 +360,7 @@ function App() {
       el.style.height = 'auto';
       el.style.height = (el.scrollHeight + 1.5) + 'px';
     }
-  }, [prompt, isMaxWidth767, textareaElement.current]);
+  }, [prompt, isMaxWidth767]);
 
   async function submit(e?: FormEvent<HTMLFormElement>) {
     e && e.preventDefault();
