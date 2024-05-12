@@ -14,6 +14,9 @@ importers:
       '@types/react':
         specifier: '18.3'
         version: 18.3.2
+      '@types/react-dom':
+        specifier: '18.3'
+        version: 18.3.0
       cookie:
         specifier: ^0.6.0
         version: 0.6.0
@@ -502,6 +505,9 @@ packages:
 
   '@types/react-copy-to-clipboard@5.0.7':
     resolution: {integrity: sha1-DLck1CKPHC+PVnVnGzlxyIAdX0U=}
+
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
   '@types/react-syntax-highlighter@15.5.11':
     resolution: {integrity: sha1-4FB0WyLv+B/BPLDHY90NBjQTu/E=}
@@ -1916,6 +1922,10 @@ snapshots:
   '@types/prop-types@15.7.11': {}
 
   '@types/react-copy-to-clipboard@5.0.7':
+    dependencies:
+      '@types/react': 18.3.2
+
+  '@types/react-dom@18.3.0':
     dependencies:
       '@types/react': 18.3.2
 
