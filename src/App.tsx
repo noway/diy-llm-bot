@@ -256,17 +256,11 @@ function reducer(state: State, action: Action) {
         messages: [...state.messages, action.payload],
       };
     case "set_message":
-      const replacedMessages = state.messages.map((message) =>
-        message.id === action.payload.id ? action.payload : message
-      );
-      const messages = state.messages.find(
-        (message) => message.id === action.payload.id
-      )
-        ? replacedMessages
-        : [...state.messages, action.payload];
       return {
         ...state,
-        messages,
+        messages: state.messages.find((message) => message.id === action.payload.id) ?
+          state.messages.map((message) => message.id === action.payload.id ? action.payload : message) :
+          [...state.messages, action.payload],
       };
     case "reset_messages":
       return {
