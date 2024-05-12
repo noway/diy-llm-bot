@@ -7,7 +7,7 @@ import { isMobile } from "react-device-detect";
 import remarkGfm from "remark-gfm";
 
 declare global {
-  function gtag(...args: any[]): void;
+  function gtag(...args: unknown[]): void;
 }
 
 interface Message {
