@@ -4,6 +4,8 @@ import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { isMobile } from "react-device-detect";
+import { visit } from 'unist-util-visit'
+import type { Element } from 'hast'
 import remarkGfm from "remark-gfm";
 
 declare global {
@@ -34,6 +36,18 @@ type Action = AddMessageAction | SetMessageAction | ResetMessagesAction;
 
 const DEFAULT_MODEL = "gpt-4-1106-preview";
 const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
+
+function rehypeInlineCodeProperty() {
+  return (tree: Element) => {
+    visit(tree, { tagName: 'code' as const }, function (node: Element, _index, parent: Element) {
+      if (parent && parent.tagName === 'pre') {
+        node.properties.inline = false;
+      } else {
+        node.properties.inline = true;
+      }
+    })
+  }
+}
 
 const bot_url =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAC80lEQVRIS7WVWUhUYRTHf9832RgWEmqltoxtFIGBU0IraVYW7ZE1LUYLBj0U0UOUpVGa9VDRSwRtD0VakNiGpI5R2kuZUCSIzkxoy4O2g5bOcuK2QDB3bGy5L/fhnvM75/uf8/2v4j8+qjfs1Va3lHSNCjsn7ECjCUeEW4q9/wmeZXXJ1a7RYTcUdmDf+Vfkp4Td5avCyvtt0EaLR6Kt3TQFNAZdUGgFg72aC76eJeoRvlF7xMA1x3wm6pP1W+MKBVqI79Jo4FwgdIEe4SsiXfIsv4HFBRNYWvWWnGxwXOjiY+YQruc2MvzoWKo+jAvJCPkhr79LnviE2jIX7xtOUDu9gCNpMdy7+JSOxtPE24uYuDyKSUpzoGOMKSckvEi7xdDYpYTBUwcwoLaDqKE+Hr224NUW4q1e4josxgTYK7bewQ19C5VHavt1U/GgGkv0SMrOp1GtKji+7DmHJi36Nt7cwMjey2LAL89slsoHFspLHtNua0NEgwqQ0JjAtuyJJGX4cFSO/TO4UWCDxS0xkUJcp6JPosL/CoZNE2NtWFvzF6v4q+/800uU069FZqX6KJ1tw36gBb8EUAqUMWWtqTs4gsn7W9FKs9s/IvyBHlYeEWXcRSNH0CicZxNJ39xK9bkk0re0YpviJzLWz5nMMczY1soeSQoqYFrRgD/JSyD54CsuFjbQNPtlkDMPej6c7Y7x1DtspBS/MF1HU/ieqW1yLPouWyrt3L7kpv3pySB4bPIOtq4ZTWniO3baBrKuJtgtTeEb+jRL8Zx6cpypnKopJ/L6rSB4QsxW1h9OpjD1IfvqJpPXHrzvpvCsiGYpy6hnQbWdG/crTOFflixkV/o8Ts6sI/dOCvmBYAswhW+yuOXS3DqWOFO4VlMZEr57RxbHBjpZUZVCsTdMeJHySH7mI+bftXPzXoXpbzaiM4KVGWlcnfuY5U47Jd1hal6gPFKS1Mbqlji0GOZk2Pr3QxovRYDAj0UtHfKGzA+xFHQGr+JXPcUQJyprHcEAAAAASUVORK5CYII=";
@@ -76,6 +90,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
         {party == 'bot' || party == 'human' ? <div className="chat-message__content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeInlineCodeProperty]}
             children={text}
             components={{
               code({ node, className, children, ...props }) {
