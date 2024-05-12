@@ -78,8 +78,9 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
             remarkPlugins={[remarkGfm]}
             children={text}
             components={{
-              code({ node, inline, className, children, ...props }) {
-                const nodeLineCount = node.position?.start.line ?? 0
+              code({ node, className, children, ...props }) {
+                const inline = node?.properties.inline
+                const nodeLineCount = node?.position?.start.line ?? 0
                 const code = String(children).trim()
                 const match = /language-(\w+)/.exec(className || "");
                 const language = match ? match[1] : undefined
@@ -92,7 +93,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               p({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <p {...props}>
                     {children}
@@ -101,7 +102,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h1({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h1 {...props}>
                     {children}
@@ -110,7 +111,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h2({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h2 {...props}>
                     {children}
@@ -119,7 +120,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h3({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h3 {...props}>
                     {children}
@@ -128,7 +129,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h4({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h4 {...props}>
                     {children}
@@ -137,7 +138,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h5({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h5 {...props}>
                     {children}
@@ -146,7 +147,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               h6({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <h6 {...props}>
                     {children}
@@ -155,7 +156,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               li({ node, children, ...props }) {
-                const isLastLine = node.position?.start.line === lineCount;
+                const isLastLine = node?.position?.start.line === lineCount;
                 return (
                   <li {...props}>
                     {children}
@@ -164,8 +165,8 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
               td({ node, children }) {
-                const isLastLine = node.position?.start.line === lineCount;
-                const isLastColumn = node.position?.end.column === lastLineColumnCount;
+                const isLastLine = node?.position?.start.line === lineCount;
+                const isLastColumn = node?.position?.end.column === lastLineColumnCount;
                 return (
                   <td>
                     {children}
