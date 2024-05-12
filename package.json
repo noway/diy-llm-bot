@@ -15,7 +15,6 @@
     "cookie": "^0.6.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "3"

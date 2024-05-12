@@ -20,9 +20,6 @@ importers:
       react-device-detect:
         specifier: ^2.2.3
         version: 2.2.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
       react-markdown:
         specifier: ^8.0.7
         version: 8.0.7(@types/react@18.2.66)(react@18.2.0)
@@ -1311,7 +1308,7 @@ packages:
       react: '>= 0.14.0'
 
   react@18.2.0:
-    resolution: {integrity: sha1-VVvZhZKIMlX6AN4U8RUakXtdd9U=}
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
 
   refractor@3.6.0:
