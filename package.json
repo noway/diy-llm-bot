@@ -13,7 +13,6 @@
   "dependencies": {
     "@netlify/functions": "^2.5.1",
     "cookie": "^0.6.0",
-    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
