@@ -45,6 +45,9 @@ importers:
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
+      '@types/node':
+        specifier: ^20.14.9
+        version: 20.14.9
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -65,7 +68,7 @@ importers:
         version: 7.14.1(eslint@8.57.0)(typescript@5.4.2)
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.3.1)
+        version: 4.3.1(vite@5.3.1(@types/node@20.14.9))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -80,7 +83,7 @@ importers:
         version: 5.4.2
       vite:
         specifier: ^5.3.1
-        version: 5.3.1
+        version: 5.3.1(@types/node@20.14.9)
 
 packages:
 
@@ -525,6 +528,9 @@ packages:
 
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
+
+  '@types/node@20.14.9':
+    resolution: {integrity: sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==}
 
   '@types/prop-types@15.7.11':
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
@@ -1499,6 +1505,9 @@ packages:
   ua-parser-js@1.0.37:
     resolution: {integrity: sha1-tdx7FjpcHwxRCwhEau1NqSxGNz8=}
 
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   unified@11.0.4:
     resolution: {integrity: sha512-apMPnyLjAX+ty4OrNap7yumyVAMlKx5IWU2wlzzUdYJO9A8f1p9m/gywF/GM2ZDFcjQPrx59Mc90KwmxsoklxQ==}
 
@@ -1993,6 +2002,10 @@ snapshots:
 
   '@types/ms@0.7.34': {}
 
+  '@types/node@20.14.9':
+    dependencies:
+      undici-types: 5.26.5
+
   '@types/prop-types@15.7.11': {}
 
   '@types/react-copy-to-clipboard@5.0.7':
@@ -2099,14 +2112,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.1(vite@5.3.1)':
+  '@vitejs/plugin-react@4.3.1(vite@5.3.1(@types/node@20.14.9))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.1
+      vite: 5.3.1(@types/node@20.14.9)
     transitivePeerDependencies:
       - supports-color
 
@@ -3254,6 +3267,8 @@ snapshots:
 
   ua-parser-js@1.0.37: {}
 
+  undici-types@5.26.5: {}
+
   unified@11.0.4:
     dependencies:
       '@types/unist': 3.0.2
@@ -3315,12 +3330,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite@5.3.1:
+  vite@5.3.1(@types/node@20.14.9):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.38
       rollup: 4.13.0
     optionalDependencies:
+      '@types/node': 20.14.9
       fsevents: 2.3.3
 
   which@2.0.2:
