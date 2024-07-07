@@ -2,7 +2,7 @@ import { useState, useReducer, useRef, FormEvent, useEffect, memo, useLayoutEffe
 import ReactMarkdown from "react-markdown";
 import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import copy from "copy-to-clipboard";
 import { isMobile } from "react-device-detect";
 import { visit } from 'unist-util-visit'
 import type { Element } from 'hast'
@@ -215,6 +215,7 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const handleCopy = () => {
+    copy(code);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
@@ -224,11 +225,9 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
     <div className="code-block__container">
       <div className="code-block__header">
         <span className="code-block__language">{language}</span>
-        <CopyToClipboard text={code} onCopy={handleCopy}>
-          <button className="code-block__copy-button">
-            {copied ? "Copied!" : "Copy code"}
-          </button>
-        </CopyToClipboard>
+        <button className="code-block__copy-button" onClick={handleCopy}>
+          {copied ? "Copied!" : "Copy code"}
+        </button>
       </div>
       <Prism
         children={code}
