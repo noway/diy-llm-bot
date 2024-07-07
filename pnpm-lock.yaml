@@ -17,9 +17,6 @@ importers:
       react:
         specifier: ^18.3.1
         version: 18.3.1
-      react-copy-to-clipboard:
-        specifier: ^5.1.0
-        version: 5.1.0(react@18.3.1)
       react-device-detect:
         specifier: ^2.2.3
         version: 2.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -51,9 +48,6 @@ importers:
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
-      '@types/react-copy-to-clipboard':
-        specifier: ^5.0.7
-        version: 5.0.7
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
@@ -535,9 +529,6 @@ packages:
   '@types/prop-types@15.7.11':
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
-  '@types/react-copy-to-clipboard@5.0.7':
-    resolution: {integrity: sha1-DLck1CKPHC+PVnVnGzlxyIAdX0U=}
-
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
@@ -740,9 +731,6 @@ packages:
   cookie@0.6.0:
     resolution: {integrity: sha1-J5iwSwcbDsv/DbtipQWo76ThkFE=}
     engines: {node: '>= 0.6'}
-
-  copy-to-clipboard@3.3.3:
-    resolution: {integrity: sha1-VaxDoduK5jmkvZlRHBSM3RuDobA=}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha1-9zqFudXUHQRVUcF34ogtSshXKKY=}
@@ -1247,10 +1235,6 @@ packages:
   node-releases@2.0.14:
     resolution: {integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==}
 
-  object-assign@4.1.1:
-    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
-    engines: {node: '>=0.10.0'}
-
   once@1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
 
@@ -1315,9 +1299,6 @@ packages:
     resolution: {integrity: sha1-8RNVWo+ptXw15je7onUJ3PgC3RI=}
     engines: {node: '>=6'}
 
-  prop-types@15.8.1:
-    resolution: {integrity: sha1-Z9h78aaU9IQ1zzMsJK8QIUoxQLU=}
-
   property-information@5.6.0:
     resolution: {integrity: sha1-YWdVRfsjAC8kXGVA7EYHfU2j7Wk=}
 
@@ -1331,11 +1312,6 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha1-SSkii7xyTfrEPg77BYyve2z7YkM=}
 
-  react-copy-to-clipboard@5.1.0:
-    resolution: {integrity: sha1-Carl7ExidQzLLmQhpYcl6rxBJVw=}
-    peerDependencies:
-      react: ^15.3.0 || 16 || 17 || 18
-
   react-device-detect@2.2.3:
     resolution: {integrity: sha1-l6eudnzdAE58NXgmD0jPcMA258o=}
     peerDependencies:
@@ -1346,9 +1322,6 @@ packages:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
       react: ^18.3.1
-
-  react-is@16.13.1:
-    resolution: {integrity: sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=}
 
   react-markdown@9.0.1:
     resolution: {integrity: sha512-186Gw/vF1uRkydbsOIkcGXw7aHq0sZOCRFFjGrr7b9+nVZg4UfA4enXCaxm4fUzecU38sWfrNDitGhshuU7rdg==}
@@ -1473,9 +1446,6 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
-
-  toggle-selection@1.0.6:
-    resolution: {integrity: sha1-bkWxJj8gF/oKzH2J14sVuL932jI=}
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
@@ -2008,10 +1978,6 @@ snapshots:
 
   '@types/prop-types@15.7.11': {}
 
-  '@types/react-copy-to-clipboard@5.0.7':
-    dependencies:
-      '@types/react': 18.3.3
-
   '@types/react-dom@18.3.0':
     dependencies:
       '@types/react': 18.3.3
@@ -2226,10 +2192,6 @@ snapshots:
   convert-source-map@2.0.0: {}
 
   cookie@0.6.0: {}
-
-  copy-to-clipboard@3.3.3:
-    dependencies:
-      toggle-selection: 1.0.6
 
   cross-spawn@7.0.3:
     dependencies:
@@ -2980,8 +2942,6 @@ snapshots:
 
   node-releases@2.0.14: {}
 
-  object-assign@4.1.1: {}
-
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
@@ -3051,12 +3011,6 @@ snapshots:
 
   prismjs@1.29.0: {}
 
-  prop-types@15.8.1:
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react-is: 16.13.1
-
   property-information@5.6.0:
     dependencies:
       xtend: 4.0.2
@@ -3066,12 +3020,6 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
-
-  react-copy-to-clipboard@5.1.0(react@18.3.1):
-    dependencies:
-      copy-to-clipboard: 3.3.3
-      prop-types: 15.8.1
-      react: 18.3.1
 
   react-device-detect@2.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -3084,8 +3032,6 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
-
-  react-is@16.13.1: {}
 
   react-markdown@9.0.1(@types/react@18.3.3)(react@18.3.1):
     dependencies:
@@ -3246,8 +3192,6 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
-
-  toggle-selection@1.0.6: {}
 
   trim-lines@3.0.1: {}
 
