@@ -205,11 +205,11 @@ const ChatMessageMemo = memo(ChatMessage);
 function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boolean, code: string, language?: string }) {
   const EM_IN_PX = 16;
   const { nodeLineCount, lineCount, blink, code, language } = props;
-  const [viewportWidth, setViewportWidth] = useState(window.screen.width);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setViewportWidth(window.screen.width);
+      setViewportWidth(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
