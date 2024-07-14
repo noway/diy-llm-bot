@@ -5,7 +5,7 @@ import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import copy from "copy-to-clipboard";
 import { isMobile } from "react-device-detect";
 import { visit } from 'unist-util-visit'
-import type { Element } from 'hast'
+import { Element } from 'hast'
 import remarkGfm from "remark-gfm";
 
 declare global {
