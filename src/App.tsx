@@ -205,15 +205,8 @@ const ChatMessageMemo = memo(ChatMessage);
 function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boolean, code: string, language?: string }) {
   const EM_IN_PX = 16;
   const { nodeLineCount, lineCount, blink, code, language } = props;
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const viewportWidth = useViewportWidth();
   const [copied, setCopied] = useState(false);
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   const handleCopy = () => {
     copy(code);
     setCopied(true);
@@ -300,17 +293,16 @@ function parseCompletionIntoMessageText(completion: string) {
 }
 
 
-function useMaxWidth767() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+function useViewportWidth() {
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth <= 767);
+      setViewportWidth(window.innerWidth);
     }
     window.addEventListener('resize', handleResize);
-    handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  return isMobile;
+  return viewportWidth;
 }
 
 async function setAuthKeyCookie(authKey: string) {
@@ -349,7 +341,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(false);
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
-  const isMaxWidth767 = useMaxWidth767();
+  const isMaxWidth767 = useViewportWidth() <= 767;
   const controller = useRef<AbortController>();
 
   function promptAuthKey() {
