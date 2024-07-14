@@ -361,7 +361,7 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = textareaElement.current;
     if (el) {
       el.style.height = 'auto';
