@@ -82,12 +82,12 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     >
       <div className="chat-message">
         <div className="chat-message__avatar">
-          {party == 'bot' || party == 'human' ? <img
+          {party === 'bot' || party === 'human' ? <img
             src={party === "bot" ? bot_url : human_url}
             alt="avatar"
           /> : null}
         </div>
-        {party == 'bot' || party == 'human' ? <div className="chat-message__content">
+        {party === 'bot' || party === 'human' ? <div className="chat-message__content">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeInlineCodeProperty]}
@@ -192,7 +192,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
             }}
           />
         </div> : null}
-        {party == 'error' ? <div className="chat-message__content chat-message__content--error">
+        {party === 'error' ? <div className="chat-message__content chat-message__content--error">
           <p>{text}</p>
         </div> : null}
       </div>
