@@ -646,6 +646,7 @@ function App() {
                 <option value="gpt-4o">gpt-4o</option>
                 <option value="gpt-4o-mini">gpt-4o-mini</option>
                 <option value="anthropic/claude-3-opus:beta">anthropic/claude-3-opus:beta</option>
+                <option value="anthropic/claude-3.5-sonnet">anthropic/claude-3.5-sonnet</option>
                 <option value="mistralai/Mixtral-8x7B-Instruct-v0.1">mistralai/Mixtral-8x7B-Instruct-v0.1</option>
                 <option value="mistralai/mistral-large">mistralai/mistral-large</option>
                 <option value="meta-llama/Llama-3-70b-chat-hf">meta-llama/Llama-3-70b-chat-hf</option>
