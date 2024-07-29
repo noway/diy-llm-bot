@@ -651,6 +651,7 @@ function App() {
                 <option value="mistralai/mistral-large">mistralai/mistral-large</option>
                 <option value="meta-llama/Llama-3-70b-chat-hf">meta-llama/Llama-3-70b-chat-hf</option>
                 <option value="meta-llama/Meta-Llama-3.1-405B-Instruct">meta-llama/Meta-Llama-3.1-405B-Instruct</option>
+                <option value="deepseek/deepseek-coder">deepseek/deepseek-coder</option>
                 {isAuthed ? (
                   <option value="gpt-4">gpt-4</option>
                 ) : null}
