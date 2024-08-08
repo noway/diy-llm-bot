@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, FormEvent } from "react";
+import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, FormEvent, useCallback, useSyncExternalStore } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism, createElement } from "react-syntax-highlighter";
@@ -293,17 +293,14 @@ function parseCompletionIntoMessageText(completion: string) {
 }
 
 
-function useViewportWidth() {
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    function handleResize() {
-      setViewportWidth(window.innerWidth);
-    }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  return viewportWidth;
-}
+const useViewportWidth = () =>
+  useSyncExternalStore(
+    useCallback((cb: () => void) => {
+      window.addEventListener('resize', cb);
+      return () => window.removeEventListener('resize', cb);
+    }, []),
+    () => window.innerWidth
+  );
 
 async function setAuthKeyCookie(authKey: string) {
   const res = await fetch('/.netlify/functions/set_auth_key', {
