@@ -367,7 +367,7 @@ function App() {
   }, [prompt, isMaxWidth767]);
 
   async function submit(e?: FormEvent<HTMLFormElement>) {
-    e && e.preventDefault();
+    if (e) e.preventDefault();
     if (prompt.trim() === "") {
       return;
     }
@@ -437,6 +437,7 @@ function App() {
           }
         }
         catch (e) {
+          console.log('isError error', e);
           isError = false;
         }
 
