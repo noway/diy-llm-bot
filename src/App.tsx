@@ -16,7 +16,7 @@ interface Message {
   text: string;
   name: "You" | "Bot" | null;
   party: "bot" | "human" | "error";
-  id: number;
+  id: string;
 }
 interface State {
   messages: Message[];
@@ -381,7 +381,7 @@ function App() {
         text: prompt,
         name: "You" as const,
         party: "human" as const,
-        id: Date.now(),
+        id: `human-${Date.now()}`,
       };
       dispatch({
         type: "add_message",
@@ -391,7 +391,7 @@ function App() {
       setLoading(true);
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
-      const id = Date.now();
+      const id = `bot-${Date.now()}`;
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
         {
@@ -485,7 +485,7 @@ function App() {
           text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
           name: null,
           party: "error" as const,
-          id: Date.now(),
+          id: `error-${Date.now()}`,
         };
         dispatch({
           type: "set_message",
@@ -501,7 +501,7 @@ function App() {
           text: `${errorMessage}\n\nPlease try again later.`,
           name: null,
           party: "error" as const,
-          id: Date.now(),
+          id: `error-${Date.now()}`,
         };
         dispatch({
           type: "set_message",
