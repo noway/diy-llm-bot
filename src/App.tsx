@@ -391,6 +391,7 @@ function App() {
       setLoading(true);
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
+      const id = Date.now();
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
         {
@@ -417,7 +418,6 @@ function App() {
       const reader = res.body.getReader();
       let completion = "";
       let botMessage: Message | null = null;
-      const id = Date.now();
       let { done, value } = await reader.read();
       while (!done) {
         // Convert the binary data to a string
