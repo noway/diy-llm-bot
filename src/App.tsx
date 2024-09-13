@@ -13,7 +13,7 @@ declare global {
 }
 
 interface Message {
-  text: string;
+  text: string | null;
   name: "You" | "Bot" | null;
   party: "bot" | "human" | "error";
   id: string;
@@ -55,7 +55,8 @@ const human_url =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACb0lEQVRIS92UX0hTURzHv2dWSx/KJojZS4GxhB5iQlQvPkQhlQg12ENlsWhMpOaW0sOcMF1ZJK6JYW70R6Fy5ei/EBFoRUoghtBCEnqqjIhWlLjpvb84Z7YGu3dsoi8dLhzu+d37+X1/3/M7h2EJB1tCNv5XOGPEbRsoBQyFqQYWDVLaytWDjNHuDQxEwNOdhIFXqQkuScvQ8mJWlaEcYIx2rWfQzEcJTGzOkw+ykJ9cSae8HJ7nMUWOKjyTLpoqj3+lZk9aWyJBC3LLNivm+T0yCt2hHlHFnrCy92nh0ckOWKrqhCnd972oNTYgFptD4IFXJDxSWYe+dzJAWcBnQlaytPgRCPmgLTkJnuTvSH6vMdrR1e8FxsahNQZShCoqn75lpkbfNbTe6BDwcxWrYO/0CH4y3G0+BbftGKTZKFaarmYGj961Uv3ZbrT1/VOstsFsPAySJGiN/szgHGQ1MPLdiSuPvr8IMA0YEVZstCVskoZHud/IO9yTRSsCaCrXkvOMA1hbLDaO9zqIofdRO/BlCowYzjvb4BqcyfIQzXvg2M6o9YITmhwt5ML8hDM5X7+hod4N78uFHn8Av+6ZqffmY8zFJID4w8CETsLx6irk7r+ywLsFgH5bo7i4RqonhGrRzjKgi9yOV+FKf2WrZubgYNcBhMNvUXsigO/2IUyXmJA3GcSbfWOCvcVgUD1APK4I31p5lBwHK7BJrxcQU01IzBN7PQiVhpC/ZjUKdAVizdLkw+uH1zPvFg73N9vEj3z+8TMCy+lnaHftAEFG8+V+sb4ocA75+PmTqHNdUXEi6aLBeRUBjw0kx63IRPkfkSH+GJhPFeIAAAAASUVORK5CYII=";
 
 function ChatMessage({ message, blink }: { message: Message, blink: boolean }): JSX.Element {
-  const { text, party } = message;
+  const { party } = message;
+  const text = message.text ?? "";
   const lineCount = (text.match(/\n/g) || []).length + 1;
   const lastLineColumnCount = text.length - text.lastIndexOf("\n");
   const lastScrollHeight = useRef(document.body.scrollHeight);
@@ -88,7 +89,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
           /> : null}
         </div>
         {party === 'bot' || party === 'human' ? <div className="chat-message__content">
-          <ReactMarkdown
+          {text ? <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeInlineCodeProperty]}
             children={text}
@@ -190,7 +191,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                 );
               },
             }}
-          />
+          /> : <p><i>Thinking...</i></p>}
         </div> : null}
         {party === 'error' ? <div className="chat-message__content chat-message__content--error">
           <p>{text}</p>
@@ -392,6 +393,17 @@ function App() {
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
       const id = `bot-${Date.now()}`;
+      if (model === "o1-mini" || model === "o1-preview") {
+        dispatch({
+          type: "set_message",
+          payload: {
+            id,
+            text: null,
+            name: "Bot",
+            party: "bot",
+          },
+        });
+      }
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
         {
@@ -471,7 +483,7 @@ function App() {
         gtag("event", "receive_message", {
           event_category: "messages",
           event_label: "Receive bot message",
-          value: botMessage.text.length,
+          value: botMessage.text?.length,
         });
       }
       setTimeout(() => {
