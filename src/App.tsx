@@ -651,7 +651,11 @@ function App() {
                 <option value="meta-llama/Meta-Llama-3.1-405B-Instruct">meta-llama/Meta-Llama-3.1-405B-Instruct</option>
                 <option value="deepseek/deepseek-coder">deepseek/deepseek-coder</option>
                 {isAuthed ? (
-                  <option value="gpt-4">gpt-4</option>
+                  <>
+                    <option value="gpt-4">gpt-4</option>
+                    <option value="o1-preview">o1-preview</option>
+                    <option value="o1-mini">o1-mini</option>
+                  </>
                 ) : null}
               </select>
             </p>
