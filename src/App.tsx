@@ -97,7 +97,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
               code({ node, className, children, ...props }) {
                 const inline = node?.properties.inline
                 const nodeLineCount = node?.position?.start.line ?? 0
-                const code = String(children).trim()
+                const code = String(children ?? '').trim()
                 const match = /language-(\w+)/.exec(className || "");
                 const language = match ? match[1] : undefined
                 return !inline ? (
