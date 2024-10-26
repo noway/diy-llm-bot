@@ -4,7 +4,7 @@ import fs from "fs";
 
 const NODE_ENV = process.env.NODE_ENV ?? "development";
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
   server:
     NODE_ENV === "development"
