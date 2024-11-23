@@ -12,8 +12,8 @@ importers:
         specifier: ^2.8.2
         version: 2.8.2
       cookie:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       copy-to-clipboard:
         specifier: ^3.3.3
         version: 3.3.3
@@ -734,8 +734,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  cookie@1.0.1:
-    resolution: {integrity: sha512-Xd8lFX4LM9QEEwxQpF9J9NTUh8pmdJO0cyRJhFiDoLTk2eH8FXlRv2IFGYVadZpqI3j8fhNrSdKCeYPxiAhLXw==}
+  cookie@1.0.2:
+    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
     engines: {node: '>=18'}
 
   copy-to-clipboard@3.3.3:
@@ -2162,7 +2162,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie@1.0.1: {}
+  cookie@1.0.2: {}
 
   copy-to-clipboard@3.3.3:
     dependencies:
