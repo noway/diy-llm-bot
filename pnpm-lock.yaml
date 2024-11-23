@@ -42,9 +42,6 @@ importers:
       '@eslint/js':
         specifier: ^9.13.0
         version: 9.13.0
-      '@types/cookie':
-        specifier: ^0.6.0
-        version: 0.6.0
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -507,9 +504,6 @@ packages:
 
   '@types/babel__traverse@7.20.5':
     resolution: {integrity: sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ==}
-
-  '@types/cookie@0.6.0':
-    resolution: {integrity: sha1-6sOX8ovx1q4K4IE2PsovQlvt8NU=}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -1916,8 +1910,6 @@ snapshots:
   '@types/babel__traverse@7.20.5':
     dependencies:
       '@babel/types': 7.25.7
-
-  '@types/cookie@0.6.0': {}
 
   '@types/debug@4.1.12':
     dependencies:
