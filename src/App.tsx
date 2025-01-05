@@ -8,10 +8,6 @@ import { Element } from "hast";
 import { isMobile } from "react-device-detect";
 import copy from "copy-to-clipboard";
 
-declare global {
-  function gtag(...args: unknown[]): void;
-}
-
 interface Message {
   text: string | null;
   name: "You" | "Bot" | null;

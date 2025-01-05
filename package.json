@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@netlify/functions": "^3.0.0",
+    "@types/gtag.js": "^0.0.20",
     "cookie": "^1.0.2",
     "copy-to-clipboard": "^3.3.3",
     "react": "^18.3.1",

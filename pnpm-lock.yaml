@@ -11,6 +11,9 @@ importers:
       '@netlify/functions':
         specifier: ^3.0.0
         version: 3.0.0
+      '@types/gtag.js':
+        specifier: ^0.0.20
+        version: 0.0.20
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
@@ -535,6 +538,9 @@ packages:
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
+
+  '@types/gtag.js@0.0.20':
+    resolution: {integrity: sha512-wwAbk3SA2QeU67unN7zPxjEHmPmlXwZXZvQEpbEUQuMCRGgKyE1m6XDuTUA9b6pCGb/GqJmdfMOY5LuDjJSbbg==}
 
   '@types/hast@2.3.10':
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
@@ -1919,6 +1925,8 @@ snapshots:
   '@types/estree@1.0.5': {}
 
   '@types/estree@1.0.6': {}
+
+  '@types/gtag.js@0.0.20': {}
 
   '@types/hast@2.3.10':
     dependencies:
