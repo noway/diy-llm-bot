@@ -31,7 +31,7 @@ interface ResetMessagesAction {
 type Action = AddMessageAction | SetMessageAction | ResetMessagesAction;
 
 const DEFAULT_MODEL = "gpt-4o";
-const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
+const DEFAULT_MODEL_AUTH_KEY = "gpt-4.5-preview";
 
 function rehypeInlineCodeProperty() {
   return (tree: Element) => {
