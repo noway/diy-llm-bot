@@ -1,10 +1,10 @@
-import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, FormEvent, useCallback, useSyncExternalStore } from "react";
+import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, type FormEvent, useCallback, useSyncExternalStore } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { visit } from "unist-util-visit";
-import { Element } from "hast";
+import type { Element } from "hast";
 import { isMobile } from "react-device-detect";
 import copy from "copy-to-clipboard";
 
