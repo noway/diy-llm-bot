@@ -199,25 +199,46 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
 
 const ChatMessageMemo = memo(ChatMessage);
 
+function CopyButton({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, []);
+  return (
+    <button 
+      className="code-block__copy-button" 
+      onClick={() => {
+        copy(code);
+        setCopied(true);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        timeoutRef.current = setTimeout(() => {
+          setCopied(false);
+        }, 2000);
+      }}
+    >
+      {copied ? "Copied!" : "Copy code"}
+    </button>
+  );
+}
+
 function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boolean, code: string, language?: string }) {
   const EM_IN_PX = 16;
   const { nodeLineCount, lineCount, blink, code, language } = props;
   const viewportWidth = useViewportWidth();
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    copy(code);
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
-  };
   return (
     <div className="code-block__container">
       <div className="code-block__header">
         <span className="code-block__language">{language}</span>
-        <button className="code-block__copy-button" onClick={handleCopy}>
-          {copied ? "Copied!" : "Copy code"}
-        </button>
+        <CopyButton code={code} />
       </div>
       <Prism
         children={code}
