@@ -580,7 +580,7 @@ function App() {
         <div className="header">
           <div className="header-item">
             {state.messages.length > 0 ? (
-              <span className="header-item-link" onClick={resetChat}>
+              <span className="header-item-link" onClick={resetChat} role="button" aria-label="Reset chat">
                 Chat
               </span>
             ) : null}
@@ -666,6 +666,7 @@ function App() {
                 id="model"
                 onChange={(e) => setModel(e.target.value)}
                 value={model}
+                aria-label="Select model"
               >
                 <option value="gpt-3.5-turbo-instruct">gpt-3.5-turbo-instruct</option>
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
@@ -691,7 +692,7 @@ function App() {
       ) : null}
       <div className="chat-input-container">
         <form className="chat-input" onSubmit={submit}>
-          <div className="chat-input__avatar" onClick={promptAuthKey}>
+          <div className="chat-input__avatar" onClick={promptAuthKey} role="button" aria-label="Enter auth key">
             <img src={human_url} alt="avatar" />
           </div>
           <div className="chat-input__content">
@@ -705,10 +706,11 @@ function App() {
                 disabled={loading}
                 ref={textareaElement}
                 rows={1}
+                aria-label="Message input"
               ></textarea>
             </div>
             <div className="chat-input__content__button">
-              <button disabled={loading}>Send</button>
+              <button disabled={loading} aria-label="Send message">Send</button>
             </div>
           </div>
         </form>
