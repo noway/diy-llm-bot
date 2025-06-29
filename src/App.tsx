@@ -201,7 +201,7 @@ const ChatMessageMemo = memo(ChatMessage);
 
 function CopyButton({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -357,7 +357,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useViewportWidth() <= 767;
-  const controller = useRef<AbortController>(undefined);
+  const controller = useRef<AbortController | undefined>(undefined);
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
