@@ -376,6 +376,21 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') return;
+      if (e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Shift') return;
+      if (e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter') return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (textareaElement.current && !loading) {
+        textareaElement.current.focus();
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [loading]);
+
   useLayoutEffect(() => {
     const el = textareaElement.current;
     if (el) {
