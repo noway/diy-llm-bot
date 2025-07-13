@@ -383,6 +383,7 @@ function App() {
       if (e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Shift') return;
       if (e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter') return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.shiftKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'ArrowDown')) return;
       if (textareaElement.current && !loading) {
         textareaElement.current.focus();
       }
