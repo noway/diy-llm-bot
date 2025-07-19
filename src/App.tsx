@@ -31,7 +31,7 @@ interface ResetMessagesAction {
 type Action = AddMessageAction | SetMessageAction | ResetMessagesAction;
 
 const DEFAULT_MODEL = "gpt-4o";
-const DEFAULT_MODEL_AUTH_KEY = "gpt-4.5-preview";
+const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
 
 function rehypeInlineCodeProperty() {
   return (tree: Element) => {
@@ -697,7 +697,6 @@ function App() {
                 <option value="meta-llama/Meta-Llama-3.1-405B-Instruct">meta-llama/Meta-Llama-3.1-405B-Instruct</option>
                 <option value="deepseek/deepseek-coder">deepseek/deepseek-coder</option>
                 <option value="gpt-4" disabled={!isAuthed}>gpt-4</option>
-                <option value="gpt-4.5-preview" disabled={!isAuthed}>gpt-4.5-preview</option>
                 <option value="gpt-4.1" disabled={!isAuthed}>gpt-4.1</option>
                 <option value="o1-preview" disabled={!isAuthed}>o1-preview</option>
                 <option value="o1-mini" disabled={!isAuthed}>o1-mini</option>
