@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@netlify/functions':
-        specifier: ^4.1.10
-        version: 4.1.10(rollup@4.40.2)
+        specifier: ^4.1.12
+        version: 4.1.12(rollup@4.40.2)
       '@types/gtag.js':
         specifier: ^0.0.20
         version: 0.0.20
@@ -621,16 +621,16 @@ packages:
   '@netlify/binary-info@1.0.0':
     resolution: {integrity: sha512-4wMPu9iN3/HL97QblBsBay3E1etIciR84izI3U+4iALY+JHCrI+a2jO0qbAZ/nxKoegypYEaiiqWXylm+/zfrw==}
 
-  '@netlify/blobs@10.0.4':
-    resolution: {integrity: sha512-eQghoBRI11PxlwtoEhCUS1+BZTLClX/SyxzgAWjTIKSv+qYSdT0T9p4EktbspSEqhZCDROtlRPY5mszuTeSvYw==}
+  '@netlify/blobs@10.0.6':
+    resolution: {integrity: sha512-KP3jSg+ipILXSXq0CfKlMzNNZtJpvkSuDF2A4F0s6w8nSyl+0UrOid9VaFdyrVvSiwBZOEE6eF6qvNqfQKYKnA==}
     engines: {node: ^14.16.0 || >=16.0.0}
 
-  '@netlify/dev-utils@3.2.2':
-    resolution: {integrity: sha512-ECz/xEaqhAPUoFkeC2Ofpky1HBEKwPCsAL66iK/dLFHUFs39SC3y6Bn5QY76DzONmt+RjWmoYkSIEhJ1xAWHfA==}
+  '@netlify/dev-utils@4.0.0':
+    resolution: {integrity: sha512-WJlP9/2eo3Ij7rNLWrZun8djeoT04DC6Np0xWrzSUAytGgdgCUDAXXK5x0g8GKwSXD7cPT1oMTUvgflBHoECzw==}
     engines: {node: ^18.14.0 || >=20}
 
-  '@netlify/functions@4.1.10':
-    resolution: {integrity: sha512-qAu2rTtVROK46NOHULIMTJRuAy38ezJIjgN1Qanr6Rrp/tHAg/q//OZdOzN/x2wyYO8WzQiHKwU9SjgEjbot6w==}
+  '@netlify/functions@4.1.12':
+    resolution: {integrity: sha512-btkG/IAvAFdQ8mmw07a+q3fgiPbPq3rKcjsmyS7qaEZDGXnI436MyMq/U5ZNhxNyM9zuiUGuF/gDvN+SS+K5Jw==}
     engines: {node: '>=18.0.0'}
 
   '@netlify/runtime-utils@2.1.0':
@@ -922,12 +922,12 @@ packages:
     resolution: {integrity: sha512-LOtTn+JgJvX8WfBVJtF08TGrdjuFzGJc4mkP8EdDI8ADbvO7kiexYep1o8dwnt0okb0jYclCDXF13xU7Ge4zSw==}
     engines: {node: '>=18.0.0'}
 
-  '@whatwg-node/fetch@0.10.8':
-    resolution: {integrity: sha512-Rw9z3ctmeEj8QIB9MavkNJqekiu9usBCSMZa+uuAvM0lF3v70oQVCXNppMIqaV6OTZbdaHF1M2HLow58DEw+wg==}
+  '@whatwg-node/fetch@0.10.9':
+    resolution: {integrity: sha512-2TaXKmjy53cybNtaAtzbPOzwIPkjXbzvZcimnaJxQwYXKSC8iYnWoZOyT4+CFt8w0KDieg5J5dIMNzUrW/UZ5g==}
     engines: {node: '>=18.0.0'}
 
-  '@whatwg-node/node-fetch@0.7.21':
-    resolution: {integrity: sha512-QC16IdsEyIW7kZd77aodrMO7zAoDyyqRCTLg+qG4wqtP4JV9AA+p7/lgqMdD29XyiYdVvIdFrfI9yh7B1QvRvw==}
+  '@whatwg-node/node-fetch@0.7.22':
+    resolution: {integrity: sha512-h4GGjGF2vH3kGJ/fEOeg9Xfu4ncoyRwFcjGIxr/5dTBgZNVwq888byIsZ+XXRDJnNnRlzVVVQDcqrZpY2yctGA==}
     engines: {node: '>=18.0.0'}
 
   '@whatwg-node/promise-helpers@1.3.2':
@@ -3429,12 +3429,12 @@ snapshots:
 
   '@netlify/binary-info@1.0.0': {}
 
-  '@netlify/blobs@10.0.4':
+  '@netlify/blobs@10.0.6':
     dependencies:
-      '@netlify/dev-utils': 3.2.2
+      '@netlify/dev-utils': 4.0.0
       '@netlify/runtime-utils': 2.1.0
 
-  '@netlify/dev-utils@3.2.2':
+  '@netlify/dev-utils@4.0.0':
     dependencies:
       '@whatwg-node/server': 0.10.10
       ansis: 4.1.0
@@ -3452,10 +3452,10 @@ snapshots:
       uuid: 11.1.0
       write-file-atomic: 5.0.1
 
-  '@netlify/functions@4.1.10(rollup@4.40.2)':
+  '@netlify/functions@4.1.12(rollup@4.40.2)':
     dependencies:
-      '@netlify/blobs': 10.0.4
-      '@netlify/dev-utils': 3.2.2
+      '@netlify/blobs': 10.0.6
+      '@netlify/dev-utils': 4.0.0
       '@netlify/serverless-functions-api': 2.1.3
       '@netlify/zip-it-and-ship-it': 12.2.1(rollup@4.40.2)
       cron-parser: 4.9.0
@@ -3824,12 +3824,12 @@ snapshots:
       '@whatwg-node/promise-helpers': 1.3.2
       tslib: 2.8.1
 
-  '@whatwg-node/fetch@0.10.8':
+  '@whatwg-node/fetch@0.10.9':
     dependencies:
-      '@whatwg-node/node-fetch': 0.7.21
+      '@whatwg-node/node-fetch': 0.7.22
       urlpattern-polyfill: 10.1.0
 
-  '@whatwg-node/node-fetch@0.7.21':
+  '@whatwg-node/node-fetch@0.7.22':
     dependencies:
       '@fastify/busboy': 3.1.1
       '@whatwg-node/disposablestack': 0.0.6
@@ -3844,7 +3844,7 @@ snapshots:
     dependencies:
       '@envelop/instrumentation': 1.0.0
       '@whatwg-node/disposablestack': 0.0.6
-      '@whatwg-node/fetch': 0.10.8
+      '@whatwg-node/fetch': 0.10.9
       '@whatwg-node/promise-helpers': 1.3.2
       tslib: 2.8.1
 
