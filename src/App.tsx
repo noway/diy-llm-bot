@@ -617,13 +617,20 @@ function App() {
         </div>
       </div>
       {state.messages.length > 0 ? (
-        <div className="chat-history">
-          {state.messages.map((message, index) => {
-            const { party } = message;
-            const blink = party === "bot" && index === state.messages.length - 1 && loading
-            return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
-          })}
-        </div>
+        <>
+          <div className="model-display-container">
+            <div className="model-display">
+              {model}
+            </div>
+          </div>
+          <div className="chat-history">
+            {state.messages.map((message, index) => {
+              const { party } = message;
+              const blink = party === "bot" && index === state.messages.length - 1 && loading
+              return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
+            })}
+          </div>
+        </>
       ) : null}
       {/* lead copy */}
       {state.messages.length === 0 ? (
