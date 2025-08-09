@@ -663,7 +663,7 @@ function App() {
               <b>Is there source code?</b>
             </p>
             <p>
-              You can find the source code here{" "}
+              You can find the source code{" "}
               <a href="https://github.com/noway/diy-llm-bot" rel="noopener">
                 here
               </a>
