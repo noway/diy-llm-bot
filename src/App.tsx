@@ -426,7 +426,7 @@ function App() {
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
       const id = `bot-${Date.now()}`;
-      if (model === "o1-mini" || model === "o1-preview") {
+      if (model === "o1-mini" || model === "o1-preview" || model === "gpt-5") {
         dispatch({
           type: "set_message",
           payload: {
