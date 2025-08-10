@@ -708,6 +708,7 @@ function App() {
                 <option value="gpt-4.1-mini" disabled={!isAuthed}>gpt-4.1-mini</option>
                 <option value="gpt-4.1-nano" disabled={!isAuthed}>gpt-4.1-nano</option>
                 <option value="gpt-5" disabled={!isAuthed}>gpt-5</option>
+                <option value="gpt-5-chat-latest" disabled={!isAuthed}>gpt-5-chat-latest</option>
                 <option value="o1-preview" disabled={!isAuthed}>o1-preview</option>
                 <option value="o1-mini" disabled={!isAuthed}>o1-mini</option>
               </select>
