@@ -400,6 +400,14 @@ function App() {
     }
   }, [prompt, isMaxWidth767]);
 
+  function stopGeneration() {
+    if (controller.current) {
+      controller.current.abort();
+      controller.current = undefined;
+      setLoading(false);
+    }
+  }
+
   async function submit(e?: FormEvent<HTMLFormElement>) {
     if (e) e.preventDefault();
     if (prompt.trim() === "") {
@@ -736,7 +744,11 @@ function App() {
               ></textarea>
             </div>
             <div className="chat-input__content__button">
-              <button disabled={loading} aria-label="Send message">Send</button>
+              {loading ? (
+                <button onClick={stopGeneration} aria-label="Stop generation">Stop</button>
+              ) : (
+                <button disabled={loading} aria-label="Send message">Send</button>
+              )}
             </div>
           </div>
         </form>
