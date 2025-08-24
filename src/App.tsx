@@ -628,7 +628,7 @@ function App() {
         <>
           <div className="model-display-container">
             <div className="model-display">
-              {model}
+              {model} · {state.messages.filter(m => m.party === 'human').length} messages
             </div>
           </div>
           <div className="chat-history">
