@@ -19,7 +19,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
-    "react-syntax-highlighter": "^15.6.3",
+    "react-syntax-highlighter": "^15.6.6",
     "remark-gfm": "^4.0.1",
     "unist-util-visit": "^5.0.0"
   },
