@@ -222,7 +222,6 @@ code {
   width: 0.6em;
   height: 1.2em;
   background-color: black;
-  animation: blink 1s step-end infinite;
   position: absolute;
 }
 
@@ -233,6 +232,18 @@ code {
 }
 .blinking-cursor--container {
   position: relative;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blinking-cursor {
+    animation: blink 1s step-end infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blinking-cursor {
+    animation: none;
+  }
 }
 
 .chat-message__content td, .chat-message__content th {
