@@ -641,7 +641,7 @@ function App() {
               {model} · {state.messages.filter(m => m.party === 'human').length} messages
             </div>
           </div>
-          <div className="chat-history">
+          <div className="chat-history" role="log" aria-live="polite" aria-relevant="additions">
             {state.messages.map((message, index) => {
               const { party } = message;
               const blink = party === "bot" && index === state.messages.length - 1 && loading
