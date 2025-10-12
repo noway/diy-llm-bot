@@ -528,8 +528,6 @@ function App() {
         ({ done, value } = await reader.read());
       }
       controller.current = undefined;
-
-      setLoading(false);
       if (botMessage) {
         gtag("event", "receive_message", {
           event_category: "messages",
@@ -572,6 +570,7 @@ function App() {
         });
       }
     }
+    setLoading(false);
   }
 
   function resetChat() {
