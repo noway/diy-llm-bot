@@ -294,7 +294,7 @@ function reducer(state: State, action: Action) {
         messages: [],
       };
     default:
-      throw new Error();
+      throw new Error(`Unknown action type: ${JSON.stringify(action)}`);
   }
 }
 
