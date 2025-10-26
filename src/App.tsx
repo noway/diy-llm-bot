@@ -54,7 +54,9 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
   const { party } = message;
   const text = message.text ?? "";
   const lineCount = (text.match(/\n/g) || []).length + 1;
-  const lastLineColumnCount = text.length - text.lastIndexOf("\n");
+  const lastNewlineIndex = text.lastIndexOf("\n");
+  const lastLineColumnCount =
+    lastNewlineIndex === -1 ? text.length + 1 : text.length - lastNewlineIndex;
   const lastScrollHeight = useRef(document.body.scrollHeight);
 
   function scrollToBottom(stickyThreshold: number) {
