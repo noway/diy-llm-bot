@@ -13,7 +13,7 @@
   "dependencies": {
     "@netlify/functions": "^4.3.0",
     "@types/gtag.js": "^0.0.20",
-    "cookie": "^1.0.2",
+    "cookie": "^1.1.1",
     "copy-to-clipboard": "^3.3.3",
     "react": "^19.1.0",
     "react-device-detect": "^2.2.3",
