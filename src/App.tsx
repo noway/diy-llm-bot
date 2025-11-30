@@ -215,6 +215,7 @@ function CopyButton({ code }: { code: string }) {
   return (
     <button 
       className="code-block__copy-button" 
+      aria-label="Copy code to clipboard"
       onClick={() => {
         copy(code);
         setCopied(true);
