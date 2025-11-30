@@ -5,7 +5,6 @@ import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { visit } from "unist-util-visit";
 import type { Element } from "hast";
-import { isMobile } from "react-device-detect";
 import copy from "copy-to-clipboard";
 
 interface Message {
@@ -596,7 +595,7 @@ function App() {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && !isMobile) {
+    if (e.key === 'Enter' && !e.shiftKey && navigator.maxTouchPoints === 0) {
       e.preventDefault();
       submit();
     }
