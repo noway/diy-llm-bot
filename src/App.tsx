@@ -759,7 +759,7 @@ function App() {
             </div>
             <div className="chat-input__content__button">
               {loading ? (
-                <button onClick={stopGeneration} aria-label="Stop generation">Stop</button>
+                <button type="button" onClick={stopGeneration} aria-label="Stop generation">Stop</button>
               ) : (
                 <button disabled={loading} aria-label="Send message">Send</button>
               )}
