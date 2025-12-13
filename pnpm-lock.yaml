@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@netlify/functions':
-        specifier: ^5.1.0
-        version: 5.1.0
+        specifier: ^5.1.1
+        version: 5.1.1
       '@types/gtag.js':
         specifier: ^0.0.20
         version: 0.0.20
@@ -422,12 +422,12 @@ packages:
     resolution: {integrity: sha512-9LfmxKTb1v+vUS1/emSk1f5ePmTLkb9Le9AxOB5T0XM59EUumwcS45z05h7aiZx3GI0Bl7mjb3FMEglYj+acuQ==}
     engines: {node: '>=18'}
 
-  '@netlify/functions@5.1.0':
-    resolution: {integrity: sha512-LZtiQtf/QzPHIeNDZuIBxx04kmU7lCipWqZ26ejX7mYSB3yj2wvpZfF49kD8B8FoKTydSvgFmBpIcCO5FvpEXA==}
+  '@netlify/functions@5.1.1':
+    resolution: {integrity: sha512-64TvwQkAFpYb3QqYemPYDqWi1xMbYOBfg70bhy23iahWf+F9TJgOOnAVUOk5fMWGN/fk9bZG5ROc+cm32whh+g==}
     engines: {node: '>=18.0.0'}
 
-  '@netlify/types@2.2.0':
-    resolution: {integrity: sha512-XOWlZ2wPpdRKkAOcQbjIf/Qz7L4RjcSVINVNQ9p3F6U8V6KSEOsB3fPrc6Ly8EOeJioHUepRPuzHzJE/7V5EsA==}
+  '@netlify/types@2.3.0':
+    resolution: {integrity: sha512-5gxMWh/S7wr0uHKSTbMv4bjWmWSpwpeLYvErWeVNAPll5/QNFo9aWimMAUuh8ReLY3/fg92XAroVVu7+z27Snw==}
     engines: {node: ^18.14.0 || >=20}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -2108,11 +2108,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@netlify/functions@5.1.0':
+  '@netlify/functions@5.1.1':
     dependencies:
-      '@netlify/types': 2.2.0
+      '@netlify/types': 2.3.0
 
-  '@netlify/types@2.2.0': {}
+  '@netlify/types@2.3.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

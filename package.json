@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@netlify/functions": "^5.1.0",
+    "@netlify/functions": "^5.1.1",
     "@types/gtag.js": "^0.0.20",
     "cookie": "^1.1.1",
     "copy-to-clipboard": "^3.3.3",
