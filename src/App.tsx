@@ -5,7 +5,6 @@ import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { visit } from "unist-util-visit";
 import type { Element } from "hast";
-import copy from "copy-to-clipboard";
 
 interface Message {
   text: string | null;
@@ -216,7 +215,7 @@ function CopyButton({ code }: { code: string }) {
       className="code-block__copy-button" 
       aria-label="Copy code to clipboard"
       onClick={() => {
-        copy(code);
+        navigator.clipboard.writeText(code);
         setCopied(true);
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
