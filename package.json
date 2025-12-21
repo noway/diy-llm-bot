@@ -22,20 +22,20 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.25.0",
+    "@eslint/js": "^9.30.1",
     "@types/hast": "^3.0.4",
     "@types/node": "^24.10.4",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^9.25.0",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.4"
   },
   "packageManager": "pnpm@10.26.1+sha512.664074abc367d2c9324fdc18037097ce0a8f126034160f709928e9e9f95d98714347044e5c3164d65bd5da6c59c6be362b107546292a8eecb7999196e5ce58fa"
 }
