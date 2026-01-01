@@ -704,13 +704,12 @@ function App() {
               <b>What model is used?</b>
             </p>
             <p>
-              You can select your model:{" "}
+              You can <label htmlFor="model">select your model:</label>{" "}
               <select
                 name="model"
                 id="model"
                 onChange={(e) => setModel(e.target.value)}
                 value={model}
-                aria-label="Select model"
               >
                 <option value="gpt-3.5-turbo-instruct">gpt-3.5-turbo-instruct</option>
                 <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
