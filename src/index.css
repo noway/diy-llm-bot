@@ -207,7 +207,7 @@ code {
   background-color: hsl(213 39% 28% / 1);
 }
 
-.code-block__copy-button:focus, .code-block__copy-button:active {
+.code-block__copy-button:focus:not(:focus-visible) {
   outline: none;
 }
 
