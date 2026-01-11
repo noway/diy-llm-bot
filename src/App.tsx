@@ -236,7 +236,7 @@ function CodeBlock(props: { lineCount: number, nodeLineCount: number, blink: boo
   const { nodeLineCount, lineCount, blink, code, language } = props;
   const viewportWidth = useViewportWidth();
   return (
-    <div className="code-block__container">
+    <div>
       <div className="code-block__header">
         <span className="code-block__language">{language}</span>
         <CopyButton code={code} />
