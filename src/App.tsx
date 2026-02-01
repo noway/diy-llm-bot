@@ -755,7 +755,7 @@ function App() {
                 aria-label="Message input"
               ></textarea>
             </div>
-            <div className="chat-input__content__button">
+            <div>
               {loading ? (
                 <button type="button" onClick={stopGeneration} aria-label="Stop generation">Stop</button>
               ) : (
