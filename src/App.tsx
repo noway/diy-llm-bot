@@ -215,7 +215,9 @@ function CopyButton({ code }: { code: string }) {
       className="code-block__copy-button" 
       aria-label="Copy code to clipboard"
       onClick={() => {
-        navigator.clipboard.writeText(code);
+        navigator.clipboard.writeText(code).catch(() => {
+          alert("Failed to copy to clipboard");
+        });
         setCopied(true);
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
