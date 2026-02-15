@@ -582,6 +582,7 @@ function App() {
   function resetChat() {
     if (controller.current) {
       controller.current.abort();
+      controller.current = undefined;
     }
     dispatch({
       type: "reset_messages",
