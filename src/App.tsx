@@ -364,7 +364,7 @@ function App() {
 
   function promptAuthKey() {
     const key = window.prompt("Enter your auth key");
-    if (key !== null && key !== undefined && `${key}`.trim() !== "") {
+    if (key !== null && `${key}`.trim() !== "") {
       const prevIsAuthed = isAuthed;
       setAuthKeyCookie(key).catch(() => {
         setIsAuthed(prevIsAuthed);
