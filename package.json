@@ -13,7 +13,6 @@
   "dependencies": {
     "@netlify/functions": "^5.1.2",
     "@types/gtag.js": "^0.0.20",
-    "cookie": "^1.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
