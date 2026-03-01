@@ -580,15 +580,11 @@ function App() {
   }
 
   function resetChat() {
-    if (controller.current) {
-      controller.current.abort();
-      controller.current = undefined;
-    }
+    stopGeneration();
     dispatch({
       type: "reset_messages",
     });
     setPrompt("");
-    setLoading(false);
     setModel(isAuthed ? DEFAULT_MODEL_AUTH_KEY : DEFAULT_MODEL);
     gtag("event", "reset_chat", {
       event_category: "messages",
