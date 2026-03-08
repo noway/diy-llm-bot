@@ -215,17 +215,19 @@ function CopyButton({ code }: { code: string }) {
       className="code-block__copy-button" 
       aria-label="Copy code to clipboard"
       onClick={() => {
-        navigator.clipboard.writeText(code).catch(() => {
-          alert("Failed to copy to clipboard");
-        });
-        setCopied(true);
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
           timeoutRef.current = null;
         }
-        timeoutRef.current = setTimeout(() => {
+        navigator.clipboard.writeText(code).then(() => {
+          setCopied(true);
+          timeoutRef.current = setTimeout(() => {
+            setCopied(false);
+          }, 2000);
+        }).catch(() => {
           setCopied(false);
-        }, 2000);
+          alert("Failed to copy to clipboard");
+        });
       }}
     >
       {copied ? "Copied!" : "Copy code"}
