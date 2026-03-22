@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, type FormEvent, useCallback, useSyncExternalStore } from "react";
+import { useState, useReducer, useEffect, useLayoutEffect, useRef, memo, type SubmitEvent, useCallback, useSyncExternalStore } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism, createElement } from "react-syntax-highlighter";
@@ -426,7 +426,7 @@ function App() {
     }
   }
 
-  async function submit(e?: FormEvent<HTMLFormElement>) {
+  async function submit(e?: SubmitEvent<HTMLFormElement>) {
     if (e) e.preventDefault();
     if (prompt.trim() === "") {
       return;
