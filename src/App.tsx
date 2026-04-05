@@ -428,7 +428,7 @@ function App() {
 
   async function submit(e?: SubmitEvent<HTMLFormElement>) {
     if (e) e.preventDefault();
-    if (prompt.trim() === "") {
+    if (prompt.trim() === "" || prompt.length > 4000) {
       return;
     }
     try {
@@ -747,6 +747,7 @@ function App() {
               <textarea
                 placeholder={loading ? "Loading..." : "Type your message"}
                 value={prompt}
+                maxLength={4000}
                 onChange={(e) => setPrompt(e.target.value)}
                 onKeyDown={handleKeyDown}
                 autoFocus={true}
