@@ -29,9 +29,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      unist-util-visit:
-        specifier: ^5.1.0
-        version: 5.1.0
     devDependencies:
       '@eslint/js':
         specifier: ^9.39.4

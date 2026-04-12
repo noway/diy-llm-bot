@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism, createElement } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { visit } from "unist-util-visit";
 import type { Element } from "hast";
 
 interface Message {
@@ -33,13 +32,17 @@ const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
 
 function rehypeInlineCodeProperty() {
   return (tree: Element) => {
-    visit(tree, { tagName: 'code' as const }, function (node: Element, _index, parent: Element) {
-      if (parent && parent.tagName === 'pre') {
-        node.properties.inline = false;
-      } else {
-        node.properties.inline = true;
+    function walk(node: Element, parent?: Element) {
+      if (node.tagName === 'code') {
+        node.properties.inline = !(parent && parent.tagName === 'pre');
       }
-    })
+      if (node.children) {
+        for (const child of node.children) {
+          if (child.type === 'element') walk(child as Element, node);
+        }
+      }
+    }
+    walk(tree);
   }
 }
 
