@@ -203,7 +203,7 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
 const ChatMessageMemo = memo(ChatMessage);
 
 function CopyButton({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     return () => {
@@ -223,17 +223,19 @@ function CopyButton({ code }: { code: string }) {
           timeoutRef.current = null;
         }
         navigator.clipboard.writeText(code).then(() => {
-          setCopied(true);
+          setStatus('copied');
           timeoutRef.current = setTimeout(() => {
-            setCopied(false);
+            setStatus('idle');
           }, 2000);
         }).catch(() => {
-          setCopied(false);
-          alert("Failed to copy to clipboard");
+          setStatus('failed');
+          timeoutRef.current = setTimeout(() => {
+            setStatus('idle');
+          }, 2000);
         });
       }}
     >
-      {copied ? "Copied!" : "Copy code"}
+      {status === 'copied' ? "Copied!" : status === 'failed' ? "Failed!" : "Copy code"}
     </button>
   );
 }
