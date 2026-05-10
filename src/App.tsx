@@ -433,7 +433,7 @@ function App() {
 
   async function submit(e?: SubmitEvent<HTMLFormElement>) {
     if (e) e.preventDefault();
-    if (prompt.trim() === "" || prompt.length > 4000) {
+    if (prompt.trim() === "") {
       return;
     }
     try {
