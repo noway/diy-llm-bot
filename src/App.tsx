@@ -60,6 +60,20 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
     lastNewlineIndex === -1 ? text.length + 1 : text.length - lastNewlineIndex;
   const lastScrollHeight = useRef(document.body.scrollHeight);
 
+  // h1-h6, p and li all render their children followed by a blinking cursor
+  // when they are the last line of a streaming bot message. Build them from a
+  // single factory rather than repeating the identical component eight times.
+  const blinkComponent = (Tag: React.ElementType) =>
+    function BlinkText({ node, children, ...props }: { node?: Element; children?: React.ReactNode } & React.HTMLAttributes<HTMLElement>) {
+      const isLastLine = node?.position?.start.line === lineCount;
+      return (
+        <Tag {...props}>
+          {children}
+          {isLastLine && blink ? <span className="blinking-cursor" /> : null}
+        </Tag>
+      );
+    };
+
   function scrollToBottom(stickyThreshold: number) {
     const currentScrollHeight = Math.ceil(window.innerHeight + window.scrollY);
     const documentHeight = document.body.scrollHeight;
@@ -107,78 +121,14 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
                   </code>
                 );
               },
-              p({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <p {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </p>
-                );
-              },
-              h1({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h1 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h1>
-                );
-              },
-              h2({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h2 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h2>
-                );
-              },
-              h3({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h3 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h3>
-                );
-              },
-              h4({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h4 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h4>
-                );
-              },
-              h5({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h5 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h5>
-                );
-              },
-              h6({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <h6 {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </h6>
-                );
-              },
-              li({ node, children, ...props }) {
-                const isLastLine = node?.position?.start.line === lineCount;
-                return (
-                  <li {...props}>
-                    {children}
-                    {isLastLine && blink ? <span className="blinking-cursor" /> : null}
-                  </li>
-                );
-              },
+              p: blinkComponent('p'),
+              h1: blinkComponent('h1'),
+              h2: blinkComponent('h2'),
+              h3: blinkComponent('h3'),
+              h4: blinkComponent('h4'),
+              h5: blinkComponent('h5'),
+              h6: blinkComponent('h6'),
+              li: blinkComponent('li'),
               td({ node, children }) {
                 const isLastLine = node?.position?.start.line === lineCount;
                 const isLastColumn = node?.position?.end.column === lastLineColumnCount;
