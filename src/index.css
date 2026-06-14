@@ -101,6 +101,26 @@ code {
 .chat-message__content--error p {
   white-space: pre-wrap;
 }
+.chat-message__retry-button {
+  margin-top: 0.25em;
+  background-color: rgba(247, 28, 28, 0.12);
+  color: #b3261e;
+  border: 1px solid rgba(247, 28, 28, 0.35);
+  border-radius: 3px;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  font-size: smaller;
+  transition: background-color 0.2s ease;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+.chat-message__retry-button:hover {
+  background-color: rgba(247, 28, 28, 0.22);
+}
+.chat-message__retry-button:focus:not(:focus-visible) {
+  outline: none;
+}
 
 .chat-input-container {
   display: flex;

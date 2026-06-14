@@ -22,10 +22,14 @@ interface SetMessageAction {
   type: "set_message";
   payload: Message;
 }
+interface SetMessagesAction {
+  type: "set_messages";
+  payload: Message[];
+}
 interface ResetMessagesAction {
   type: "reset_messages";
 }
-type Action = AddMessageAction | SetMessageAction | ResetMessagesAction;
+type Action = AddMessageAction | SetMessageAction | SetMessagesAction | ResetMessagesAction;
 
 const DEFAULT_MODEL = "gpt-4o";
 const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
@@ -51,7 +55,7 @@ const bot_url =
 const human_url =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAACb0lEQVRIS92UX0hTURzHv2dWSx/KJojZS4GxhB5iQlQvPkQhlQg12ENlsWhMpOaW0sOcMF1ZJK6JYW70R6Fy5ei/EBFoRUoghtBCEnqqjIhWlLjpvb84Z7YGu3dsoi8dLhzu+d37+X1/3/M7h2EJB1tCNv5XOGPEbRsoBQyFqQYWDVLaytWDjNHuDQxEwNOdhIFXqQkuScvQ8mJWlaEcYIx2rWfQzEcJTGzOkw+ykJ9cSae8HJ7nMUWOKjyTLpoqj3+lZk9aWyJBC3LLNivm+T0yCt2hHlHFnrCy92nh0ckOWKrqhCnd972oNTYgFptD4IFXJDxSWYe+dzJAWcBnQlaytPgRCPmgLTkJnuTvSH6vMdrR1e8FxsahNQZShCoqn75lpkbfNbTe6BDwcxWrYO/0CH4y3G0+BbftGKTZKFaarmYGj961Uv3ZbrT1/VOstsFsPAySJGiN/szgHGQ1MPLdiSuPvr8IMA0YEVZstCVskoZHud/IO9yTRSsCaCrXkvOMA1hbLDaO9zqIofdRO/BlCowYzjvb4BqcyfIQzXvg2M6o9YITmhwt5ML8hDM5X7+hod4N78uFHn8Av+6ZqffmY8zFJID4w8CETsLx6irk7r+ywLsFgH5bo7i4RqonhGrRzjKgi9yOV+FKf2WrZubgYNcBhMNvUXsigO/2IUyXmJA3GcSbfWOCvcVgUD1APK4I31p5lBwHK7BJrxcQU01IzBN7PQiVhpC/ZjUKdAVizdLkw+uH1zPvFg73N9vEj3z+8TMCy+lnaHftAEFG8+V+sb4ocA75+PmTqHNdUXEi6aLBeRUBjw0kx63IRPkfkSH+GJhPFeIAAAAASUVORK5CYII=";
 
-function ChatMessage({ message, blink }: { message: Message, blink: boolean }): React.JSX.Element {
+function ChatMessage({ message, blink, onRetry }: { message: Message, blink: boolean, onRetry?: () => void }): React.JSX.Element {
   const { party } = message;
   const text = message.text ?? "";
   const lineCount = (text.match(/\n/g) || []).length + 1;
@@ -144,6 +148,11 @@ function ChatMessage({ message, blink }: { message: Message, blink: boolean }): 
         </div> : null}
         {party === 'error' ? <div className="chat-message__content chat-message__content--error">
           <p>{text}</p>
+          {onRetry ? (
+            <button type="button" className="chat-message__retry-button" onClick={onRetry} aria-label="Retry last message">
+              Retry
+            </button>
+          ) : null}
         </div> : null}
       </div>
     </div>
@@ -247,6 +256,11 @@ function reducer(state: State, action: Action) {
         messages: state.messages.find((message) => message.id === action.payload.id) ?
           state.messages.map((message) => message.id === action.payload.id ? action.payload : message) :
           [...state.messages, action.payload],
+      };
+    case "set_messages":
+      return {
+        ...state,
+        messages: action.payload,
       };
     case "reset_messages":
       return {
@@ -386,23 +400,27 @@ function App() {
     if (prompt.trim() === "") {
       return;
     }
+    gtag("event", "send_message", {
+      event_category: "messages",
+      event_label: "Send human message",
+      value: prompt.length,
+    });
+    const humanMessage = {
+      text: prompt,
+      name: "You" as const,
+      party: "human" as const,
+      id: `human-${Date.now()}`,
+    };
+    dispatch({
+      type: "add_message",
+      payload: humanMessage,
+    });
+    setPrompt("");
+    await runGeneration([...state.messages, humanMessage]);
+  }
+
+  async function runGeneration(messagesToSend: Message[]) {
     try {
-      gtag("event", "send_message", {
-        event_category: "messages",
-        event_label: "Send human message",
-        value: prompt.length,
-      });
-      const humanMessage = {
-        text: prompt,
-        name: "You" as const,
-        party: "human" as const,
-        id: `human-${Date.now()}`,
-      };
-      dispatch({
-        type: "add_message",
-        payload: humanMessage,
-      });
-      setPrompt("");
       setLoading(true);
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
@@ -426,7 +444,7 @@ function App() {
             "Content-Type": "text/plain",
           },
           body: JSON.stringify({
-            messages: [...state.messages, humanMessage],
+            messages: messagesToSend,
             model,
           }),
           signal: controller.current.signal,
@@ -536,6 +554,34 @@ function App() {
     setLoading(false);
   }
 
+  function retryLast() {
+    const trimmed = [...state.messages];
+    while (trimmed.length > 0) {
+      const last = trimmed[trimmed.length - 1];
+      if (last.party === "error" || (last.party === "bot" && !last.text)) {
+        trimmed.pop();
+      } else {
+        break;
+      }
+    }
+    if (trimmed.length === 0) {
+      return;
+    }
+    gtag("event", "retry_message", {
+      event_category: "messages",
+      event_label: "Retry bot message",
+    });
+    dispatch({
+      type: "set_messages",
+      payload: trimmed,
+    });
+    runGeneration(trimmed);
+  }
+
+  const retryLastRef = useRef(retryLast);
+  retryLastRef.current = retryLast;
+  const handleRetry = useCallback(() => retryLastRef.current(), []);
+
   function resetChat() {
     stopGeneration();
     dispatch({
@@ -603,8 +649,10 @@ function App() {
           <div role="log" aria-live="polite" aria-relevant="additions">
             {state.messages.map((message, index) => {
               const { party } = message;
-              const blink = party === "bot" && index === state.messages.length - 1 && loading
-              return <ChatMessageMemo key={message.id} message={message} blink={blink} />;
+              const isLast = index === state.messages.length - 1;
+              const blink = party === "bot" && isLast && loading
+              const onRetry = party === "error" && isLast && !loading ? handleRetry : undefined;
+              return <ChatMessageMemo key={message.id} message={message} blink={blink} onRetry={onRetry} />;
             })}
           </div>
         </>
