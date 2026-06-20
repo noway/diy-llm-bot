@@ -460,12 +460,13 @@ function App() {
       }
 
       const reader = res.body.getReader();
+      const decoder = new TextDecoder();
       let completion = "";
       let botMessage: Message | null = null;
       let { done, value } = await reader.read();
       while (!done) {
         // Convert the binary data to a string
-        const dataString = new TextDecoder().decode(value);
+        const dataString = decoder.decode(value, { stream: true });
         completion += dataString;
 
         let isError = false;
