@@ -34,6 +34,8 @@ type Action = AddMessageAction | SetMessageAction | SetMessagesAction | ResetMes
 const DEFAULT_MODEL = "gpt-4o";
 const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
 
+const NON_STREAMING_MODELS = new Set(["o1-preview", "o1-mini", "gpt-5"]);
+
 function rehypeInlineCodeProperty() {
   return (tree: Element) => {
     function walk(node: Element, parent?: Element) {
@@ -425,7 +427,7 @@ function App() {
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
       const id = `bot-${Date.now()}`;
-      if (model === "o1-mini" || model === "o1-preview" || model === "gpt-5") {
+      if (NON_STREAMING_MODELS.has(model)) {
         dispatch({
           type: "set_message",
           payload: {
