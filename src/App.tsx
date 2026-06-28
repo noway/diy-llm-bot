@@ -536,9 +536,7 @@ function App() {
           type: "set_message",
           payload: message,
         });
-      } else if (e instanceof Error && e.message === "BodyStreamBuffer was aborted") {
-        // ignore
-      } else if (e instanceof Error && e.message === "Fetch is aborted") {
+      } else if (e instanceof DOMException && e.name === "AbortError") {
         // ignore
       } else {
         const errorMessage = e instanceof Error ? e.message : "Unknown error";
