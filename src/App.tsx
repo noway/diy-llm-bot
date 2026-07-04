@@ -446,7 +446,7 @@ function App() {
             "Content-Type": "text/plain",
           },
           body: JSON.stringify({
-            messages: messagesToSend,
+            messages: messagesToSend.filter((m) => m.party !== "error" && m.text !== null),
             model,
           }),
           signal: controller.current.signal,
