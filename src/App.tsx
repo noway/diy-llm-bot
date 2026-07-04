@@ -461,55 +461,38 @@ function App() {
         throw new Error("No response body");
       }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let completion = "";
       let botMessage: Message | null = null;
-      let { done, value } = await reader.read();
-      while (!done) {
-        // Convert the binary data to a string
-        const dataString = decoder.decode(value, { stream: true });
-        completion += dataString;
-
-        let isError = false;
-        try {
-          // TODO: API should properly send 4xx/5xx status codes for this
-          const headers: Record<string, string> = {};
-          res.headers.forEach((value, name) => {
-            headers[name] = value;
-          })
-          const msg = JSON.parse(completion);
-          if (headers['content-length'] !== undefined && !msg.success && msg.error && msg.error.message) {
-            isError = true;
-          }
-        }
-        catch (e) {
-          console.log('isError error', e);
-          isError = false;
-        }
-
-        if (isError) {
-          botMessage = {
-            text: JSON.parse(completion).error.message,
-            name: null,
-            party: "error",
-            id,
-          };
-        }
-        else {
+      if (res.headers.get("content-type")?.includes("application/json")) {
+        const msg = await res.json();
+        botMessage = {
+          text: msg.error?.message ?? "Unknown error",
+          name: null,
+          party: "error",
+          id,
+        };
+        dispatch({
+          type: "set_message",
+          payload: botMessage,
+        });
+      } else {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let completion = "";
+        let { done, value } = await reader.read();
+        while (!done) {
+          completion += decoder.decode(value, { stream: true });
           botMessage = {
             text: parseCompletionIntoMessageText(completion),
             name: "Bot" as const,
             party: "bot" as const,
             id,
           };
+          dispatch({
+            type: "set_message",
+            payload: botMessage,
+          });
+          ({ done, value } = await reader.read());
         }
-
-        dispatch({
-          type: "set_message",
-          payload: botMessage,
-        });
-        ({ done, value } = await reader.read());
       }
       controller.current = undefined;
       if (botMessage) {
