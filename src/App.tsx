@@ -7,7 +7,6 @@ import type { Element } from "hast";
 
 interface Message {
   text: string | null;
-  name: "You" | "Bot" | null;
   party: "bot" | "human" | "error";
   id: string;
 }
@@ -409,7 +408,6 @@ function App() {
     });
     const humanMessage = {
       text: prompt,
-      name: "You" as const,
       party: "human" as const,
       id: `human-${Date.now()}`,
     };
@@ -433,7 +431,6 @@ function App() {
           payload: {
             id,
             text: null,
-            name: "Bot",
             party: "bot",
           },
         });
@@ -466,7 +463,6 @@ function App() {
         const msg = await res.json();
         botMessage = {
           text: msg.error?.message ?? "Unknown error",
-          name: null,
           party: "error",
           id,
         };
@@ -483,7 +479,6 @@ function App() {
           completion += decoder.decode(value, { stream: true });
           botMessage = {
             text: parseCompletionIntoMessageText(completion),
-            name: "Bot" as const,
             party: "bot" as const,
             id,
           };
@@ -511,7 +506,6 @@ function App() {
       if (e instanceof Error && e.message === "Failed to fetch") {
         const message = {
           text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
-          name: null,
           party: "error" as const,
           id: `error-${Date.now()}`,
         };
@@ -525,7 +519,6 @@ function App() {
         const errorMessage = e instanceof Error ? e.message : "Unknown error";
         const message = {
           text: `${errorMessage}\n\nPlease try again later.`,
-          name: null,
           party: "error" as const,
           id: `error-${Date.now()}`,
         };
