@@ -503,7 +503,7 @@ function App() {
         }
       }, 0);
     } catch (e) {
-      if (e instanceof Error && e.message === "Failed to fetch") {
+      if (e instanceof TypeError) {
         const message = {
           text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
           party: "error" as const,
