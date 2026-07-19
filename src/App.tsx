@@ -453,13 +453,6 @@ function App() {
         }
       );
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      if (!res.body) {
-        throw new Error("No response body");
-      }
-
       let botMessage: Message | null = null;
       if (res.headers.get("content-type")?.includes("application/json")) {
         const msg = await res.json();
@@ -472,6 +465,10 @@ function App() {
           type: "set_message",
           payload: botMessage,
         });
+      } else if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      } else if (!res.body) {
+        throw new Error("No response body");
       } else {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
