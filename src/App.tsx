@@ -435,7 +435,10 @@ function App() {
           },
         });
       }
-      const messages = messagesToSend.filter((m) => m.party !== "error" && m.text !== null).slice(-25);
+      const messages = messagesToSend
+        .filter((m) => m.party !== "error" && m.text !== null)
+        .slice(-25)
+        .map(({ text, party }) => ({ text, party }));
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
         {
