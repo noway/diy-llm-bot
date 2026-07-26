@@ -436,7 +436,6 @@ function App() {
         });
       }
       const messages = messagesToSend.filter((m) => m.party !== "error" && m.text !== null).slice(-25);
-      while (messages[0]?.party === "bot") messages.shift();
       const res = await fetch(
         `${apiDomain}/generate-chat-completion-streaming`,
         {
