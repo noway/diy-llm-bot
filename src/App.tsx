@@ -351,7 +351,7 @@ function App() {
       if (data.isAuthed) {
         setModel(DEFAULT_MODEL_AUTH_KEY);
       }
-    });
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
