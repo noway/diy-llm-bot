@@ -420,11 +420,11 @@ function App() {
   }
 
   async function runGeneration(messagesToSend: Message[]) {
+    const id = `bot-${Date.now()}`;
     try {
       setLoading(true);
       controller.current = new AbortController();
       const apiDomain = import.meta.env.VITE_API_URL;
-      const id = `bot-${Date.now()}`;
       if (NON_STREAMING_MODELS.has(model)) {
         dispatch({
           type: "set_message",
@@ -508,7 +508,7 @@ function App() {
         const message = {
           text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
           party: "error" as const,
-          id: `error-${Date.now()}`,
+          id,
         };
         dispatch({
           type: "set_message",
@@ -521,7 +521,7 @@ function App() {
         const message = {
           text: `${errorMessage}\n\nPlease try again later.`,
           party: "error" as const,
-          id: `error-${Date.now()}`,
+          id,
         };
         dispatch({
           type: "set_message",
