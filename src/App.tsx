@@ -25,10 +25,14 @@ interface SetMessagesAction {
   type: "set_messages";
   payload: Message[];
 }
+interface RemoveMessageAction {
+  type: "remove_message";
+  payload: { id: string };
+}
 interface ResetMessagesAction {
   type: "reset_messages";
 }
-type Action = AddMessageAction | SetMessageAction | SetMessagesAction | ResetMessagesAction;
+type Action = AddMessageAction | SetMessageAction | SetMessagesAction | RemoveMessageAction | ResetMessagesAction;
 
 const DEFAULT_MODEL = "gpt-4o";
 const DEFAULT_MODEL_AUTH_KEY = "gpt-4";
@@ -263,6 +267,11 @@ function reducer(state: State, action: Action) {
         ...state,
         messages: action.payload,
       };
+    case "remove_message":
+      return {
+        ...state,
+        messages: state.messages.filter((message) => message.id !== action.payload.id),
+      };
     case "reset_messages":
       return {
         ...state,
@@ -421,6 +430,7 @@ function App() {
 
   async function runGeneration(messagesToSend: Message[]) {
     const id = `bot-${Date.now()}`;
+    let botMessage: Message | null = null;
     try {
       setLoading(true);
       controller.current = new AbortController();
@@ -455,7 +465,6 @@ function App() {
         }
       );
 
-      let botMessage: Message | null = null;
       if (res.headers.get("content-type")?.includes("application/json")) {
         const msg = await res.json();
         botMessage = {
@@ -491,6 +500,12 @@ function App() {
         }
       }
       controller.current = undefined;
+      if (!botMessage) {
+        dispatch({
+          type: "remove_message",
+          payload: { id },
+        });
+      }
       if (botMessage) {
         gtag("event", "receive_message", {
           event_category: "messages",
@@ -515,7 +530,12 @@ function App() {
           payload: message,
         });
       } else if (e instanceof DOMException && e.name === "AbortError") {
-        // ignore
+        if (!botMessage) {
+          dispatch({
+            type: "remove_message",
+            payload: { id },
+          });
+        }
       } else {
         const errorMessage = e instanceof Error ? e.message : "Unknown error";
         const message = {
