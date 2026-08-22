@@ -594,7 +594,7 @@ function App() {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey && navigator.maxTouchPoints === 0) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing && navigator.maxTouchPoints === 0) {
       e.preventDefault();
       submit();
     }
