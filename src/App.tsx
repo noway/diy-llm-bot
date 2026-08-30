@@ -186,17 +186,15 @@ function CopyButton({ code }: { code: string }) {
           clearTimeout(timeoutRef.current);
           timeoutRef.current = null;
         }
-        navigator.clipboard.writeText(code).then(() => {
-          setStatus('copied');
+        const flashStatus = (status: 'copied' | 'failed') => {
+          setStatus(status);
           timeoutRef.current = setTimeout(() => {
             setStatus('idle');
           }, 2000);
-        }).catch(() => {
-          setStatus('failed');
-          timeoutRef.current = setTimeout(() => {
-            setStatus('idle');
-          }, 2000);
-        });
+        };
+        navigator.clipboard.writeText(code)
+          .then(() => flashStatus('copied'))
+          .catch(() => flashStatus('failed'));
       }}
     >
       {status === 'copied' ? "Copied!" : status === 'failed' ? "Failed!" : "Copy code"}
