@@ -339,8 +339,8 @@ function App() {
   const controller = useRef<AbortController | undefined>(undefined);
 
   function promptAuthKey() {
-    const key = window.prompt("Enter your auth key");
-    if (key !== null && `${key}`.trim() !== "") {
+    const key = window.prompt("Enter your auth key")?.trim();
+    if (key) {
       const prevIsAuthed = isAuthed;
       setAuthKeyCookie(key).catch(() => {
         setIsAuthed(prevIsAuthed);
