@@ -138,7 +138,9 @@ code {
 .chat-input__avatar {
   display: flex;
   align-items: center;
-  padding-bottom: 3.5px;
+  padding: 0 0 3.5px;
+  background: none;
+  border: none;
 }
 .chat-input__avatar img {
   width: 34.5px;
@@ -189,6 +191,12 @@ code {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.header-item-link {
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
 }
 
 .code-block__code {

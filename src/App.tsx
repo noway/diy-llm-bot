@@ -612,9 +612,9 @@ function App() {
         <div className="header">
           <div className="header-item">
             {state.messages.length > 0 ? (
-              <span className="header-item-link" onClick={resetChat} role="button" aria-label="Reset chat">
+              <button type="button" className="header-item-link" onClick={resetChat} aria-label="Reset chat">
                 Chat
-              </span>
+              </button>
             ) : null}
             {state.messages.length === 0 ? "Chat" : null}
           </div>
@@ -735,9 +735,9 @@ function App() {
       ) : null}
       <div className="chat-input-container">
         <form className="chat-input" onSubmit={submit}>
-          <div className="chat-input__avatar" onClick={promptAuthKey} role="button" aria-label="Enter auth key">
+          <button type="button" className="chat-input__avatar" onClick={promptAuthKey} aria-label="Enter auth key">
             <img src={human_url} alt="avatar" />
-          </div>
+          </button>
           <div className="chat-input__content">
             <div className="chat-input__content__textarea">
               <textarea
