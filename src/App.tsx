@@ -495,17 +495,16 @@ function App() {
         }
       }
       controller.current = undefined;
-      if (!botMessage) {
-        dispatch({
-          type: "remove_message",
-          payload: { id },
-        });
-      }
       if (botMessage) {
         gtag("event", "receive_message", {
           event_category: "messages",
           event_label: "Receive bot message",
           value: botMessage.text?.length,
+        });
+      } else {
+        dispatch({
+          type: "remove_message",
+          payload: { id },
         });
       }
       setTimeout(() => {
