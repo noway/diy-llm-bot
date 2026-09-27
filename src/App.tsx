@@ -515,7 +515,9 @@ function App() {
     } catch (e) {
       if (e instanceof TypeError) {
         const message = {
-          text: "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
+          text: botMessage
+            ? "The response was cut off before it finished. \n\nPlease try again."
+            : "There is currently a problem with the DIY LLM Bot API. We are working to fix it as soon as possible. \n\nPlease try again later.",
           party: "error" as const,
           id,
         };
