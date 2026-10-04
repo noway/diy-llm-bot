@@ -372,10 +372,8 @@ function App() {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') return;
-      if (e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Shift') return;
-      if (e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter') return;
+      if (e.key.length !== 1) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.shiftKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'ArrowDown')) return;
       if (textareaElement.current && !loading) {
         textareaElement.current.focus();
       }
