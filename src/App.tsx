@@ -342,9 +342,12 @@ function App() {
     const key = window.prompt("Enter your auth key")?.trim();
     if (key) {
       const prevIsAuthed = isAuthed;
-      setAuthKeyCookie(key).catch(() => {
-        setIsAuthed(prevIsAuthed);
-      });
+      setAuthKeyCookie(key)
+        .then(() => getIsAuthed())
+        .then((data) => setIsAuthed(data.isAuthed))
+        .catch(() => {
+          setIsAuthed(prevIsAuthed);
+        });
       setIsAuthed(true);
     }
   }
