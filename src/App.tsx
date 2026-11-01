@@ -336,6 +336,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const textareaElement = useRef<HTMLTextAreaElement | null>(null);
   const isMaxWidth767 = useViewportWidth() <= 767;
+  const humanMessageCount = state.messages.filter(m => m.party === 'human').length;
   const controller = useRef<AbortController | undefined>(undefined);
 
   function promptAuthKey() {
@@ -638,7 +639,7 @@ function App() {
         <>
           <div className="model-display-container">
             <div className="model-display">
-              {model} · {state.messages.filter(m => m.party === 'human').length} messages
+              {model} · {humanMessageCount} {humanMessageCount === 1 ? "message" : "messages"}
             </div>
           </div>
           <div role="log" aria-live="polite" aria-relevant="additions">
