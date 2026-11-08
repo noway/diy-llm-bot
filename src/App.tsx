@@ -760,7 +760,7 @@ function App() {
               {loading ? (
                 <button type="button" onClick={stopGeneration} aria-label="Stop generation">Stop</button>
               ) : (
-                <button disabled={loading} aria-label="Send message">Send</button>
+                <button disabled={prompt.trim() === ""} aria-label="Send message">Send</button>
               )}
             </div>
           </div>
